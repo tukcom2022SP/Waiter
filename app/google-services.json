@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "494181949744",
+    "project_id": "waiterdb",
+    "storage_bucket": "waiterdb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494181949744:android:9c6395b331f685609b28f5",
+        "android_client_info": {
+          "package_name": "kr.ac.tukorea.waiter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494181949744-t0bukfio1bbk5gv4p3nfn3ockttd2lgl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM07LilWSrgbe_sf-5smk-yY8WFgVh-d8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494181949744-t0bukfio1bbk5gv4p3nfn3ockttd2lgl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
