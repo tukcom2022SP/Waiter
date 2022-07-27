@@ -3,11 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/activity_info_registration_page.xml" value="0.2390625" />
+        <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/activity_waiting_list_page.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19701086956521738" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">
