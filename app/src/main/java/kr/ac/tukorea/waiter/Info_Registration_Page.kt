@@ -17,15 +17,33 @@ import kr.ac.tukorea.waiter.databinding.InputInformationBinding
 class CustomDialog : DialogFragment(){
     private var infoBinding : InputInformationBinding? = null
     private val subbinding get() = infoBinding!!  //fragment에서 사용
+    private var StoreNameStirng : String? = null // 입력 값 저장할 변수들 얘들을 디비로?
+    private var AddressString : String? = null
+    private var CorpNumString : String? = null
+    private var OwnerString : String? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         infoBinding = InputInformationBinding.inflate(inflater,container,false)
         val view = subbinding.root
 
-        subbinding.storeNameEdit.setOnClickListener {
-            dismiss()
+        subbinding.registrationBtn.setOnClickListener {
+            if(subbinding.storeNameEdit.length() == 0 || subbinding.storeAddressEdit.length()==0 || subbinding.storeCorpNumEdit.length()==0 || subbinding.storeOwnerEdit.length()==0){
+                Toast.makeText(activity, "값을 모두 입력해주세요",Toast.LENGTH_LONG).show()
+            }
+            else{
+                StoreNameStirng = subbinding.storeNameEdit.toString()
+                AddressString = subbinding.storeAddressEdit.toString()
+                CorpNumString = subbinding.storeCorpNumEdit.toString()
+                OwnerString = subbinding.storeOwnerEdit.toString()
+                dismiss()
+            }
         }
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        dialog?.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT )
     }
 
     override fun onDestroyView() {
