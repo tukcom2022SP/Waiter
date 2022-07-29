@@ -15,7 +15,7 @@
         android:text="회원 가입"
         android:textColor="#b22222"
         android:gravity="center"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold"/>
 
     <LinearLayout
@@ -53,7 +53,7 @@
                     android:layout_marginLeft="30dp"
                     android:text="이메일"
                     android:textColor="#b22222"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -77,7 +77,7 @@
                     android:layout_marginLeft="30dp"
                     android:text="이메일 확인"
                     android:textColor="#b22222"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <LinearLayout
@@ -118,7 +118,7 @@
                     android:layout_marginLeft="30dp"
                     android:text="비밀번호"
                     android:textColor="#b22222"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
 
@@ -144,7 +144,7 @@
                     android:layout_marginLeft="30dp"
                     android:text="이름"
                     android:textColor="#b22222"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <EditText
@@ -168,7 +168,7 @@
                     android:layout_marginLeft="30dp"
                     android:text="전화번호"
                     android:textColor="#b22222"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <EditText
