@@ -20,7 +20,13 @@
             android:name="com.naver.maps.map.av6rm647yo"
             android:value="37OWiVAabs8eX4BcUk91vpzEgWKLTolj0W3Edoky" />
         <activity
+            android:name=".Waiting_List_Page"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Info_Registration_Page"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
