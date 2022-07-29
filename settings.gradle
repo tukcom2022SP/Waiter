@@ -10,8 +10,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        jcenter()
-        mavem {
+        //jcenter()
+        maven {
             url 'https://naver.jfrog.io/artifactory/maven/'
         }
     }
