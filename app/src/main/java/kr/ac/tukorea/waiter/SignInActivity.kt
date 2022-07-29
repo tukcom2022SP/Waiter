@@ -1,5 +1,6 @@
 package kr.ac.tukorea.waiter
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 //import kr.ac.tukorea.kyungeun_login.databinding.ActivitySignInBinding
@@ -11,5 +12,9 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySignInBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.signupbutton.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+        }
     }
 }
