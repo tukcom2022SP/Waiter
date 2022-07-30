@@ -7,7 +7,7 @@ import android.os.Bundle
 import kr.ac.tukorea.waiter.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityLoginBinding
+    private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -15,9 +15,13 @@ class LoginActivity : AppCompatActivity() {
 
         binding.loginbutton.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)
-        }
-        binding.signinButton.setOnClickListener {
-            val intent = Intent(this,SignInActivity::class.java)
+            startActivity(intent)
+
+            binding.signinButton.setOnClickListener {
+                val intent = Intent(this, SignInActivity::class.java)
+                startActivity(intent)
+
+            }
         }
     }
 }
