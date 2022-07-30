@@ -8,6 +8,9 @@
         <entry key="..\:/AndroidStudio/Waiter/app/src/main/res/layout/activity_map_page.xml" value="0.12552083333333333" />
         <entry key="..\:/AndroidStudio/Waiter/app/src/main/res/layout/activity_waiting_list_page.xml" value="0.16" />
         <entry key="..\:/AndroidStudio/Waiter/app/src/main/res/layout/input_information.xml" value="0.6" />
+        <entry key="app/src/main/res/layout/activity_info_registration_page.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
+
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19701086956521738" />
       </map>
     </option>
