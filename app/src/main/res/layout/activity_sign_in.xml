@@ -23,12 +23,36 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="회원 유형"/>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/selection_type">
+
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="사업자"
+                    />
+                <RadioButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="고객"
+                    />
+
+            </RadioGroup>
 
 
         </LinearLayout>
@@ -65,7 +89,7 @@
                     android:layout_marginLeft="30dp"
                     android:ems="10"
                     android:hint=" 이메일"
-                    android:inputType="textPersonName"
+                    android:inputType="textEmailAddress"
                     android:text="" />
 
                 <TextView
@@ -94,7 +118,7 @@
                         android:layout_marginLeft="30dp"
                         android:ems="10"
                         android:hint=" 이메일 다시 입력"
-                        android:inputType="textPassword"
+                        android:inputType="textEmailAddress"
                         android:text="" />
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -180,7 +204,7 @@
                     android:layout_marginLeft="30dp"
                     android:ems="10"
                     android:hint=" 전화번호"
-                    android:inputType="textPersonName"
+                    android:inputType="text|phone"
                     android:text="" />
 
 
