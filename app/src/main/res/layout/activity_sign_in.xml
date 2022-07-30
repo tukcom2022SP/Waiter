@@ -7,7 +7,7 @@
     >
 
     <TextView
-        android:id="@+id/signup"
+        android:id="@+id/signin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -31,30 +31,6 @@
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="회원 유형"
-                android:textColor="#b22222"
-                android:textStyle="bold"/>
-
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/selection_type">
-
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="사업자"
-                    />
-                <RadioButton
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="고객"
-                    />
-
-            </RadioGroup>
 
 
         </LinearLayout>
@@ -66,14 +42,44 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="40dp"
                 android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp"
+                    android:text="회원 유형"
+                    android:textSize="20sp"
+                    android:textColor="#b22222"
+                    android:textStyle="bold"/>
+
+                <RadioGroup
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/selection_type"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginLeft="30dp">
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="고객"
+                        />
+
+                    <RadioButton
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="사업자" />
+
+                </RadioGroup>
 
                 <TextView
                     android:id="@+id/signmailtext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="5dp"
                     android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
@@ -81,6 +87,11 @@
                     android:textColor="#b22222"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
                 <EditText
                     android:id="@+id/signmail"
@@ -90,50 +101,21 @@
                     android:layout_marginRight="30dp"
                     android:layout_marginLeft="30dp"
                     android:ems="10"
-                    android:hint=" 이메일"
+                    android:hint=" 이메일(@포함)"
                     android:inputType="textEmailAddress"
                     android:text="" />
 
-                <TextView
-                    android:id="@+id/emailchecktext"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginLeft="30dp"
-                    android:text="이메일 확인"
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/signmailcheckbutton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="확인"
                     android:textColor="#b22222"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
                     android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <EditText
-                        android:id="@+id/emailcheck"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginBottom="20dp"
-                        android:layout_marginRight="30dp"
-                        android:layout_marginLeft="30dp"
-                        android:ems="10"
-                        android:hint=" 이메일 다시 입력"
-                        android:inputType="textEmailAddress"
-                        android:text="" />
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/pwcheckbutton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_marginLeft="10dp"
-                        android:text="확인"
-                        android:textColor="#b22222"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
+            </LinearLayout>
 
                 <TextView
                     android:id="@+id/signPWtext"
@@ -159,6 +141,45 @@
                     android:hint=" 비밀번호"
                     android:inputType="textPassword"
                     android:text="" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/signPWchecktext"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="30dp"
+                        android:text="비밀번호 확인"
+                        android:textColor="#b22222"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/signPWcheck"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_marginLeft="30dp"
+                        android:ems="10"
+                        android:hint=" 비밀번호 다시 입력"
+                        android:inputType="textEmailAddress"
+                        android:text="" />
+
+
+                </LinearLayout>
+
+                </LinearLayout>
 
 
                 <TextView
@@ -186,7 +207,7 @@
                     android:text="" />
 
                 <TextView
-                    android:id="@+id/signIDtext"
+                    android:id="@+id/signnumbertext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
@@ -198,7 +219,7 @@
                     android:textStyle="bold" />
 
                 <EditText
-                    android:id="@+id/signID"
+                    android:id="@+id/signnumber"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginBottom="20dp"
@@ -211,11 +232,11 @@
 
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/signupbutton"
+                    android:id="@+id/signinbutton"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:text="회원가입"
                     android:textColor="#b22222"
                     android:textSize="16sp"
