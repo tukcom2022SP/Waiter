@@ -23,7 +23,7 @@
 
         <meta-data
             android:name="com.naver.maps.map.av6rm647yo"
-            android:value="37OWiVAabs8eX4BcUk91vpzEgWKLTolj0W3Edoky" />
+            android:value="dyVAfQESGFmoZVer0oD2rNRfdVxG1m4317pduGOJ" />
 
         <activity
             android:name=".Waiting_List_Page"
