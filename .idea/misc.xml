@@ -3,6 +3,15 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+
+        <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/activity_info_registration_page.xml" value="0.2390625" />
+        <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/activity_information_registration_page.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/activity_login.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/activity_map_page.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/activity_sign_in.xml" value="0.25364583333333335" />
+        <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/activity_waiting_list_page.xml" value="0.2" />
+        <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/input_information.xml" value="0.24895833333333334" />
         <entry key="..\:/AndroidStudio/Waiter/app/src/main/res/layout/activity_info_registration_page.xml" value="0.264" />
         <entry key="..\:/AndroidStudio/Waiter/app/src/main/res/layout/activity_main.xml" value="0.13854166666666667" />
         <entry key="..\:/AndroidStudio/Waiter/app/src/main/res/layout/activity_map_page.xml" value="0.12552083333333333" />
