@@ -22,7 +22,7 @@ android:background="#ffffff"
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="400dp"
+    android:layout_marginTop="300dp"
     android:layout_marginBottom="30dp"
     android:orientation="vertical">
 
@@ -30,7 +30,8 @@ android:background="#ffffff"
         android:id="@+id/userid"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
         android:layout_gravity="center"
         android:ems="10"
         android:hint="이메일"
@@ -75,6 +76,6 @@ android:background="#ffffff"
         android:textSize="13sp"
         android:textStyle="bold" />
 
-    
+
 </LinearLayout>
 </FrameLayout>
