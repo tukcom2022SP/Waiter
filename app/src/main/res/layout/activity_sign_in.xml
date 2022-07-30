@@ -34,7 +34,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="회원 유형"/>
+                android:text="회원 유형"
+                android:textColor="#b22222"
+                android:textStyle="bold"/>
 
             <RadioGroup
                 android:layout_width="match_parent"
