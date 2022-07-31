@@ -23,10 +23,12 @@ import com.naver.maps.map.*
 import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
+import com.naver.maps.map.widget.LocationButtonView
 
 //import java.util.jar.Pack200
 
 class MapPage : AppCompatActivity(), OnMapReadyCallback{
+
     val permissionrequest = 99
     private lateinit var naverMap: NaverMap
     lateinit var  fusedLocationProvideClient : FusedLocationProviderClient
@@ -72,6 +74,9 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback{
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
+//        val locationButtonView: LocationButtonView = findViewById(R.id.locationbtn)
+//       locationButtonView.setMap(naverMap)
+        naverMap.uiSettings.isLocationButtonEnabled = true
         naverMap.locationSource = locationSource
         val cameraPosition = CameraPosition(
             LatLng(37.343991285297,126.74729588817),
@@ -86,7 +91,6 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback{
    fun setUpdateLocationListener() {
        val locationRequest = LocationRequest.create()
        locationRequest.run {
-           interval = 1000
            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
        }
        locationCallback = object  : LocationCallback(){
@@ -97,8 +101,6 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback{
                setLastLocation(location)
            }
        }
-
-
        }
        fusedLocationProvideClient.requestLocationUpdates(
            locationRequest,
