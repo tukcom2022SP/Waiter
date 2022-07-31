@@ -3,6 +3,10 @@ package kr.ac.tukorea.waiter
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 //import kr.ac.tukorea.kyungeun_login.databinding.ActivityLoginBinding
 import kr.ac.tukorea.waiter.databinding.ActivityLoginBinding
 
@@ -14,14 +18,30 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.loginbutton.setOnClickListener {
-            val intent = Intent(this, SignInActivity::class.java)
+            val userEmail = binding.userid.text.toString()
+            val password = binding.password.text.toString()
+            doLogin(userEmail, password)
+            val intent = Intent(this, SigninActivity::class.java)
             startActivity(intent)
-
-            binding.signinButton.setOnClickListener {
-                val intent = Intent(this, SignInActivity::class.java)
-                startActivity(intent)
-
-            }
         }
+
+        binding.signinButton.setOnClickListener {
+            val intent = Intent(this, SigninActivity::class.java)
+            startActivity(intent)
+        }
+    }
+    private fun doLogin(userEmail: String, password: String) {
+        Firebase.auth.signInWithEmailAndPassword(userEmail, password)
+            .addOnCompleteListener(this) { // it: Task<AuthResult!>
+                if (it.isSuccessful) {
+                    startActivity(
+                        Intent(this, MainActivity::class.java)
+                    )
+                    finish()
+                } else {
+                    Log.w("LoginActivity", "signInWithEmail", it.exception)
+                    Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 }
