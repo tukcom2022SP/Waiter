@@ -18,15 +18,210 @@
         android:id="@+id/test1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="test1"
+        android:padding="10dp"
+        android:text="식당이름"
         />
-    <TextView
-        android:id="@+id/test2"
+
+//----------------------------------------------------------------
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:visibility="visible"
+    android:background="@drawable/layout_border">
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="test2"
+        android:layout_alignParentLeft="true"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/waitingName1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textSize="15dp"
+            android:text="이름(이메일)"/>
+        <View
+            android:layout_width="15dp"
+            android:layout_height="10dp"/>
+        <TextView
+            android:id="@+id/waitingPhone1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:textSize="15dp"
+            android:text="전화번호"/>
+    </LinearLayout>
+    <View
+        android:id="@+id/brankView1"
+        android:layout_width="20dp"
+        android:layout_height="5dp"
+        android:layout_toLeftOf="@+id/Linbtns1"/>
+
+    <TextView
+        android:id="@+id/waitingNum1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/brankView1"
+        android:padding="5dp"
+        android:textSize="20dp"
+        android:text="0명"
         />
 
+    <LinearLayout
+        android:id="@+id/Linbtns1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/InStorebtn1"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:text="입장완료"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            android:text="대기중"/>
+    </LinearLayout>
 
+
+</RelativeLayout>
+
+//------------------------------------------------------------
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:background="@drawable/layout_border">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/waitingName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textSize="15dp"
+                android:text="이름(이메일)"/>
+            <View
+                android:layout_width="15dp"
+                android:layout_height="10dp"/>
+            <TextView
+                android:id="@+id/waitingPhone2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textSize="15dp"
+                android:text="전화번호"/>
+        </LinearLayout>
+        <View
+            android:id="@+id/brankView2"
+            android:layout_width="20dp"
+            android:layout_height="5dp"
+            android:layout_toLeftOf="@+id/Linbtns2"/>
+
+        <TextView
+            android:id="@+id/waitingNum2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/brankView2"
+            android:padding="5dp"
+            android:textSize="20dp"
+            android:text="0명"
+            />
+
+        <LinearLayout
+            android:id="@+id/Linbtns2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/InStorebtn2"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:text="입장완료"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:text="대기중"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
+ //------------------------------------------------------------
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:background="@drawable/layout_border">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/waitingName3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textSize="15dp"
+                android:text="이름(이메일)"/>
+            <View
+                android:layout_width="15dp"
+                android:layout_height="10dp"/>
+            <TextView
+                android:id="@+id/waitingPhone3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textSize="15dp"
+                android:text="전화번호"/>
+        </LinearLayout>
+        <View
+            android:id="@+id/brankView3"
+            android:layout_width="20dp"
+            android:layout_height="5dp"
+            android:layout_toLeftOf="@+id/Linbtns3"/>
+
+        <TextView
+            android:id="@+id/waitingNum3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/brankView3"
+            android:padding="5dp"
+            android:textSize="20dp"
+            android:text="0명"
+            />
+
+        <LinearLayout
+            android:id="@+id/Linbtns3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical">
+            <Button
+                android:id="@+id/InStorebtn3"
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:text="입장완료"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:text="대기중"/>
+        </LinearLayout>
+
+
+    </RelativeLayout>
 
 </LinearLayout>
