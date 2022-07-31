@@ -3,64 +3,46 @@ package kr.ac.tukorea.waiter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.content.pm.PackageManager
-import android.Manifest;
-import android.app.Instrumentation
+import android.Manifest
+import android.annotation.SuppressLint
+//import android.app.Instrumentation
+import android.location.Location
+import android.os.Looper
 import android.util.Log
-import android.webkit.PermissionRequest
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.NonNull
+//import android.webkit.PermissionRequest
+//import android.widget.Toast
+//import androidx.activity.result.contract.ActivityResultContract
+//import androidx.activity.result.contract.ActivityResultContracts
+//import androidx.annotation.NonNull
+import androidx.annotation.UiThread
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.gms.location.*
+import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
-import java.util.jar.Pack200
+import com.naver.maps.map.overlay.LocationOverlay
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.util.FusedLocationSource
+
+//import java.util.jar.Pack200
 
 class MapPage : AppCompatActivity(), OnMapReadyCallback{
+    val permissionrequest = 99
+    private lateinit var naverMap: NaverMap
+    lateinit var  fusedLocationProvideClient : FusedLocationProviderClient
+    lateinit var  locationCallback: LocationCallback
+    private lateinit var  locationSource: FusedLocationSource
 
-//    private val requestPermissionLauncher =
-//        registerForActivityResult(
-//            ActivityResultContracts.RequestPermission()
-//        ) { isGranted: Boolean ->
-//            if (isGranted) {
-//                Log.i ("Permission: ", "Granted")
-//            }
-//            else {
-//                Log.i("Permission:  ","Denied")
-//            }
-//        }
-//    private fun requestPermission() {
-//        when {
-//            ContextCompat.checkSelfPermission(
-//                this,Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED-> {}
-//            ActivityCompat.shouldShowRequestPermissionRationale(
-//                this, Manifest.permission.ACCESS_FINE_LOCATION)-> {
-//                Toast.makeText(this, "위치를 사용할려면 권한이 필요합니다.",Toast.LENGTH_SHORT).show()
-//                requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-//            }
-//            else -> {}
-//        }
-//    }
+    var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
 
-    var permissions = arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+    companion object {
+        private const val LOCATION_PERMISSION_REQUEST_CODE  = 1000
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map_page)
-//        var permission =
-//            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
-//        var permission1 =
-//            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
-//        if (permission == PackageManager.PERMISSION_DENIED || permission1 == PackageManager.PERMISSION_DENIED)
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
-
-        fun startProcess(){
-            val fm  = supportFragmentManager
-            val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
-                ?: MapFragment.newInstance().also{
-                    fm.beginTransaction().add(R.id.map, it).commit()
-                }
-            mapFragment.getMapAsync(onMapReady)
-        }
         fun isPermitted(): Boolean {
             for (perm in permissions){
                 if (ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED){
@@ -69,26 +51,77 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback{
             }
             return true
         }
-
-
+        fun startProcess(){
+            val fm  = supportFragmentManager
+            val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
+                ?: MapFragment.newInstance().also{
+                    fm.beginTransaction().add(R.id.map, it).commit()
+                }
+            mapFragment.getMapAsync(this)
+        }
         if (isPermitted()){
             startProcess()
         }else{
-            ActivityCompat.requestPermissions(this, permissions, permission_request)
+            ActivityCompat.requestPermissions(this, permissions, permissionrequest)
         }
             title = "map"
         NaverMapSdk.getInstance(this).client =
             NaverMapSdk.NaverCloudPlatformClient("8eo4a3qdn1")
-            return;
+            return
     }
+    @UiThread
+    override fun onMapReady(naverMap: NaverMap) {
+        this.naverMap = naverMap
+        naverMap.locationSource = locationSource
+        val cameraPosition = CameraPosition(
+            LatLng(37.343991285297,126.74729588817),
+            16.0
+        )
+        naverMap.cameraPosition= cameraPosition
+        fusedLocationProvideClient =
+            LocationServices.getFusedLocationProviderClient(this)
+        setUpdateLocationListener()
+   }
+   @SuppressLint("MissingPermission")
+   fun setUpdateLocationListener() {
+       val locationRequest = LocationRequest.create()
+       locationRequest.run {
+           interval = 1000
+           priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+       }
+       locationCallback = object  : LocationCallback(){
+           override fun onLocationResult(locationResult: LocationResult?) {
+           locationResult ?: return
+           for ((i, location) in locationResult.locations.withIndex()) {
+               Log.d("location: ", "${location.latitude},${location.longitude}")
+               setLastLocation(location)
+           }
+       }
 
-//    override fun onMapReady(naverMap: NaverMap) {
-//        val cameraPosition = CameraPosition(
-//        )
-//    }
+
+       }
+       fusedLocationProvideClient.requestLocationUpdates(
+           locationRequest,
+           locationCallback,
+           Looper.myLooper()
+       )
+   }
+    fun setLastLocation(location: Location) {
+        val myLocation =LatLng(location.latitude,location.longitude)
+        val marker = Marker()
+        marker.position = myLocation
+        marker.map = naverMap
+        val locationOverlay = naverMap.locationOverlay
+        naverMap.locationOverlay.run {
+            isVisible = true
+            position = LatLng(location!!.latitude, location!!.longitude)
+        }
+        locationOverlay.isVisible = true
+        locationOverlay.iconWidth = LocationOverlay.SIZE_AUTO
+        locationOverlay.iconHeight = LocationOverlay.SIZE_AUTO
+        //정보창 여는 예시 infoWindow.open(marker)
+        val cameraUpdate = CameraUpdate.scrollTo(myLocation)
+        naverMap.moveCamera(cameraUpdate)
+   }
 }
-//    @Override
-//    public void onRequestPermissionsResult(var requestCode,String permissions[],int[] grandResults){
-//        if(grantResults.  )
-//     }
 
