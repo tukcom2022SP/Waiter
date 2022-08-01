@@ -17,6 +17,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Waiter"
         tools:targetApi="31">
+<<<<<<< Updated upstream
+=======
+        <activity
+            android:name=".Information_Registration_Page"
+            android:exported="true">
+
+        </activity>
+
+>>>>>>> Stashed changes
 
         <meta-data
             android:name="com.naver.maps.map.av6rm647yo"
@@ -34,6 +43,7 @@
             android:exported="true"/>
         <activity
             android:name=".MapPage"
+<<<<<<< Updated upstream
             android:exported="true"/>
         <activity
             android:name=".SigninActivity"
@@ -43,6 +53,12 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+=======
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+>>>>>>> Stashed changes
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
