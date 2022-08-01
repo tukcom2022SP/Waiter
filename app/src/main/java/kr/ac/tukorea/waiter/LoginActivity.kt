@@ -5,15 +5,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-//import kr.ac.tukorea.kyungeun_login.databinding.ActivityLoginBinding
 import kr.ac.tukorea.waiter.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
+    private var auth : FirebaseAuth? = null
     private lateinit var binding: ActivityLoginBinding
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        auth = Firebase.auth
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -21,12 +25,12 @@ class LoginActivity : AppCompatActivity() {
             val userEmail = binding.userid.text.toString()
             val password = binding.password.text.toString()
             doLogin(userEmail, password)
-            val intent = Intent(this, SigninActivity::class.java)
+            val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
 
         binding.signinButton.setOnClickListener {
-            val intent = Intent(this, SigninActivity::class.java)
+            val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
     }
