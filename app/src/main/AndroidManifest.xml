@@ -36,7 +36,7 @@
             android:name=".MapPage"
             android:exported="true"/>
         <activity
-            android:name=".SigninActivity"
+            android:name=".SignInActivity"
             android:exported="true"/>
         <activity
             android:name=".LoginActivity"
