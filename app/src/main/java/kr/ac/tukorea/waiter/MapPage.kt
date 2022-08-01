@@ -9,6 +9,7 @@ import android.annotation.SuppressLint
 import android.location.Location
 import android.os.Looper
 import android.util.Log
+import android.view.Menu
 //import android.webkit.PermissionRequest
 //import android.widget.Toast
 //import androidx.activity.result.contract.ActivityResultContract
@@ -40,6 +41,14 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback{
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE  = 1000
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
+        super.onCreateOptionsMenu(menu)
+        var mInflater = menuInflater
+        mInflater.inflate(R.menu.menu1,menu)
+        return true
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map_page)
