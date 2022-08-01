@@ -115,7 +115,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback{
            locationRequest,
            locationCallback,
            Looper.myLooper()
-       )
+       )/dsadas
    }
     fun setLastLocation(location: Location) {
         val myLocation =LatLng(location.latitude,location.longitude)
