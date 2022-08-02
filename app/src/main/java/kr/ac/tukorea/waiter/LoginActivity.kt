@@ -25,8 +25,6 @@ class LoginActivity : AppCompatActivity() {
             val userEmail = binding.userid.text.toString()
             val password = binding.password.text.toString()
             doLogin(userEmail, password)
-            val intent = Intent(this, SignInActivity::class.java)
-            startActivity(intent)
         }
 
         binding.signinButton.setOnClickListener {
@@ -39,12 +37,12 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { // it: Task<AuthResult!>
                 if (it.isSuccessful) {
                     startActivity(
-                        Intent(this, MainActivity::class.java)
+                        Intent(this, MapPage::class.java)
                     )
                     finish()
                 } else {
                     Log.w("LoginActivity", "signInWithEmail", it.exception)
-                    Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "로그인 실패!", Toast.LENGTH_SHORT).show()
                 }
             }
     }
