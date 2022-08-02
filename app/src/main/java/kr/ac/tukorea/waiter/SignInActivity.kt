@@ -63,12 +63,12 @@ class SignInActivity : AppCompatActivity() {
                             )
                             Log.d("aaa", db.toString())
                              //db안에 있는 users 컬렉션에 위 userMap에서 담은 정보를 넣어줌
-                            if (binding.customer.equals(true)) {
+                            if (binding.customer.isChecked) {
                                 db.collection("customer")
                                     .document(Firebase.auth.currentUser?.uid ?: "No User")
                                     .set(userMap)
                             }
-                            else if(binding.owner.equals(true)) {
+                            else if(binding.owner.isChecked) {
                                 db.collection("owner")
                                     .document(Firebase.auth.currentUser?.uid ?: "No User")
                                     .set(userMap)
