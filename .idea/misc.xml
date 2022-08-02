@@ -22,11 +22,13 @@
         <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/input_information.xml" value="0.24895833333333334" />
         <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/layout_bord.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/layout/activity_info_registration_page.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_information_registration_page.xml" value="0.22056159420289856" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_information_registration_page.xml" value="0.1562595312146173" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.197955322265625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19701086956521738" />
+        <entry key="app/src/main/res/layout/activity_map_page.xml" value="0.15625" />
         <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.1106872182761507" />
         <entry key="app/src/main/res/layout/activity_waiting_list_page.xml" value="0.22056159420289856" />
+        <entry key="app/src/main/res/layout/input_information.xml" value="0.26284672833871153" />
       </map>
     </option>
   </component>
