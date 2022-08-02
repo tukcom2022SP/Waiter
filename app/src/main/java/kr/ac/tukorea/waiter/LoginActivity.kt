@@ -30,7 +30,7 @@ class LoginActivity : AppCompatActivity() {
             val userEmail = binding.userid.text.toString()
             val password = binding.password.text.toString()
             //doLogin(userEmail, password)
-            val intent = Intent(this, SignInActivity::class.java)
+            val intent = Intent(this, MapPage::class.java)
             startActivity(intent)
         }
 
