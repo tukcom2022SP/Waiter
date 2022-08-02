@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.content.pm.PackageManager
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 //import android.app.Instrumentation
 import android.location.Location
 import android.os.Looper
@@ -23,13 +24,13 @@ import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.util.FusedLocationSource
 import com.naver.maps.map.widget.LocationButtonView
 
 //import java.util.jar.Pack200
 
-class MapPage : AppCompatActivity(), OnMapReadyCallback{
-
+class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener{
     val permissionrequest = 99
     private lateinit var naverMap: NaverMap
     lateinit var  fusedLocationProvideClient : FusedLocationProviderClient
@@ -62,6 +63,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback{
             }
             return true
         }
+
         fun startProcess(){
             val fm  = supportFragmentManager
             val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
@@ -122,6 +124,8 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback{
         val marker = Marker()
         marker.position = myLocation
         marker.map = naverMap
+        marker.setOnClickListener(this)
+
         val locationOverlay = naverMap.locationOverlay
         naverMap.locationOverlay.run {
             isVisible = true
@@ -134,5 +138,12 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback{
         val cameraUpdate = CameraUpdate.scrollTo(myLocation)
         naverMap.moveCamera(cameraUpdate)
    }
+    override fun onClick(overlay: Overlay): Boolean {
+        if (overlay is Marker) {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+        return true
+    }
 }
 
