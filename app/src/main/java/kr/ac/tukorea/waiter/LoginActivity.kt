@@ -14,7 +14,6 @@ class LoginActivity : AppCompatActivity() {
     private var auth : FirebaseAuth? = null
     private lateinit var binding: ActivityLoginBinding
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
@@ -32,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
     private fun doLogin(userEmail: String, password: String) {
         Firebase.auth.signInWithEmailAndPassword(userEmail, password)
             .addOnCompleteListener(this) { // it: Task<AuthResult!>
