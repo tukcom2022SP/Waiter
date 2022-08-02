@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../layout/custom_preview.xml" value="0.1" />
         <entry key="..\:/AndroidStudio/Waiter/app/src/main/res/layout/activity_info_registration_page.xml" value="0.264" />
         <entry key="..\:/AndroidStudio/Waiter/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/AndroidStudio/Waiter/app/src/main/res/layout/activity_main.xml" value="0.13854166666666667" />
@@ -24,7 +25,7 @@
         <entry key="app/src/main/res/layout/activity_information_registration_page.xml" value="0.22056159420289856" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19701086956521738" />
-        <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.22056159420289856" />
+        <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.1106872182761507" />
         <entry key="app/src/main/res/layout/activity_waiting_list_page.xml" value="0.22056159420289856" />
       </map>
     </option>
