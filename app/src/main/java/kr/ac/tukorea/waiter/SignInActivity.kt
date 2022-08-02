@@ -73,15 +73,6 @@ class SignInActivity : AppCompatActivity() {
                                     .document(Firebase.auth.currentUser?.uid ?: "No User")
                                     .set(userMap)
                             }
-//                            db.collection("owner")
-//                                .document(Firebase.auth.currentUser?.uid ?: "No User")
-//                                .set(userMap)
-//                            //회원가입 완료 후에는 LoginActivity로 인텐트
-//                            startActivity(
-//                                Intent(this, LoginActivity::class.java)
-//                            )
-//                            Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
-
                             finish()
                         } // 위에서 말한 모든 경우에 해당하지 않고 회원가입 실패 -> 회원가입 실패
                         else{
