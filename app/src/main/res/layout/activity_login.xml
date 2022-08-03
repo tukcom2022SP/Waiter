@@ -60,6 +60,7 @@ android:background="#ffffff"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:text="로그인"
+        android:background="@drawable/button_design"
         android:textColor="#b22222"
         android:textSize="15sp"
         android:textStyle="bold" />
@@ -72,6 +73,7 @@ android:background="#ffffff"
         android:layout_marginTop="10dp"
         android:text="회원가입"
         android:textColor="#b22222"
+        android:background="@drawable/button_design"
         android:textSize="15sp"
         android:textStyle="bold" />
 
