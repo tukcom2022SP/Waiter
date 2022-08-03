@@ -23,7 +23,13 @@ class LoginActivity : AppCompatActivity() {
         binding.loginbutton.setOnClickListener {
             val userEmail = binding.userid.text.toString()
             val password = binding.password.text.toString()
-            doLogin(userEmail, password)
+            if(binding.userid.text.toString().equals("")
+                ||binding.password.text.toString().equals("")
+            ){
+                Toast.makeText(this, "로그인에 필요한 정보를 모두 입력해 주세요", Toast.LENGTH_SHORT).show()
+            } else {
+                doLogin(userEmail, password)
+            }
         }
 
         binding.signinButton.setOnClickListener {
