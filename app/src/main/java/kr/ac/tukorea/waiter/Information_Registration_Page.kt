@@ -51,5 +51,6 @@ class Information_Registration_Page : AppCompatActivity() {
     override fun onDestroy() {
         mbinding = null
         super.onDestroy()
+        
     }
 }
