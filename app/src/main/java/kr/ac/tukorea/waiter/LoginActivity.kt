@@ -32,7 +32,10 @@ class LoginActivity : AppCompatActivity() {
             //doLogin(userEmail, password)
             val intent = Intent(this, MapPage::class.java)
             startActivity(intent)
+
         }
+//clickable 써보자
+
 
         binding.signinButton.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)
