@@ -65,12 +65,14 @@
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/customer"
                         android:text="고객"
                         />
 
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:id="@+id/owner"
                         android:text="사업자" />
 
                 </RadioGroup>
@@ -110,7 +112,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
-                    android:text="확인"
+                    android:text=" 중복 확인"
                     android:textColor="#b22222"
                     android:textSize="16sp"
                     android:textStyle="bold" />
@@ -173,7 +175,7 @@
                         android:layout_marginLeft="30dp"
                         android:ems="10"
                         android:hint=" 비밀번호 다시 입력"
-                        android:inputType="textEmailAddress"
+                        android:inputType="textPassword"
                         android:text="" />
 
 

@@ -1,20 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    xmlns:sothree="http://schemas.android.com/tools"
+    app:umanoDragView="@id/slide"
+    android:id="@+id/Slidepanel"
     android:layout_height="match_parent"
-    tools:context=".MapPage"
-    android:orientation="vertical">
-    <fragment
-        android:id="@+id/map"
+    android:layout_width="match_parent"
+    android:layout_gravity="bottom"
+    android:gravity = "bottom"
+    sothree:umanoPanelHeight="68dp"
+    sothree:umanoShadowHeight="4dp"
+    app:umanoOverlay="false"
+    app:umanoShadowHeight="0dp"
+    android:background="@color/white"
+    >
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.naver.maps.map.MapFragment"/>
-    <com.naver.maps.map.widget.LocationButtonView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/locationbtn"/>
+        android:id="@+id/maplayout"
+        android:orientation="vertical">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.naver.maps.map.MapFragment"/>
+    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/slide"
+            android:layout_width="match_parent"
+            android:layout_height="400sp"
+            tools:context=".MapPage"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rest_name"
+                android:text="식당이름"
+                android:textSize="50dp"/>
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/rest_hours"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="식당시간"
+                android:textSize="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/restaurant_num"
+                android:text="식당번호"
+                android:textSize="20dp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/rest_address"
+                android:text="식당주소"
+                android:textSize="20dp"
+                />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/reservationBtn"
+                    android:text="대기열보기"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+
+                
+    </LinearLayout>
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
