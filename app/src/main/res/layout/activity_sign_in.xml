@@ -16,7 +16,9 @@
         android:textColor="#b22222"
         android:gravity="center"
         android:textSize="25sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:fontFamily="@font/godom"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -53,25 +55,34 @@
                     android:text="회원 유형"
                     android:textSize="20sp"
                     android:textColor="#b22222"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold"
+                    android:fontFamily="@font/godom"
+                    />
 
                 <RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:id="@+id/selection_type"
                     android:layout_marginRight="30dp"
-                    android:layout_marginLeft="30dp">
+                    android:layout_marginLeft="30dp"
+                    android:fontFamily="@font/godom"
+                    >
 
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="고객"
+                        android:fontFamily="@font/godom"
+                        android:textColor="#b22222"
                         />
 
                     <RadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="사업자" />
+                        android:text="사업자"
+                        android:fontFamily="@font/godom"
+                        android:textColor="#b22222"
+                        />
 
                 </RadioGroup>
 
@@ -86,7 +97,9 @@
                     android:text="이메일"
                     android:textColor="#b22222"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/godom"
+                    />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -103,7 +116,9 @@
                     android:ems="10"
                     android:hint=" 이메일(@포함)"
                     android:inputType="textEmailAddress"
-                    android:text="" />
+                    android:text=""
+                    android:fontFamily="@font/godom"
+                    />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/signmailcheckbutton"
@@ -113,7 +128,9 @@
                     android:text="확인"
                     android:textColor="#b22222"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/godom"
+                    />
 
             </LinearLayout>
 
@@ -127,7 +144,9 @@
                     android:text="비밀번호"
                     android:textColor="#b22222"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/godom"
+                    />
 
 
                 <EditText
@@ -140,7 +159,9 @@
                     android:ems="10"
                     android:hint=" 비밀번호"
                     android:inputType="textPassword"
-                    android:text="" />
+                    android:text=""
+                    android:fontFamily="@font/godom"
+                    />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -157,7 +178,9 @@
                         android:text="비밀번호 확인"
                         android:textColor="#b22222"
                         android:textSize="20sp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:fontFamily="@font/godom"
+                        />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -174,7 +197,9 @@
                         android:ems="10"
                         android:hint=" 비밀번호 다시 입력"
                         android:inputType="textEmailAddress"
-                        android:text="" />
+                        android:text=""
+                        android:fontFamily="@font/godom"
+                        />
 
 
                 </LinearLayout>
@@ -192,7 +217,9 @@
                     android:text="이름"
                     android:textColor="#b22222"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/godom"
+                    />
 
                 <EditText
                     android:id="@+id/signName"
@@ -204,7 +231,9 @@
                     android:ems="10"
                     android:hint=" 이름"
                     android:inputType="textPersonName"
-                    android:text="" />
+                    android:text=""
+                    android:fontFamily="@font/godom"
+                    />
 
                 <TextView
                     android:id="@+id/signnumbertext"
@@ -216,7 +245,9 @@
                     android:text="전화번호"
                     android:textColor="#b22222"
                     android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/godom"
+                    />
 
                 <EditText
                     android:id="@+id/signnumber"
@@ -228,7 +259,9 @@
                     android:ems="10"
                     android:hint=" 전화번호"
                     android:inputType="text|phone"
-                    android:text="" />
+                    android:text=""
+                    android:fontFamily="@font/godom"
+                    />
 
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -240,7 +273,9 @@
                     android:text="회원가입"
                     android:textColor="#b22222"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:fontFamily="@font/godom"
+                    />
 
             </LinearLayout>
         </ScrollView>
