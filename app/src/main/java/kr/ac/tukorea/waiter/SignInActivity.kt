@@ -16,7 +16,7 @@ import kr.ac.tukorea.waiter.databinding.ActivitySignInBinding
 
 class SignInActivity : AppCompatActivity() {
     private var auth : FirebaseAuth? = null
-    private lateinit var storage: FirebaseStorage
+    private lateinit var storage: FirebaseStorage   //프로필 사진 추가 기능 구현 떄 사용
     private lateinit var binding: ActivitySignInBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

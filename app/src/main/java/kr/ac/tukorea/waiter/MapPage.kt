@@ -20,6 +20,9 @@ import androidx.annotation.UiThread
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.LocationOverlay
@@ -28,8 +31,11 @@ import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.util.FusedLocationSource
 import com.naver.maps.map.widget.LocationButtonView
 import kr.ac.tukorea.waiter.databinding.ActivityMapPageBinding
+import kr.ac.tukorea.waiter.databinding.ActivitySignInBinding
 
 //import java.util.jar.Pack200
+
+
 
 class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener{
     val permissionrequest = 99
@@ -40,6 +46,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
     private lateinit var binding: ActivityMapPageBinding
 
     var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE  = 1000
@@ -56,6 +63,13 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map_page)
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+
+        binding = ActivityMapPageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        var db: FirebaseFirestore = Firebase.firestore
+        db = FirebaseFirestore.getInstance()
+
 
         fun isPermitted(): Boolean {
             for (perm in permissions){
@@ -148,4 +162,3 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         return true
     }
 }
-
