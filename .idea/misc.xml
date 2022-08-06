@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../layout/custom_preview.xml" value="0.1" />
         <entry key="..\:/AndroidStudio/Waiter/app/src/main/res/layout/activity_info_registration_page.xml" value="0.264" />
         <entry key="..\:/AndroidStudio/Waiter/app/src/main/res/layout/activity_login.xml" value="0.2" />
         <entry key="..\:/AndroidStudio/Waiter/app/src/main/res/layout/activity_main.xml" value="0.13854166666666667" />
@@ -20,28 +21,20 @@
         <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/activity_waiting_list_page.xml" value="0.264" />
         <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/input_information.xml" value="0.24895833333333334" />
         <entry key="..\:/Users/ehddn/Desktop/FirstProject/summer_project/Waiter/app/src/main/res/layout/layout_bord.xml" value="0.25364583333333335" />
-        <entry key="app/src/main/res/drawable/button_back.xml" value="0.2715" />
-        <entry key="app/src/main/res/drawable/button_click.xml" value="0.2715" />
-        <entry key="app/src/main/res/drawable/button_design.xml" value="0.226" />
-        <entry key="app/src/main/res/drawable/button_layout_set.xml" value="0.226" />
-        <entry key="app/src/main/res/drawable/button_round.xml" value="0.143" />
-        <entry key="app/src/main/res/drawable/button_round_press.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2235" />
-        <entry key="app/src/main/res/drawable/layout_border.xml" value="0.2715" />
         <entry key="app/src/main/res/drawable/round_button.xml" value="0.2225" />
-        <entry key="app/src/main/res/font/font.xml" value="0.1078125" />
-        <entry key="app/src/main/res/font/godofont.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/activity_customer_waitinglist.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_cwaiting_list_page.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/activity_info_registration_page.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_information_registration_page.xml" value="0.2125" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_information_registration_page.xml" value="0.2028202001599298" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.197955322265625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19701086956521738" />
-        <entry key="app/src/main/res/layout/activity_map_page.xml" value="0.2125" />
-        <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_waiting_list_page.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/input_information.xml" value="0.2125" />
+        <entry key="app/src/main/res/layout/activity_map_page.xml" value="0.15625" />
+        <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.3701781850730257" />
+        <entry key="app/src/main/res/layout/activity_waiting_list_page.xml" value="0.22056159420289856" />
+        <entry key="app/src/main/res/layout/input_information.xml" value="0.26284672833871153" />
         <entry key="app/src/main/res/layout/shadow.xml" value="0.2125" />
+        <entry key="app/src/main/res/layout/waiting_list_page_layout.xml" value="0.254981884057971" />
         <entry key="app/src/main/res/menu/menu1.xml" value="0.3369415283203125" />
       </map>
     </option>
