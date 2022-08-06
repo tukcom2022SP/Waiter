@@ -1,60 +1,68 @@
 package kr.ac.tukorea.waiter
 
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
-import android.content.pm.PackageManager
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.Intent
 //import android.app.Instrumentation
-import android.location.Location
-import android.os.Looper
-import android.util.Log
-import android.view.Menu
 //import android.webkit.PermissionRequest
 //import android.widget.Toast
 //import androidx.activity.result.contract.ActivityResultContract
 //import androidx.activity.result.contract.ActivityResultContracts
 //import androidx.annotation.NonNull
+
+import ResultSearchKeyword
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Location
+import android.os.Bundle
+import android.os.Looper
+import android.util.Log
+import android.view.Menu
+import android.widget.EditText
+import android.widget.Toast
 import androidx.annotation.UiThread
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
+import com.google.gson.Gson
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.util.FusedLocationSource
-import com.naver.maps.map.widget.LocationButtonView
+
+
 
 //import java.util.jar.Pack200
 
 class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener{
+    private val GEOCODE_URL : String ="http://dapi.kakao.com/v2/local/search/address.json?query="
+    private val GEOCODE_USER_INFO : String ="e2ff78b2e20ee43f72827e3e379c2191"
     val permissionrequest = 99
     private lateinit var naverMap: NaverMap
     lateinit var  fusedLocationProvideClient : FusedLocationProviderClient
     lateinit var  locationCallback: LocationCallback
     private lateinit var  locationSource: FusedLocationSource
+    lateinit var keyword : EditText
 
     var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
 
     companion object {
         private const val LOCATION_PERMISSION_REQUEST_CODE  = 1000
     }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
         mInflater.inflate(R.menu.menu1,menu)
         return true
     }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map_page)
+        var keyword = findViewById<EditText>(R.id.keyword).getText().toString()
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
-
         fun isPermitted(): Boolean {
             for (perm in permissions){
                 if (ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED){
@@ -63,6 +71,8 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
             }
             return true
         }
+
+
 
         fun startProcess(){
             val fm  = supportFragmentManager
