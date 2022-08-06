@@ -7,7 +7,36 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:494181949744:android:9c6395b331f685609b28f5",
+        "mobilesdk_app_id": "1:494181949744:android:f18ae76b643684ec9b28f5",
+        "android_client_info": {
+          "package_name": "kr.ac.tukorea.test"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494181949744-t0bukfio1bbk5gv4p3nfn3ockttd2lgl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM07LilWSrgbe_sf-5smk-yY8WFgVh-d8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494181949744-t0bukfio1bbk5gv4p3nfn3ockttd2lgl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494181949744:android:861691180a9e8ec29b28f5",
         "android_client_info": {
           "package_name": "kr.ac.tukorea.waiter"
         }
