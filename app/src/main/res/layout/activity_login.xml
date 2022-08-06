@@ -17,7 +17,9 @@ android:background="#ffffff"
     android:textStyle="bold"
     android:textSize="25sp"
     android:textAlignment="center"
-    android:gravity="center_horizontal" />
+    android:gravity="center_horizontal"
+    android:fontFamily="@font/godom"
+    />
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -39,7 +41,9 @@ android:background="#ffffff"
         android:layout_marginRight="30dp"
         android:textColorHint="#b22222"
         android:inputType="textEmailAddress"
-        android:text="" />
+        android:text=""
+        android:fontFamily="@font/godom"
+        />
 
     <EditText
         android:id="@+id/password"
@@ -51,7 +55,9 @@ android:background="#ffffff"
         android:layout_marginRight="30dp"
         android:hint="비밀번호"
         android:textColorHint="#b22222"
-        android:inputType="textPassword" />
+        android:inputType="textPassword"
+        android:fontFamily="@font/godom"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/loginbutton"
@@ -60,10 +66,12 @@ android:background="#ffffff"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
         android:text="로그인"
-        android:background="@drawable/button_design"
+        android:background="@drawable/button_back"
         android:textColor="#b22222"
         android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:fontFamily="@font/godom"
+        />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/signinButton"
@@ -73,9 +81,11 @@ android:background="#ffffff"
         android:layout_marginTop="10dp"
         android:text="회원가입"
         android:textColor="#b22222"
-        android:background="@drawable/button_design"
+        android:background="@drawable/button_back"
         android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:fontFamily="@font/godom"
+        />
 
 
 </LinearLayout>
