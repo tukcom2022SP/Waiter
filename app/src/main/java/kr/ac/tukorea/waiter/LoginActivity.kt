@@ -19,6 +19,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     var db: FirebaseFirestore = Firebase.firestore
 
+
     data class UserInfo(
         val passwd: String? = null,
         val passwdCk: String? = null
@@ -35,6 +36,7 @@ class LoginActivity : AppCompatActivity() {
         binding.loginbutton.setOnClickListener {
             val userEmail = binding.userid.text.toString()
             val password = binding.password.text.toString()
+
             if(binding.userid.text.toString().equals("")
                 ||binding.password.text.toString().equals("")
             ){
@@ -43,6 +45,8 @@ class LoginActivity : AppCompatActivity() {
                 doLogin(userEmail, password)
             }
         }
+//clickable 써보자
+
 
         binding.signinButton.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)
