@@ -59,6 +59,7 @@
         android:layout_width="335dp"
         android:layout_height="wrap_content"
         android:theme="@style/EditTextStyle"
+        android:inputType="textPassword"
         android:layout_gravity="center"/>
 
     <Button
