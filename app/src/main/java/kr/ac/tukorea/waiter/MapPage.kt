@@ -27,6 +27,7 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.util.FusedLocationSource
 import com.naver.maps.map.widget.LocationButtonView
+import kr.ac.tukorea.waiter.databinding.ActivityMapPageBinding
 
 //import java.util.jar.Pack200
 
@@ -36,6 +37,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
     lateinit var  fusedLocationProvideClient : FusedLocationProviderClient
     lateinit var  locationCallback: LocationCallback
     private lateinit var  locationSource: FusedLocationSource
+    private lateinit var binding: ActivityMapPageBinding
 
     var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
 
