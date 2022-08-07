@@ -36,8 +36,8 @@ class SignInActivity : AppCompatActivity() {
                     ||binding.signPWcheck.text.toString().equals("")
                     ||binding.signName.text.toString().equals("")
                     ||binding.signnumber.text.toString().equals("")
-                    ||binding.customer.equals(false)
-                    ||binding.owner.equals(false)
+                    ||(binding.customer.isChecked === false
+                    &&binding.owner.isChecked === false)
                 ){
                     Toast.makeText(this, "모든 정보를 입력해주세요", Toast.LENGTH_SHORT).show()
                 }
@@ -61,18 +61,19 @@ class SignInActivity : AppCompatActivity() {
                                 "passwdCk" to binding.signPWcheck.text.toString(),
                                 "phoneNum" to binding.signnumber.text.toString()
                             )
-                            Log.d("aaa", db.toString())
+
                              //db안에 있는 users 컬렉션에 위 userMap에서 담은 정보를 넣어줌
                             if (binding.customer.isChecked) {
-                                db.collection("customer")
-                                    .document(Firebase.auth.currentUser?.uid ?: "No User")
-                                    .set(userMap)
+                                userMap["userType"] = "customer"
                             }
                             else if(binding.owner.isChecked) {
-                                db.collection("owner")
-                                    .document(Firebase.auth.currentUser?.uid ?: "No User")
-                                    .set(userMap)
+                                userMap["userType"] = "owner"
                             }
+
+                            db.collection("user")
+                                   .document(Firebase.auth.currentUser?.uid ?: "No User")
+                                   .set(userMap)
+                            Toast.makeText(this, "회원가입 완료! 로그인 해주세요", Toast.LENGTH_LONG).show()
                             finish()
                         } // 위에서 말한 모든 경우에 해당하지 않고 회원가입 실패 -> 회원가입 실패
                         else{

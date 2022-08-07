@@ -1,82 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:background="#ffffff"
->
-
-<TextView
-    android:id="@+id/logintext"
-    android:layout_width="match_parent"
-    android:layout_height="40sp"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="20dp"
-    android:text="회원 로그인"
-    android:textColor="#b22222"
-    android:textStyle="bold"
-    android:textSize="25sp"
-    android:textAlignment="center"
-    android:gravity="center_horizontal" />
-
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="250dp"
-    android:layout_marginBottom="30dp"
+    android:background="#FFFF"
     android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="250dp"
+        android:layout_height="180dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp"
+        android:src="@drawable/testlogo"/>
+
+    <TextView
+        android:fontFamily="@font/godom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="welcome to waiter"
+        android:layout_gravity="center"
+        android:textColor="#FF1493"
+        android:textSize="27dp"/>
+    <TextView
+        android:fontFamily="@font/godom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="Sign in to continue"
+        android:layout_gravity="center"
+        android:textSize="18dp"/>
+
+    <TextView
+        android:fontFamily="@font/godom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="User ID"
+        android:textSize="15dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="40dp"
+        />
     <EditText
         android:id="@+id/userid"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"
-        android:layout_gravity="center"
-        android:ems="10"
-        android:hint="이메일"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="30dp"
-        android:textColorHint="#b22222"
-        android:inputType="textEmailAddress"
-        android:text="" />
+        android:layout_width="335dp"
+        android:layout_height="wrap_content"
+        android:theme="@style/EditTextStyle"
+        android:layout_gravity="center"/>
 
+    <TextView
+        android:fontFamily="@font/godom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PASSWORD"
+        android:textSize="15dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="40dp"
+        />
     <EditText
         android:id="@+id/password"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:layout_gravity="center"
-        android:ems="10"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="30dp"
-        android:hint="비밀번호"
-        android:textColorHint="#b22222"
-        android:inputType="textPassword" />
+        android:layout_width="335dp"
+        android:layout_height="wrap_content"
+        android:theme="@style/EditTextStyle"
+        android:inputType="textPassword"
+        android:layout_gravity="center"/>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/loginbutton"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:fontFamily="@font/godom"
+        android:layout_width="335dp"
+        android:layout_height="60dp"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:text="로그인"
-        android:background="@drawable/button_design"
-        android:textColor="#b22222"
-        android:textSize="15sp"
-        android:textStyle="bold" />
+        android:textSize="20dp"
+        android:textColor="@color/white"
+        android:background="@drawable/button_layout_set"
+        />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <TextView
         android:id="@+id/signinButton"
+        android:fontFamily="@font/godom"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
+        android:text="SIGN UP FOR AN ACCOUNT"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:text="회원가입"
-        android:textColor="#b22222"
-        android:background="@drawable/button_design"
-        android:textSize="15sp"
-        android:textStyle="bold" />
-
+        android:layout_marginTop="15dp"
+        />
 
 </LinearLayout>
-</FrameLayout>
