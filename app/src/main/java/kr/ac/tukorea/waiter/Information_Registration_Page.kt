@@ -5,10 +5,13 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.widget.Toast
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kr.ac.tukorea.waiter.databinding.ActivityInformationRegistrationPageBinding
 
 class Information_Registration_Page : AppCompatActivity() {
-
+    var db: FirebaseFirestore = Firebase.firestore
     private var mbinding : ActivityInformationRegistrationPageBinding? = null
     private val binding get() = mbinding!!
 
@@ -28,10 +31,15 @@ class Information_Registration_Page : AppCompatActivity() {
 
         mbinding = ActivityInformationRegistrationPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        db = FirebaseFirestore.getInstance()
+
+        binding.searchAddress.setOnClickListener {
+            
+        }
 
         binding.registrationBtn.setOnClickListener {
             if(binding.storeNameEdit.length() == 0 || binding.storeAddressEdit.length()==0 ||  binding.storeCorpNumEdit.length()==0 ){
-                Toast.makeText(this, "값을 모두 입력해주세요", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "식당 등록에 필요한 정보를 모두 입력해주세요", Toast.LENGTH_LONG).show()
             }
             else{
                 //activName.receiveData()

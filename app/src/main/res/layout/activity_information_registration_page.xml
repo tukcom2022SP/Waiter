@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
@@ -27,8 +28,6 @@
         </LinearLayout>
 
         <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -92,6 +91,13 @@
                     android:theme="@style/EditTextStyle"
                     android:paddingRight="10dp"
                     />
+//주소 검색 api를 사용하기 위한 버튼
+                <Button
+                    android:id="@+id/searchAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    />
             </LinearLayout>
 
 
@@ -135,7 +141,7 @@
                 android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
                 android:background="@drawable/button_layout_set"
-                android:text="등록완료"
+                android:text="나의 식당 등록하기!"
                 android:textColor="#B22222" />
         </LinearLayout>
 
