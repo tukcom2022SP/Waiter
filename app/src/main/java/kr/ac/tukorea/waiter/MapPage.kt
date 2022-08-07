@@ -81,7 +81,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         }
             title = "map"
         NaverMapSdk.getInstance(this).client =
-            NaverMapSdk.NaverCloudPlatformClient("")
+            NaverMapSdk.NaverCloudPlatformClient("8eo4a3qdn1")
             return
     }
     @UiThread
