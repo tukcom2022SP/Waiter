@@ -32,26 +32,28 @@ import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.util.FusedLocationSource
-
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 
 //import java.util.jar.Pack200
 
 class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener{
-    private val GEOCODE_URL : String ="http://dapi.kakao.com/v2/local/search/address.json?query="
-    private val GEOCODE_USER_INFO : String ="e2ff78b2e20ee43f72827e3e379c2191"
     val permissionrequest = 99
     private lateinit var naverMap: NaverMap
     lateinit var  fusedLocationProvideClient : FusedLocationProviderClient
     lateinit var  locationCallback: LocationCallback
     private lateinit var  locationSource: FusedLocationSource
-    lateinit var keyword : EditText
-
-    var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
-
-    companion object {
+    companion object{
+        const val BASE_URL = "https://dapi.kakao.com/"
+        const val API_KEY = "KakaoAK e2ff78b2e20ee43f72827e3e379c2191"
         private const val LOCATION_PERMISSION_REQUEST_CODE  = 1000
     }
+
+    var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
@@ -61,7 +63,6 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_map_page)
-        var keyword = findViewById<EditText>(R.id.keyword).getText().toString()
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
         fun isPermitted(): Boolean {
             for (perm in permissions){
@@ -71,9 +72,6 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
             }
             return true
         }
-
-
-
         fun startProcess(){
             val fm  = supportFragmentManager
             val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
@@ -154,6 +152,34 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
             startActivity(intent)
         }
         return true
+
+    }
+    private fun searchKeyword(place_name: String)
+    {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(MainActivity2.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val api = retrofit.create(KakaoAPI::class.java)
+        val call= api.getSearchKeyword(MainActivity2.API_KEY,place_name)
+
+        call.enqueue(object: Callback<ResultSearchKeyword> {
+            override fun onResponse(
+                call: Call<ResultSearchKeyword>,
+                response: Response<ResultSearchKeyword>
+            ) {
+                Log.d("Test","성공: ${response.raw()}")
+                Log.d("Test", "Body: ${response.body()}")
+                val x = response.body()?.documents?.get(0)?.x
+                val y = response.body()?.documents?.get(0)?.y
+                println("x : ${x}")
+                println("y : ${y}")
+            }
+            override fun onFailure(call: Call<ResultSearchKeyword>, t: Throwable) {
+                Log.w("MainActivity","실패 ${t.message}")
+            }
+        })
     }
 }
+
 

@@ -9,11 +9,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ResultSearchKeyword
 import android.util.Log
-import kr.ac.tukorea.waiter.databinding.ActivityMain2Binding
 
 class MainActivity2 : AppCompatActivity() {
-    private lateinit var  binding : ActivityMain2Binding
-
     companion object{
         const val BASE_URL = "https://dapi.kakao.com/"
         const val API_KEY = "KakaoAK e2ff78b2e20ee43f72827e3e379c2191"
@@ -21,14 +18,8 @@ class MainActivity2 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMain2Binding.inflate(layoutInflater)
-        val view = binding.root
-
-        setContentView(view)
         searchKeyword("스타벅스")
     }
-//            private val GEOCODE_URL : String ="http://dapi.kakao.com/v2/local/search/address.json?query="
-//            private val GEOCODE_USER_INFO : String ="KakaoAK 507dc2f99aa19623091be3d1502da0c4"
     private fun searchKeyword(place_name: String)
     {
         val retrofit = Retrofit.Builder()
