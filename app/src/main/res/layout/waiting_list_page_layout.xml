@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="38dp"
                 android:background="@drawable/button_layout_set"
-                android:textColor="#B22222"
+                android:textColor="@color/white"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:text="입장완료"/>
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="38dp"
                 android:background="@drawable/button_layout_set"
-                android:textColor="#B22222"
+                android:textColor="@color/white"
                 android:layout_marginBottom="5dp"
                 android:text="취소"/>
         </LinearLayout>
