@@ -52,7 +52,6 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     // 로그인 시 실행되는 함수
