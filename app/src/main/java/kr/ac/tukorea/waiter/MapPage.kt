@@ -42,7 +42,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
     companion object {
         const val BASE_URL = "https://dapi.kakao.com/"
         const val API_KEY = "KakaoAK 2f8e49e7fefd85e3d4c11dc88ca0a8fd"
-        const val LOCATION_PERMISSION_REQUEST_CODE = 1000
+        private const val LOCATION_PERMISSION_REQUEST_CODE  = 1000
     }
     private lateinit var binding: ActivityMapPageBinding
     val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
