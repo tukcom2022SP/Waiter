@@ -39,20 +39,17 @@ class LoginActivity : AppCompatActivity() {
 
             if(binding.userid.text.toString().equals("")
                 ||binding.password.text.toString().equals("")
-            ){
+            ) {
                 Toast.makeText(this, "로그인에 필요한 정보를 모두 입력해 주세요", Toast.LENGTH_SHORT).show()
             } else {
                 doLogin(userEmail, password)
             }
         }
 //clickable 써보자
-
-
         binding.signinButton.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     // 로그인 시 실행되는 함수
