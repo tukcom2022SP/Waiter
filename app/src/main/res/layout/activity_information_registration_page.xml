@@ -23,7 +23,7 @@
                 android:layout_margin="5dp"
                 android:textColor="#B22222"
                 android:textSize="30dp"
-                android:text="식당 정보 등록"
+                android:text="운영중인 가게 등록하기"
                 />
         </LinearLayout>
 
@@ -48,7 +48,7 @@
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="20dp"
                     android:textSize="20dp"
-                    android:text="식당 이름"/>
+                    android:text="가게 주소 검색"/>
                 <EditText
                     android:id="@+id/storeNameEdit"
                     android:layout_width="match_parent"
@@ -64,6 +64,7 @@
                     />
             </LinearLayout>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -72,35 +73,33 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:textColor="@color/black"
                     android:layout_marginLeft="32dp"
+                    android:layout_marginTop="32dp"
                     android:layout_marginRight="20dp"
-                    android:textSize="20dp"
-                    android:text="식당 주소"/>
+                    android:text="식당 주소"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
                 <EditText
                     android:id="@+id/storeAddressEdit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:layout_marginRight="32dp"
-                    android:inputType="textEmailAddress"
-                    android:textColorHint="#BAB8B8"
                     android:hint=" 식당 주소를 입력해 주세요."
-                    android:textSize="15dp"
-                    android:theme="@style/EditTextStyle"
+                    android:inputType="textEmailAddress"
                     android:paddingRight="10dp"
-                    />
-//주소 검색 api를 사용하기 위한 버튼
+                    android:textColorHint="#BAB8B8"
+                    android:textSize="15dp"
+                    android:theme="@style/EditTextStyle" />
+                //주소 검색 api를 사용하기 위한 버튼
+
                 <Button
                     android:id="@+id/searchAddress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    />
+                    android:layout_gravity="center" />
             </LinearLayout>
-
-
 
             <LinearLayout
                 android:layout_width="match_parent"

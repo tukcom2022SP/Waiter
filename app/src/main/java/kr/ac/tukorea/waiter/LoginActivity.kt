@@ -47,7 +47,6 @@ class LoginActivity : AppCompatActivity() {
         }
 //clickable 써보자
 
-
         binding.signinButton.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)

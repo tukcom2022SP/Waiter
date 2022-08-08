@@ -35,8 +35,9 @@ class Information_Registration_Page : AppCompatActivity() {
 
         binding.searchAddress.setOnClickListener {
 
-            val restMap = hashMapOf<String>(
-                // 식당 이름, 주소, x, y, 연락처
+            val restMap = hashMapOf(
+                // 식당 이름, 주소, x, y, 연락처 DB에 넣기
+                "storeName" to binding.storeNameEdit
             )
 
         }
