@@ -18,15 +18,6 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        // url 변수 지정
-        buildConfigField "String", "kakao map rest api key", properties['kakao.map.rest.api.key']
-
-        // api key 변수 지정
-        buildConfigField "String", "naver map client secret key", properties['naver.map.client.secret']
-
-        // kakao map rest api key 변수 지정
-        buildConfigField "String", "naver map api client id key", properties['naver.map.client.id']
     }
 
     buildFeatures {
