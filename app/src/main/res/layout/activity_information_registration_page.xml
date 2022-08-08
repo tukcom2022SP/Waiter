@@ -29,9 +29,9 @@
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:fontFamily="@font/godom"
-                android:text=" 가게 등록하기"
+                android:text="가게 등록하기"
                 android:textColor="#B22222"
-                android:textSize="30dp" />
+                android:textSize="30sp" />
         </LinearLayout>
 
         <LinearLayout
