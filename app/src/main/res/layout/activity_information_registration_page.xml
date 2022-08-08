@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
             android:background="@drawable/layout_border"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
-                android:textColor="#B22222"
-                android:textSize="30dp"
-                android:text=" 가게 등록하기"
                 android:fontFamily="@font/godom"
-                />
+                android:text=" 가게 등록하기"
+                android:textColor="#B22222"
+                android:textSize="30dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="top"
+            android:layout_height="wrap_content"
             android:background="#FFF0F5"
+            android:gravity="top"
+            android:orientation="vertical"
             tools:context=".MainActivity">
 
             <LinearLayout
@@ -45,31 +50,29 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:textColor="@color/black"
                     android:layout_marginLeft="32dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
-                    android:textSize="20dp"
-                    android:text="가게 주소 검색"
                     android:fontFamily="@font/godom"
-                    />
+                    android:text="가게 주소 검색"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="32dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
-                    android:text="먼저 사장님의 가게를 주소검색을 통해 등록하여주세요"
                     android:fontFamily="@font/godom"
-                    />
+                    android:text="먼저 사장님의 가게를 주소검색을 통해 등록하여주세요" />
 
                 <EditText
                     android:id="@+id/storeAddressEdit"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="48dp"
                     android:layout_marginLeft="32dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="32dp"
                     android:hint=" 식당 주소를 입력해 주세요."
                     android:inputType="textEmailAddress"
@@ -79,18 +82,19 @@
                     android:theme="@style/EditTextStyle" />
 
                 //주소 검색 api를 사용하기 위한 버튼
+
                 <Button
                     android:id="@+id/searchAddress"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
-                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/button_layout_set"
-                    android:textColor="@color/white"
-                    android:text="주소 검색 버튼"
                     android:fontFamily="@font/godom"
-                    />
+                    android:text="주소 검색 버튼"
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -101,28 +105,27 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="32dp"
-                    android:textColor="@color/black"
                     android:layout_marginLeft="32dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
-                    android:textSize="20dp"
-                    android:text="사업자 번호"
                     android:fontFamily="@font/godom"
-                    />
+                    android:text="사업자 번호"
+                    android:textColor="@color/black"
+                    android:textSize="20dp" />
+
                 <EditText
                     android:id="@+id/storeCorpNumEdit"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_height="48dp"
                     android:layout_marginLeft="32dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="32dp"
-                    android:inputType="textEmailAddress"
-                    android:textColorHint="#BAB8B8"
                     android:hint=" 사업자 번호를 입력해 주세요."
-                    android:textSize="15dp"
-                    android:theme="@style/EditTextStyle"
+                    android:inputType="textEmailAddress"
                     android:paddingRight="10dp"
-                    />
+                    android:textColorHint="#BAB8B8"
+                    android:textSize="15dp"
+                    android:theme="@style/EditTextStyle" />
             </LinearLayout>
 
 
@@ -130,20 +133,29 @@
                 android:id="@+id/registrationBtn"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:layout_gravity="center"
                 android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/button_layout_set"
+                android:fontFamily="@font/godom"
                 android:text="나의 식당 등록하기!"
-                android:textColor="@color/white"
-                android:fontFamily="@font/godom"/>
+                android:textColor="@color/white" />
+
         </LinearLayout>
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/map2"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.naver.maps.map.MapFragment"/>
+            android:orientation="vertical">
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/map2"
+                android:name="com.naver.maps.map.MapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/activity_map_page"/>
+        </LinearLayout>
     </LinearLayout>
 
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
