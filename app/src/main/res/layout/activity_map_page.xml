@@ -25,54 +25,54 @@
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.naver.maps.map.MapFragment"/>
+            android:name="com.naver.maps.map.MapFragment"
+            />
     </LinearLayout>
-        <LinearLayout
-            android:id="@+id/slide"
+    <LinearLayout
+        android:id="@+id/slide"
+        android:layout_width="match_parent"
+        android:layout_height="400sp"
+        tools:context=".MapPage"
+        android:orientation="vertical">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="400sp"
-            tools:context=".MapPage"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/Searchbar"
+            >
+            <EditText
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/rest_name"
-                android:text="식당이름"
-                android:textSize="50dp"/>
-
-            <TextView
-                android:id="@+id/rest_hours"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="식당시간"
-                android:textSize="20dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/restaurant_num"
-                android:text="식당번호"
-                android:textSize="20dp"
+                android:id="@+id/searchText"
+                android:inputType="text"
+                android:hint="장소입력"
+                app:layout_constraintTop_toTopOf="parent"
                 />
-            <TextView
+            <Button
+                android:id="@+id/btn_search"
+                style="@style/Widget.AppCompat.Button.Small"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="검색"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvList"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="#E8EAF6"
+                app:layout_constraintTop_toBottomOf="@id/searchText"
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rest_address"
-                android:text="식당주소"
-                android:textSize="20dp"
-                />
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/reservationBtn"
-                    android:text="대기열보기"
-                    android:layout_alignParentRight="true"/>
-            </RelativeLayout>
-
-                
+                android:id="@+id/reservationBtn"
+                android:text="예약하기"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
     </LinearLayout>
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
