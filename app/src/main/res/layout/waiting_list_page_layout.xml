@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:visibility="visible"
+        android:background="@drawable/layout_border">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/waitingName1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textSize="15dp"
+                android:text="이름(이메일)"/>
+            <View
+                android:layout_width="15dp"
+                android:layout_height="10dp"/>
+            <TextView
+                android:id="@+id/waitingPhone1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:textSize="15dp"
+                android:text="전화번호"/>
+        </LinearLayout>
+        <View
+            android:id="@+id/brankView1"
+            android:layout_width="20dp"
+            android:layout_height="5dp"
+            android:layout_toLeftOf="@+id/Linbtns1"/>
+
+        <TextView
+            android:id="@+id/waitingNum1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/brankView1"
+            android:padding="5dp"
+            android:textSize="20dp"
+            android:text="0명"
+            />
+
+        <LinearLayout
+            android:id="@+id/Linbtns1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/InStorebtn1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/button_layout_set"
+                android:textColor="@color/white"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="입장완료"/>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>
