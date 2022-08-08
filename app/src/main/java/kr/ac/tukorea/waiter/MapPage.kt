@@ -1,139 +1,201 @@
 package kr.ac.tukorea.waiter
 
-//import android.app.Instrumentation
-//import android.webkit.PermissionRequest
-//import android.widget.Toast
-//import androidx.activity.result.contract.ActivityResultContract
-//import androidx.activity.result.contract.ActivityResultContracts
-//import androidx.annotation.NonNull
 
 import ResultSearchKeyword
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Address
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.Menu
-import android.widget.EditText
+import android.view.View
 import android.widget.Toast
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
-import com.google.gson.Gson
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.util.FusedLocationSource
-
+import kr.ac.tukorea.waiter.databinding.ActivityMapPageBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-//import java.util.jar.Pack200
 
-class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener{
+class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener {
     val permissionrequest = 99
     private lateinit var naverMap: NaverMap
-    lateinit var  fusedLocationProvideClient : FusedLocationProviderClient
-    lateinit var  locationCallback: LocationCallback
-    private lateinit var  locationSource: FusedLocationSource
-    companion object{
+    lateinit var fusedLocationProvideClient: FusedLocationProviderClient
+    lateinit var locationCallback: LocationCallback
+    private lateinit var locationSource: FusedLocationSource
+    companion object {
         const val BASE_URL = "https://dapi.kakao.com/"
         const val API_KEY = "KakaoAK 2f8e49e7fefd85e3d4c11dc88ca0a8fd"
         private const val LOCATION_PERMISSION_REQUEST_CODE  = 1000
     }
+    private lateinit var binding: ActivityMapPageBinding
+    val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
+    val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
+    private var pageNumber = 1      // 검색 페이지 번호
+    private var keyword = ""        // 검색 키워드
 
-    var permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+    var permissions = arrayOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
-        mInflater.inflate(R.menu.menu1,menu)
+        mInflater.inflate(R.menu.menu1, menu)
         return true
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_map_page)
+        //setContentView(R.layout.activity_map_page)
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+        binding = ActivityMapPageBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
+        // 리사이클러 뷰
+        binding.rvList.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rvList.adapter = listAdapter
+
+        listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
+            override fun onClick(v: View, position: Int) {
+                val marker = Marker()
+                marker.position = LatLng(listItems[position].y, listItems[position].x)
+                marker.map =naverMap
+                val cameraUpdate =
+                    CameraUpdate.scrollTo(LatLng(listItems[position].y, listItems[position].x))
+                naverMap.moveCamera((cameraUpdate))
+            }
+        })
+        binding.btnSearch.setOnClickListener {
+            keyword = binding.searchText.text.toString()
+            pageNumber = 1
+            searchKeyword(keyword)
+        }
         fun isPermitted(): Boolean {
-            for (perm in permissions){
-                if (ContextCompat.checkSelfPermission(this, perm) != PackageManager.PERMISSION_GRANTED){
+            for (perm in permissions) {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        perm
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
                     return false
                 }
             }
             return true
         }
-        fun startProcess(){
-            val fm  = supportFragmentManager
+        fun startProcess() {
+            //권한 확인
+            val fm = supportFragmentManager
             val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
-                ?: MapFragment.newInstance().also{
+                ?: MapFragment.newInstance().also {
                     fm.beginTransaction().add(R.id.map, it).commit()
                 }
             mapFragment.getMapAsync(this)
         }
-        if (isPermitted()){
+        if (isPermitted()) {
             startProcess()
-        }else{
+        } else {
             ActivityCompat.requestPermissions(this, permissions, permissionrequest)
         }
-            title = "map"
+        title = "map"
         NaverMapSdk.getInstance(this).client =
             NaverMapSdk.NaverCloudPlatformClient("8eo4a3qdn1")
-            return
+        return
     }
+    //검색 기능
+    private fun searchKeyword(place_name: String) {
+        //API설정
+        val retrofit = Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val api = retrofit.create(KakaoAPI::class.java)
+        val call = api.getSearchKeyword(API_KEY, place_name)
+
+        call.enqueue(object : Callback<ResultSearchKeyword> {
+            //만약에 API와 통신성공시
+            override fun onResponse(
+                call: Call<ResultSearchKeyword>,
+                response: Response<ResultSearchKeyword>
+            ) {
+                Log.d("Test", "성공: ${response.raw()}")//로그찍기
+                Log.d("Test", "Body: ${response.body()}")//로그찍기
+                val x = response.body()?.documents?.get(0)?.x//x 확인 값
+                val y = response.body()?.documents?.get(0)?.y//y 확인 값
+                addItemsAndMarkers(response.body())//result 넘겨주기
+            }
+            //만약에 API와 통신실패시
+            override fun onFailure(call: Call<ResultSearchKeyword>, t: Throwable) {
+                Log.w("MainActivity", "실패 ${t.message}")
+            }
+        })
+    }
+
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
+        //맵구현
         this.naverMap = naverMap
-//        val locationButtonView: LocationButtonView = findViewById(R.id.locationbtn)
-//       locationButtonView.setMap(naverMap)
         naverMap.uiSettings.isLocationButtonEnabled = true
         naverMap.locationSource = locationSource
         val cameraPosition = CameraPosition(
-            LatLng(37.343991285297,126.74729588817),
+            LatLng(37.343991285297, 126.74729588817),
             16.0
         )
-        naverMap.cameraPosition= cameraPosition
+        naverMap.cameraPosition = cameraPosition
         fusedLocationProvideClient =
             LocationServices.getFusedLocationProviderClient(this)
         setUpdateLocationListener()
-   }
-   @SuppressLint("MissingPermission")
-   fun setUpdateLocationListener() {
-       val locationRequest = LocationRequest.create()
-       locationRequest.run {
-           priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-       }
-       locationCallback = object  : LocationCallback(){
-           override fun onLocationResult(locationResult: LocationResult?) {
-               locationResult ?: return
-               for ((i, location) in locationResult.locations.withIndex()) {
-                   Log.d("location: ", "${location.latitude},${location.longitude}")
-                   setLastLocation(location)
-               }
-           }
-       }
-       fusedLocationProvideClient.requestLocationUpdates(
-           locationRequest,
-           locationCallback,
-           Looper.myLooper()
-       )
-   }
-    fun setLastLocation(location: Location) {
-        val myLocation =LatLng(location.latitude,location.longitude)
-        val marker = Marker()
-        marker.position = myLocation
-        marker.map = naverMap
-        marker.setOnClickListener(this)
+    }
+    //만약에 권한을 받지 못했으면 메세지
+    @SuppressLint("MissingPermission")
 
+    fun setUpdateLocationListener() {
+        val locationRequest = LocationRequest.create()
+        locationRequest.run {
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+        locationCallback = object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult?) {
+                locationResult ?: return
+                for ((i, location) in locationResult.locations.withIndex()) {
+                    Log.d("location: ", "${location.latitude},${location.longitude}")
+                    setLastLocation(location)
+                }
+            }
+        }
+        fusedLocationProvideClient.requestLocationUpdates(
+            locationRequest,
+            locationCallback,
+            Looper.myLooper()
+        )
+    }
+
+    fun setLastLocation(location: Location) {
+        //내 현 위치 찍어주기
+        val myLocation = LatLng(location.latitude, location.longitude)
+
+//        val marker = Marker()
+//        marker.map = naverMap
+//        marker.setOnClickListener(this)
+
+        //맵위에 overlay
         val locationOverlay = naverMap.locationOverlay
         naverMap.locationOverlay.run {
             isVisible = true
@@ -142,44 +204,46 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         locationOverlay.isVisible = true
         locationOverlay.iconWidth = LocationOverlay.SIZE_AUTO
         locationOverlay.iconHeight = LocationOverlay.SIZE_AUTO
-        //정보창 여는 예시 infoWindow.open(marker)
-        val cameraUpdate = CameraUpdate.scrollTo(myLocation)
+        val cameraUpdate = CameraUpdate.scrollTo(myLocation)//카메라 내위치에 표시
         naverMap.moveCamera(cameraUpdate)
-   }
+    }
     override fun onClick(overlay: Overlay): Boolean {
+        //마커 클릭하면 mainactivity 넘어가기
         if (overlay is Marker) {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
         return true
-
     }
-    private fun searchKeyword(place_name: String)
-    {
-        val retrofit = Retrofit.Builder()
-            .baseUrl(MainActivity2.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val api = retrofit.create(KakaoAPI::class.java)
-        val call= api.getSearchKeyword(MainActivity2.API_KEY,place_name)
-
-        call.enqueue(object: Callback<ResultSearchKeyword> {
-            override fun onResponse(
-                call: Call<ResultSearchKeyword>,
-                response: Response<ResultSearchKeyword>
-            ) {
-                Log.d("Test","성공: ${response.raw()}")
-                Log.d("Test", "Body: ${response.body()}")
-                val x = response.body()?.documents?.get(0)?.x
-                val y = response.body()?.documents?.get(0)?.y
-                println("x : ${x}")
-                println("y : ${y}")
+    //recyleview에 리스트랑 마커 추가
+    private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
+        if (!searchResult?.documents.isNullOrEmpty()) {
+            // 검색 결과 있음
+            listItems.clear()
+            Log.d("로그","${searchResult}")//로그 찍기
+            for (document in searchResult!!.documents)
+            // 해당 결과들이 documents 에 있으면
+                 {
+                // 결과를 리사이클러 뷰에 추가
+                val item = ListLayout(
+                    document.place_name,
+                    document.road_address_name,
+                    document.address_name,
+                    document.x.toDouble(),
+                    document.y.toDouble()
+                )
+                listItems.add(item)//item에 있는내용 list로 넘기기
+                listAdapter.notifyDataSetChanged()//listadapter에 변경사항 알리기
+                val marker = Marker()//마커 생성
+                marker.position = LatLng(document.y.toDouble(),document.x.toDouble())//검색결과나오는거 마커로 찍기
+                marker.map = naverMap// 리스트 초기화
+                Log.d("로그1","${item}")//로그찍어보기
             }
-            override fun onFailure(call: Call<ResultSearchKeyword>, t: Throwable) {
-                Log.w("MainActivity","실패 ${t.message}")
-            }
-        })
+        }
+        else
+        {
+            // 검색 결과가 없을 때 toast 메세지
+            Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
+        }
     }
 }
-
-
