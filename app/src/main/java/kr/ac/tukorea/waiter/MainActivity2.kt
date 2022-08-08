@@ -13,7 +13,7 @@ import android.util.Log
 class MainActivity2 : AppCompatActivity() {
     companion object{
         const val BASE_URL = "https://dapi.kakao.com/"
-        const val API_KEY = "KakaoAK e2ff78b2e20ee43f72827e3e379c2191"
+        const val API_KEY = "KakaoAK 2f8e49e7fefd85e3d4c11dc88ca0a8fd"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

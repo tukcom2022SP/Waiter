@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.TextView
 import kr.ac.tukorea.waiter.databinding.ActivityWaitingListPageBinding
 import kr.ac.tukorea.waiter.databinding.WaitingListPageLayoutBinding
 
@@ -28,19 +29,14 @@ class WaitingListAdapter(val context: Context, val WaitingListInfo: ArrayList<Wa
 
         val binding = WaitingListPageLayoutBinding.inflate(LayoutInflater.from(context))
 
-        val view: View = LayoutInflater.from(context).inflate(R.layout.waiting_list_page_layout,null)
-
-        val name = binding.waitingName1
-        val phoneNum = binding.waitingPhone1
-        val num = binding.waitingNum1
-
         val userinfo =WaitingListInfo[position]
+        binding.waitingName1.text = userinfo.name
+        binding.waitingNum1.text = userinfo.customerNum.toString()
+        binding.waitingPhone1.text = userinfo.phone
 
-        name.text = userinfo.customername
-        phoneNum.text = userinfo.phoneNum
-        num.text = userinfo.customerNum
+        return binding.root
 
-        return view
+
     }
 
 }
