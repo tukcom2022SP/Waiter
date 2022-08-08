@@ -21,58 +21,78 @@
         android:layout_height="match_parent"
         android:id="@+id/maplayout"
         android:orientation="vertical">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/Searchbar"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/searchText"
+                android:inputType="text"
+                android:hint="장소입력"
+                app:layout_constraintTop_toTopOf="parent"                 />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="#E8EAF6"
+                app:layout_constraintTop_toBottomOf="@id/searchText"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:name="com.naver.maps.map.MapFragment"/>
     </LinearLayout>
-        <LinearLayout
-            android:id="@+id/slide"
-            android:layout_width="match_parent"
-            android:layout_height="400sp"
-            tools:context=".MapPage"
-            android:orientation="vertical">
-            <TextView
+    <LinearLayout
+        android:id="@+id/slide"
+        android:layout_width="match_parent"
+        android:layout_height="400sp"
+        tools:context=".MapPage"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rest_name"
+            android:text="식당이름"
+            android:textSize="50dp"/>
+
+        <TextView
+            android:id="@+id/rest_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="식당시간"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/restaurant_num"
+            android:text="식당번호"
+            android:textSize="20dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rest_address"
+            android:text="식당주소"
+            android:textSize="20dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/rest_name"
-                android:text="식당이름"
-                android:textSize="50dp"/>
+                android:id="@+id/reservationBtn"
+                android:text="대기열보기"
+                android:layout_alignParentRight="true"/>
+        </RelativeLayout>
 
-            <TextView
-                android:id="@+id/rest_hours"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="식당시간"
-                android:textSize="20dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/restaurant_num"
-                android:text="식당번호"
-                android:textSize="20dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/rest_address"
-                android:text="식당주소"
-                android:textSize="20dp"
-                />
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/reservationBtn"
-                    android:text="대기열보기"
-                    android:layout_alignParentRight="true"/>
-            </RelativeLayout>
-
-                
     </LinearLayout>
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
