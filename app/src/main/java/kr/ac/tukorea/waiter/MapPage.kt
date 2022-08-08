@@ -114,12 +114,12 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
        }
        locationCallback = object  : LocationCallback(){
            override fun onLocationResult(locationResult: LocationResult?) {
-           locationResult ?: return
-           for ((i, location) in locationResult.locations.withIndex()) {
-               Log.d("location: ", "${location.latitude},${location.longitude}")
-               setLastLocation(location)
+               locationResult ?: return
+               for ((i, location) in locationResult.locations.withIndex()) {
+                   Log.d("location: ", "${location.latitude},${location.longitude}")
+                   setLastLocation(location)
+               }
            }
-       }
        }
        fusedLocationProvideClient.requestLocationUpdates(
            locationRequest,
