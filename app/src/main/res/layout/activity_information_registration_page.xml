@@ -29,9 +29,9 @@
                 android:layout_gravity="center"
                 android:layout_margin="5dp"
                 android:fontFamily="@font/godom"
-                android:text=" 가게 등록하기"
+                android:text="가게 등록하기"
                 android:textColor="#B22222"
-                android:textSize="30dp" />
+                android:textSize="30sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -82,7 +82,6 @@
                     android:theme="@style/EditTextStyle" />
 
                 //주소 검색 api를 사용하기 위한 버튼
-
                 <Button
                     android:id="@+id/searchAddress"
                     android:layout_width="150dp"

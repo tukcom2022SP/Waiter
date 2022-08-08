@@ -15,7 +15,7 @@ class Information_Registration_Page : AppCompatActivity() {
     private var mbinding : ActivityInformationRegistrationPageBinding? = null
     private val binding get() = mbinding!!
 
-    private var StoreNameStirng : String? = null // 입력 값 저장할 변수들 얘들을 디비로?
+    // 입력 값 저장할 변수들 얘들을 디비로?
     private var AddressString : String? = null
     private var CorpNumString : String? = null
 
@@ -35,30 +35,43 @@ class Information_Registration_Page : AppCompatActivity() {
 
         binding.searchAddress.setOnClickListener {
 
-            val restMap = hashMapOf(
-                // 식당 이름, 주소, x, y, 연락처 DB에 넣기
-                "storeName" to binding.storeNameEdit
-            )
-
-        }
+//            val restMap = hashMapOf(
+//                // 식당 이름, 주소, x, y, 연락처 DB에 넣기
+//                "상호명" to binding.storeAddressEdit.text.toString(),
+//                "도로명 주소" to binding.text.toString(),
+//                "지번 주소" to binding.text.toString(),
+//                "연락처" to binding.text.toString(),
+//                "경도 x좌표" to binding.text.toString(),
+//                "위도 y좌표" to binding.text.toString()
+//            )
+//
+//            db.collection("restInfo").add(restMap)
+//                .addOnSuccessListener {
+//
+//                }
+//
+//
+      }
 
         binding.registrationBtn.setOnClickListener {
-            if(binding.storeNameEdit.length() == 0 || binding.storeAddressEdit.length()==0 ||  binding.storeCorpNumEdit.length()==0 ){
-                Toast.makeText(this, "식당 등록에 필요한 정보를 모두 입력해주세요", Toast.LENGTH_LONG).show()
+            if(binding.storeAddressEdit.text.toString().equals("")
+                || binding.storeCorpNumEdit.text.toString().equals("") ){
+                Toast.makeText(this, "식당 등록에 필요한 정보를 모두 입력해주세요", Toast.LENGTH_SHORT).show()
             }
             else{
                 //activName.receiveData()
-                StoreNameStirng = binding.storeNameEdit.toString()
                 AddressString = binding.storeAddressEdit.toString()
                 CorpNumString = binding.storeCorpNumEdit.toString()
+
+
+
                 Toast.makeText(this, "입력 완료", Toast.LENGTH_LONG).show()
                 val intent = Intent(this,Waiting_List_Page::class.java)
-                intent.putExtra("storeName",binding.storeNameEdit.text.toString())
+                //intent.putExtra("storeName",binding.storeNameEdit.text.toString())
                 startActivity(intent)
             }
         }
     }
-
     override fun onDestroy() {
         mbinding = null
         super.onDestroy()
