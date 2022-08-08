@@ -34,7 +34,11 @@ class Information_Registration_Page : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
         binding.searchAddress.setOnClickListener {
-            
+
+            val restMap = hashMapOf<String>(
+                // 식당 이름, 주소, x, y, 연락처
+            )
+
         }
 
         binding.registrationBtn.setOnClickListener {
