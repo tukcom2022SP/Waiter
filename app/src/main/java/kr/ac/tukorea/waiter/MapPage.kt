@@ -154,6 +154,10 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         return true
 
     }
+    //뒤로가기 비활성화 -> 뒤로 가기 눌렀을 때 앱 종료 방지
+    override fun onBackPressed() {
+        return
+    }
     private fun searchKeyword(place_name: String)
     {
         val retrofit = Retrofit.Builder()
