@@ -12,7 +12,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_login.*
 import kr.ac.tukorea.waiter.databinding.ActivityLoginBinding
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
     private var auth : FirebaseAuth? = null
@@ -31,6 +33,31 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = FirebaseFirestore.getInstance()
+
+
+
+//        if (userid == null) {
+//
+  //          Timer().schedule(object : TimerTask() {
+  //              override fun run() {
+  //                  val intent: Intent = Intent(applicationContext, LoginActivity::class.java)
+  //                  startActivity(intent)
+  //                  finish()
+  //              }
+  //          }, 2000)
+
+  //      }else{
+
+    //        Timer().schedule(object : TimerTask() {
+      //          override fun run() {
+        //            val intent: Intent = Intent(applicationContext, MainActivity::class.java)
+          //          startActivity(intent)
+            //        finish()
+         //       }
+       //     }, 2000)
+
+    //    }
+
 
         binding.loginbutton.setOnClickListener {
             val userEmail = binding.userid.text.toString()

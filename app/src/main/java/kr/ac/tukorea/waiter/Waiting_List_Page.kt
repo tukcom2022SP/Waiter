@@ -1,15 +1,17 @@
 package kr.ac.tukorea.waiter
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.ContentValues.TAG
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ImageButton
-import android.widget.Toast
+import android.view.WindowManager
+import android.widget.*
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -17,16 +19,18 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.activity_waiting_list_page.*
-import kr.ac.tukorea.waiter.databinding.ActivityWaitingListPageBinding
+import kr.ac.tukorea.waiter.databinding.WaitingListPageLayoutBinding
 import java.text.FieldPosition
 
 
 class Waiting_List_Page : AppCompatActivity() {
 
-    private var Wbinding: ActivityWaitingListPageBinding? = null
-    private val binding get() = Wbinding!!
+//    private var Wbinding: DialogmenuBinding? = null
+//    private val binding get() = Wbinding!!
 
     var db: FirebaseFirestore = Firebase.firestore
+
+    lateinit var newbtn : Button
 
     data class UserInfo(
         val index: String? = null,
@@ -36,10 +40,12 @@ class Waiting_List_Page : AppCompatActivity() {
     )
 
 
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
         mInflater.inflate(R.menu.menu1, menu)
+
         return true
     }
 
@@ -53,9 +59,14 @@ class Waiting_List_Page : AppCompatActivity() {
         val reserveInfo = db.collection("rest_Info").document("abc")
             .collection("reservation")
 
-        reserveInfo.get().addOnSuccessListener { result ->
+
+
+        reserveInfo.addSnapshotListener { result, e ->
 
             if (result != null) {
+
+                waitingListInfo.clear()
+
                 for (data in result) {
                     waitingListInfo.addAll(
                         listOf(
@@ -87,21 +98,43 @@ class Waiting_List_Page : AppCompatActivity() {
 
                 val indexpo = (position+1).toString()
 
-                val remove = db.collection("rest_Info").document("abc")
-                    .collection("reservation").document("${indexpo}")
-                remove.delete().addOnSuccessListener {
-                    Log.d("Testdata","succes")
-                }
+                AlertDialog.Builder(this)  // 다이어로그 출력
+                    .setView(R.layout.dialogmenu)
+                    .show()
+                    .also{ alertDialog ->
+                        if(alertDialog == null){
+                            return@also
+                        }
+//                        Wbinding = DialogmenuBinding.inflate(layoutInflater)
+//                        setContentView(binding.root)  //바인딩 연결 시간 남으면
+                        val button1 = alertDialog.findViewById<Button>(R.id.diabtn1)
+                        val button2 = alertDialog.findViewById<Button>(R.id.diabtn2)
+                        val infotext = alertDialog.findViewById<TextView>(R.id.infoText)
+
+                        infotext.setText("${(position+1)}번째 리스트를 삭제")
+
+                        button1?.setOnClickListener {
+                            alertDialog.dismiss()
+                            Log.d("Testdata","확인")
+
+                            val remove = db.collection("rest_Info").document("abc")   //DB삭제
+                                .collection("reservation").document("${indexpo}")
+                            remove.delete().addOnSuccessListener {
+                                Log.d("Testdata","succes")
+                            }
+                        }
+
+                        button2?.setOnClickListener {
+                            alertDialog.dismiss()
+                            Log.d("Testdata","취소")
+                        }
+
+                    }
+
+
             }
 
-        }
-
-        var checked = 0
-        //items.remove
-
-        Wbinding = ActivityWaitingListPageBinding.inflate(layoutInflater)
-        setContentView(binding.root)  //바인딩 연결
-
+        } // resereInfo get data
 
     }
 
@@ -110,6 +143,7 @@ class Waiting_List_Page : AppCompatActivity() {
 
         setContentView(R.layout.activity_waiting_list_page)
         var reintent = intent
+
 
 
     }
