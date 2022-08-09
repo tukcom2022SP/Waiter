@@ -16,14 +16,19 @@ import androidx.annotation.UiThread
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
+import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.android.synthetic.main.activity_information_registration_page.*
 import kr.ac.tukorea.waiter.databinding.ActivityInformationRegistrationPageBinding
@@ -40,6 +45,7 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationSource: FusedLocationSource
     val permissionrequest = 99
 
+    var store_registration = hashMapOf<String, Any>()
     val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
     val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
     companion object {
@@ -71,6 +77,7 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
 
         //val intent = Intent(this, SearchPage::class.java)
         mbinding = ActivityInformationRegistrationPageBinding.inflate(layoutInflater)
+
         if(intent.hasExtra("storeName")) {
             var storeName = intent.getStringExtra("storeName")
             var roadNameAddress = intent.getStringExtra("roadNameAddress")
@@ -89,9 +96,11 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
                 "latitude_y" to latitude_y,
                 "longitude_x" to longitude_x
             )
+            store_registration = restMap.clone() as HashMap<String, Any>
+
             Log.d("restMap", "${restMap}")
             binding.storeAddress.text = intent.getStringExtra("roadNameAddress")
-
+//            addItemsAndMarkers(longitude_x, latitude_y)
         }
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
@@ -114,7 +123,7 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
             //권한 확인
             val fm = supportFragmentManager
             Log.d("지도확인", "API 지도확인")
-            val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
+            val mapFragment = fm.findFragmentById(R.id.map2) as MapFragment?
                 ?: MapFragment.newInstance().also {
                     fm.beginTransaction().add(R.id.map2, it).commit()
                 }
@@ -135,9 +144,6 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
             startActivity(
                 Intent(this, SearchPage::class.java)
             )
-
-
-
         }
 
         binding.registrationBtn.setOnClickListener {
@@ -150,8 +156,15 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
                 AddressString = binding.storeAddress.toString()
                 CorpNumString = binding.storeCorpNumEdit.toString()
 
-//                db.collection("rest_Info").document("${longitude_x}_${latitude_y}")
-//                .set(restMap)
+                db.collection("rest_Info").document("${store_registration.get("longitude_x")}_${store_registration.get("latitude_y")}")
+                .set(store_registration)
+
+                val arr = "${store_registration.get("longitude_x")}_${store_registration.get("latitude_y")}"
+
+                val data = hashMapOf("x_y" to arr)
+
+                db.collection("user").document(Firebase.auth.currentUser?.uid.toString())
+                    .update("x_y",FieldValue.arrayUnion(arr))
 
                 Toast.makeText(this, "입력 완료", Toast.LENGTH_LONG).show()
                 val intent = Intent(this,Waiting_List_Page::class.java)
@@ -251,36 +264,30 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
 //    }
 
     //recyleview에 리스트랑 마커 추가
-//    private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
-//        if (!searchResult?.documents.isNullOrEmpty()) {
-//            // 검색 결과 있음
-//            listItems.clear()
-//            Log.d("로그","${searchResult}")//로그 찍기
-//            for (document in searchResult!!.documents)
-//            // 해당 결과들이 documents 에 있으면
-//            {
-//                // 결과를 리사이클러 뷰에 추가
-//                val item = ListLayout(
-//                    document.place_name,
-//                    document.road_address_name,
-//                    document.address_name,
-//                    document.x.toDouble(),
-//                    document.y.toDouble()
-//                )
-//                listItems.add(item)//item에 있는내용 list로 넘기기
-//                listAdapter.notifyDataSetChanged()//listadapter에 변경사항 알리기
+//    private fun addItemsAndMarkers(x : Double, y : Double) {
 //                val marker = Marker()//마커 생성
-//                marker.position = LatLng(document.y.toDouble(),document.x.toDouble())//검색결과나오는거 마커로 찍기
+//                marker.position = LatLng(y,x)//검색결과나오는거 마커로 찍기
 //                marker.map = naverMap// 리스트 초기화
-//                Log.d("로그1","${item}")//로그찍어보기
+//
+//                val infoWindow = InfoWindow()
+//                infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(getApplication()) {
+//                    override fun getText(infoWindow: InfoWindow): CharSequence {
+//                        return "정보 창 내용"
+//                    }
+//                }
+//                // infoWindow.open(marker)
+//                infoWindow.position = LatLng(y,x)
+//                infoWindow.open(naverMap)
+//                val listener = Overlay.OnClickListener { overlay : Overlay ->
+//                    if (marker.infoWindow == null){
+//                        infoWindow.open(marker)
+//                    }else {
+//                        infoWindow.close()
+//                    }
+//                    true
+//                }
 //            }
-//        }
-//        else
-//        {
-//            // 검색 결과가 없을 때 toast 메세지
-//            Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
-//        }
-//    }
+
 
     override fun onDestroy() {
         mbinding = null

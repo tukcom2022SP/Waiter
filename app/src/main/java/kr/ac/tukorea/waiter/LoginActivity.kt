@@ -90,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
                     .addOnSuccessListener { documents ->
                      if (documents != null) { // documents 값이 존재할 때
                         var userType = documents.get("userType").toString()
-                        var a = documents.toObject<UserInfo>()  //인텐트로 페이지를 넘겨줄 때 사용자의 정보도 같이 넘겨주기 위함
+                        var x_y = documents.toObject<UserInfo>()  //인텐트로 페이지를 넘겨줄 때 사용자의 정보도 같이 넘겨주기 위함
 
                          if (userType.equals("customer")) {
                              startActivity(
@@ -98,15 +98,14 @@ class LoginActivity : AppCompatActivity() {
                              )
                          }
                          else if (userType.equals("owner")){
-                             if (a != null) {
-                                 if(!a.x_y.isEmpty()) {
-                                     Log.d("현민  ", "${a}")
-                                     val intent = Intent(this, Waiting_List_Page::class.java)
-                                     intent.putExtra("x_y","${a}")
+                             if (x_y != null) {
+                                 if(!x_y.x_y.isEmpty()) {
+                                     Log.d("현민  ", "${x_y}")
+                                     val intent = Intent(this, StoreList_UseOwner::class.java)
+                                     intent.putExtra("x_y","${x_y}")
                                      startActivity(intent)
                                  }
                                  else {
-                                     Log.d("좌표ㅌ", "${a}")
                                      startActivity(
                                          Intent(this, Information_Registration_Page::class.java)
                                      )
