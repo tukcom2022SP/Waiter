@@ -106,6 +106,7 @@ class LoginActivity : AppCompatActivity() {
                                      startActivity(intent)
                                  }
                                  else {
+                                     Log.d("좌표ㅌ", "${a}")
                                      startActivity(
                                          Intent(this, Information_Registration_Page::class.java)
                                      )

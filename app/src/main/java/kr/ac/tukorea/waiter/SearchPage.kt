@@ -1,6 +1,7 @@
 package kr.ac.tukorea.waiter
 
 import ResultSearchKeyword
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -37,6 +38,7 @@ class SearchPage : AppCompatActivity() {
         binding = ActivitySearchPageBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        val intent = Intent(this, Information_Registration_Page::class.java)
 
         // 리사이클러 뷰
         binding.rvList.layoutManager =
@@ -73,6 +75,17 @@ class SearchPage : AppCompatActivity() {
         listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
 // 여기에서 변수 선언해주고 다음 페이지로 넘어가게 해주어야함
+                intent.putExtra("storeName", listAdapter.itemList.get(position).name)
+                intent.putExtra("roadNameAddress", listAdapter.itemList.get(position).road)
+                intent.putExtra("parcelAddress", listAdapter.itemList.get(position).address)
+                intent.putExtra("storeCallNum", listAdapter.itemList.get(position).phone)
+                intent.putExtra("latitude_y", listAdapter.itemList.get(position).y)
+                intent.putExtra("longitude_x", listAdapter.itemList.get(position).x)
+                Log.d("ddddd", listAdapter.itemList.get(position).name)
+                startActivity(
+                    intent
+                )
+
             }
         })
         binding.btnSearch1.setOnClickListener {
@@ -95,6 +108,7 @@ class SearchPage : AppCompatActivity() {
                 val item = ListLayout(
                     document.place_name,
                     document.road_address_name,
+                    document.phone,
                     document.address_name,
                     document.x.toDouble(),
                     document.y.toDouble()
