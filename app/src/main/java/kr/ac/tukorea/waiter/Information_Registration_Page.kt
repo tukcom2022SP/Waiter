@@ -1,5 +1,6 @@
 package kr.ac.tukorea.waiter
 
+import ResultSearchKeyword
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -12,19 +13,24 @@ import android.util.Log
 import android.view.Menu
 import android.widget.Toast
 import androidx.annotation.UiThread
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.CameraPosition
-import com.naver.maps.map.CameraUpdate
-import com.naver.maps.map.NaverMap
-import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.*
 import com.naver.maps.map.overlay.LocationOverlay
+import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import kr.ac.tukorea.waiter.databinding.ActivityInformationRegistrationPageBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var naverMap: NaverMap
@@ -32,6 +38,9 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
     lateinit var locationCallback: LocationCallback
     private lateinit var locationSource: FusedLocationSource
     val permissionrequest = 99
+
+    val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
+    val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
     companion object {
         const val BASE_URL = "https://dapi.kakao.com/"
         const val API_KEY = "KakaoAK 2f8e49e7fefd85e3d4c11dc88ca0a8fd"
@@ -79,9 +88,10 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
         fun startProcess() {
             //권한 확인
             val fm = supportFragmentManager
+            Log.d("지도확인", "API 지도확인")
             val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
                 ?: MapFragment.newInstance().also {
-                    fm.beginTransaction().add(R.id.map, it).commit()
+                    fm.beginTransaction().add(R.id.map2, it).commit()
                 }
             mapFragment.getMapAsync(this)
         }
@@ -95,29 +105,23 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
             NaverMapSdk.NaverCloudPlatformClient("8eo4a3qdn1")
 
 
-
-
-
-
-
-
-
         binding.searchAddress.setOnClickListener {  // 주소를 등록하기 위한 검색 API 사용 버튼
 
-            val restMap = hashMapOf(
-                // 식당 이름, 주소, x, y, 연락처 DB에 넣기
-                "storeName" to binding.storeAddressEdit.text.toString(),
-//                "roadNameAddress" to binding.text.toString(),
-//                "parcelAddress" to binding.text.toString(),
-//                "storeCallNum" to binding.text.toString(),
-//                "latitude_x" to binding.text.toString(),
-//                "longitude_y" to binding.text.toString()
-            )
+        //    searchKeyword()
+//            val restMap = hashMapOf(
+//                // 식당 이름, 주소, x, y, 연락처 DB에 넣기
+//                "storeName" to binding.storeAddressEdit.text.toString(),
+//                "roadNameAddress" to ,
+//                "parcelAddress" to ,
+//                "storeCallNum" to ,
+//                "latitude_y" to ,
+//                "longitude_x" to
+//            )
 
-            db.collection("restInfo").add(restMap)
-                .addOnSuccessListener {
-
-                }
+//            db.collection("restInfo").add(restMap)
+//                .addOnSuccessListener {
+//
+//                }
 
         }
 
@@ -199,6 +203,67 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
             locationCallback,
             Looper.myLooper()
         )
+    }
+
+    //검색 기능
+    private fun searchKeyword(place_name: String) {
+        //API설정
+        val retrofit = Retrofit.Builder()
+            .baseUrl(MapPage.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val api = retrofit.create(KakaoAPI::class.java)
+        val call = api.getSearchKeyword(MapPage.API_KEY, place_name)
+
+        call.enqueue(object : Callback<ResultSearchKeyword> {
+            //만약에 API와 통신성공시
+            override fun onResponse(
+                call: Call<ResultSearchKeyword>,
+                response: Response<ResultSearchKeyword>
+            ) {
+                Log.d("Test", "성공: ${response.raw()}")//로그찍기
+                Log.d("Test", "Body: ${response.body()}")//로그찍기
+                val x = response.body()?.documents?.get(0)?.x//x 확인 값
+                val y = response.body()?.documents?.get(0)?.y//y 확인 값
+                addItemsAndMarkers(response.body())//result 넘겨주기
+            }
+            //만약에 API와 통신실패시
+            override fun onFailure(call: Call<ResultSearchKeyword>, t: Throwable) {
+                Log.w("MainActivity", "실패 ${t.message}")
+            }
+        })
+    }
+
+    //recyleview에 리스트랑 마커 추가
+    private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
+        if (!searchResult?.documents.isNullOrEmpty()) {
+            // 검색 결과 있음
+            listItems.clear()
+            Log.d("로그","${searchResult}")//로그 찍기
+            for (document in searchResult!!.documents)
+            // 해당 결과들이 documents 에 있으면
+            {
+                // 결과를 리사이클러 뷰에 추가
+                val item = ListLayout(
+                    document.place_name,
+                    document.road_address_name,
+                    document.address_name,
+                    document.x.toDouble(),
+                    document.y.toDouble()
+                )
+                listItems.add(item)//item에 있는내용 list로 넘기기
+                listAdapter.notifyDataSetChanged()//listadapter에 변경사항 알리기
+                val marker = Marker()//마커 생성
+                marker.position = LatLng(document.y.toDouble(),document.x.toDouble())//검색결과나오는거 마커로 찍기
+                marker.map = naverMap// 리스트 초기화
+                Log.d("로그1","${item}")//로그찍어보기
+            }
+        }
+        else
+        {
+            // 검색 결과가 없을 때 toast 메세지
+            Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
+        }
     }
 
     override fun onDestroy() {
