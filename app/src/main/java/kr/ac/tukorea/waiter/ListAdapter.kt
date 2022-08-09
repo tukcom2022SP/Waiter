@@ -12,7 +12,6 @@ class ListAdapter(val itemList: ArrayList<ListLayout>): RecyclerView.Adapter<Lis
         val view = LayoutInflater.from(parent.context).inflate(R.layout.list_layout, parent, false)
         return ViewHolder(view)
     }
-
     override fun getItemCount(): Int {
         return itemList.size
     }
