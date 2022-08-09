@@ -19,6 +19,7 @@
             android:textColor="#B22222"
             android:textSize="25dp"
             android:text="고객 웨이팅 리스트"
+            android:fontFamily="@font/godom"
             />
     </LinearLayout>
 
@@ -38,13 +39,15 @@
             android:layout_marginBottom="10dp"
             android:layout_gravity="center"
             android:text="식당이름"
+            android:fontFamily="@font/godom"
             />
     </LinearLayout>
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
     </ListView>
 
