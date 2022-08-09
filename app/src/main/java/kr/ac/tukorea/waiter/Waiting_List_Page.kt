@@ -41,12 +41,13 @@ class Waiting_List_Page : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        val x_y = intent.getStringExtra("x_y")
+        Log.d("x_y확인", "${x_y}")
         var waitingListInfo = arrayListOf<WaitingListInfo_useWaitingPage>()
 
         db = FirebaseFirestore.getInstance()
 
-        val reserveInfo = db.collection("rest_Info").document("12_34")
+        val reserveInfo = db.collection("rest_Info").document("${x_y}")
             .collection("reservation")
 
 
@@ -108,7 +109,7 @@ class Waiting_List_Page : AppCompatActivity() {
                             alertDialog.dismiss()
                             Log.d("Testdata","확인")
 
-                            val remove = db.collection("rest_Info").document("12_34")   //DB삭제
+                            val remove = db.collection("rest_Info").document("${x_y}")   //DB삭제
                                 .collection("reservation").document("${indexpo}")
                             remove.delete().addOnSuccessListener {
                                 Log.d("Testdata","succes")
