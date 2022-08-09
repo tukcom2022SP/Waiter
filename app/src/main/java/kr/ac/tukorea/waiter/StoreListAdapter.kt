@@ -29,7 +29,8 @@ class StoreListAdapter ( val context: Context, val StoreListInfo: ArrayList<Stor
         val storeinfo =StoreListInfo[position]
         binding2.stroeListName.text = storeinfo.storeName
         binding2.StoreListAddress.text = storeinfo.roadNameAddress
-
+        binding2.longitudeX.text = storeinfo.longitude_x.toString()
+        binding2.latitudeY.text = storeinfo.latitude_y.toString()
 
         return binding2.root
 
