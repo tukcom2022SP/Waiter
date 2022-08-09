@@ -25,6 +25,7 @@ import com.naver.maps.map.*
 import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
+import kotlinx.android.synthetic.main.activity_information_registration_page.*
 import kr.ac.tukorea.waiter.databinding.ActivityInformationRegistrationPageBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -68,6 +69,17 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val intent = Intent(this, MainActivity::class.java)
+        storeAddress.text = intent.getStringExtra("storeAddress")
+
+        val storeName = intent.getStringExtra("storeName")
+        val roadNameAddress = intent.getStringExtra("roadNameAddress")
+        val parcelAddress = intent.getStringExtra("parcelAddress")
+        val storeCallNum = intent.getStringExtra("storeCallNum")
+        val latitude_y = intent.getStringExtra("latitude_y")
+        val longitude_x = intent.getStringExtra("longitude_x")
+
+
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
         mbinding = ActivityInformationRegistrationPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -106,23 +118,24 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
 
 
         binding.searchAddress.setOnClickListener {  // 주소를 등록하기 위한 검색 API 사용 버튼
+            startActivity(
+                Intent(this, MainActivity::class.java)
+            )
 
-        //    searchKeyword()
-//            val restMap = hashMapOf(
-//                // 식당 이름, 주소, x, y, 연락처 DB에 넣기
-//                "storeName" to binding.storeAddressEdit.text.toString(),
-//                "roadNameAddress" to ,
-//                "parcelAddress" to ,
-//                "storeCallNum" to ,
-//                "latitude_y" to ,
-//                "longitude_x" to
-//            )
+            val restMap = hashMapOf(
+                // 식당 이름, 주소, x, y, 연락처 DB에 넣기
+                "storeName" to storeName,
+                "roadNameAddress" to roadNameAddress,
+                "parcelAddress" to parcelAddress,
+                "storeCallNum" to storeCallNum,
+                "latitude_y" to latitude_y,
+                "longitude_x" to longitude_x
+            )
 
-//            db.collection("restInfo").add(restMap)
-//                .addOnSuccessListener {
-//
-//                }
+            db.collection("rest_Info").add(restMap)
+                .addOnSuccessListener {
 
+                }
         }
 
         binding.registrationBtn.setOnClickListener {
