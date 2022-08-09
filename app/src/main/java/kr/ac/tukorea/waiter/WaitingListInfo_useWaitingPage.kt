@@ -1,3 +1,4 @@
 package kr.ac.tukorea.waiter
 
-class WaitingListInfo_useWaitingPage(val customername: String, val phoneNum: String, val customerNum : String)
+class WaitingListInfo_useWaitingPage(val name: String, val phone: String, val customerNum : Int, val index:Int)
+

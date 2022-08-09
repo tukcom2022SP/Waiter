@@ -12,7 +12,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_login.*
 import kr.ac.tukorea.waiter.databinding.ActivityLoginBinding
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
     private var auth : FirebaseAuth? = null
@@ -33,26 +35,45 @@ class LoginActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
 
+        if (userid == null) {
+
+            Timer().schedule(object : TimerTask() {
+                override fun run() {
+                    val intent: Intent = Intent(applicationContext, LoginActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }, 2000)
+
+        }else{
+
+            Timer().schedule(object : TimerTask() {
+                override fun run() {
+                    val intent: Intent = Intent(applicationContext, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+            }, 2000)
+
+        }
+
         binding.loginbutton.setOnClickListener {
             val userEmail = binding.userid.text.toString()
             val password = binding.password.text.toString()
 
             if(binding.userid.text.toString().equals("")
                 ||binding.password.text.toString().equals("")
-            ){
+            ) {
                 Toast.makeText(this, "로그인에 필요한 정보를 모두 입력해 주세요", Toast.LENGTH_SHORT).show()
             } else {
                 doLogin(userEmail, password)
             }
         }
 //clickable 써보자
-
-
         binding.signinButton.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
-
     }
 
     // 로그인 시 실행되는 함수
