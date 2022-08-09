@@ -72,7 +72,13 @@ class LoginActivity : AppCompatActivity() {
                          }
                          else if (userType.equals("owner")){
                              startActivity(
-                                 Intent(this, Information_Registration_Page::class.java)
+//                                 if(collection("user").document
+//                                         .collection("restInfo") != null {
+//                                     Log.d(TAG,"intent waitingPage")
+//                                     Intent(this, Waiting_List_Page::class.java)
+//                                 } else if () {
+                                     Intent(this, Information_Registration_Page::class.java)
+//                                 }
                              )
                          }
                          finish()
