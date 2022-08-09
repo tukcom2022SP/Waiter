@@ -30,16 +30,6 @@ class Waiting_List_Page : AppCompatActivity() {
 
     var db: FirebaseFirestore = Firebase.firestore
 
-    lateinit var newbtn : Button
-
-    data class UserInfo(
-        val index: String? = null,
-        val name: String? = null,
-        val phone: String? = null,
-        val customeNum: Int = 0
-    )
-
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
@@ -56,7 +46,7 @@ class Waiting_List_Page : AppCompatActivity() {
 
         db = FirebaseFirestore.getInstance()
 
-        val reserveInfo = db.collection("rest_Info").document("abc")
+        val reserveInfo = db.collection("rest_Info").document("12_34")
             .collection("reservation")
 
 
@@ -64,6 +54,7 @@ class Waiting_List_Page : AppCompatActivity() {
         reserveInfo.addSnapshotListener { result, e ->
 
             if (result != null) {
+                Log.d("datachk2", "${result.documents}")
 
                 waitingListInfo.clear()
 
@@ -117,7 +108,7 @@ class Waiting_List_Page : AppCompatActivity() {
                             alertDialog.dismiss()
                             Log.d("Testdata","확인")
 
-                            val remove = db.collection("rest_Info").document("abc")   //DB삭제
+                            val remove = db.collection("rest_Info").document("12_34")   //DB삭제
                                 .collection("reservation").document("${indexpo}")
                             remove.delete().addOnSuccessListener {
                                 Log.d("Testdata","succes")
