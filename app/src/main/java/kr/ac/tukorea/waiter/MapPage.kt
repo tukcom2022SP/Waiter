@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
+import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
@@ -34,27 +35,28 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener {
-    val permissionrequest = 99
     private lateinit var naverMap: NaverMap
-    lateinit var fusedLocationProvideClient: FusedLocationProviderClient
-    lateinit var locationCallback: LocationCallback
-    private lateinit var locationSource: FusedLocationSource
     companion object {
+        val permissionrequest = 99
+        val infoWindow = InfoWindow()
+        lateinit var fusedLocationProvideClient: FusedLocationProviderClient
+        lateinit var locationCallback: LocationCallback
+        private lateinit var locationSource: FusedLocationSource
+
         const val BASE_URL = "https://dapi.kakao.com/"
         const val API_KEY = "KakaoAK 2f8e49e7fefd85e3d4c11dc88ca0a8fd"
-        private const val LOCATION_PERMISSION_REQUEST_CODE  = 1000
+        const val LOCATION_PERMISSION_REQUEST_CODE = 1000
+        private lateinit var binding: ActivityMapPageBinding
+        val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
+        val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
+        private var pageNumber = 1      // 검색 페이지 번호
+        private var keyword = ""        // 검색 키워드
+
+        var permissions = arrayOf(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        )
     }
-    private lateinit var binding: ActivityMapPageBinding
-    val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
-    val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
-    private var pageNumber = 1      // 검색 페이지 번호
-    private var keyword = ""        // 검색 키워드
-
-    var permissions = arrayOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
-    )
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
@@ -69,6 +71,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         binding = ActivityMapPageBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
         // 리사이클러 뷰
         binding.rvList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
@@ -237,8 +240,31 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
                 marker.position = LatLng(document.y.toDouble(),document.x.toDouble())//검색결과나오는거 마커로 찍기
                 marker.map = naverMap// 리스트 초기화
                 Log.d("로그1","${item}")//로그찍어보기
+//                     infoWindow.adapter = object: InfoWindow.DefaultTextAdapter(application){
+//                         override fun get(infoWindow: InfoWindow): CharSequence{
+//                             return ""
+//                         }
+//                     }
+//
+                     val infoWindow = InfoWindow()
+                     infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(getApplication()) {
+                         override fun getText(infoWindow: InfoWindow): CharSequence {
+                             return "정보 창 내용"
+                         }
+                     }
+                    // infoWindow.open(marker)
+                     infoWindow.position = LatLng(document.y.toDouble(),document.x.toDouble())
+                     infoWindow.open(naverMap)
+                     val listener = Overlay.OnClickListener { overlay :Overlay->
+                         if (marker.infoWindow == null){
+                                infoWindow.open(marker)
+                         }else {
+                                infoWindow.close()
+                         }
+                         true
+                     }
+                     }
             }
-        }
         else
         {
             // 검색 결과가 없을 때 toast 메세지
