@@ -1,7 +1,9 @@
 package kr.ac.tukorea.waiter
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.Location
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -29,12 +31,16 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
     lateinit var fusedLocationProvideClient: FusedLocationProviderClient
     lateinit var locationCallback: LocationCallback
     private lateinit var locationSource: FusedLocationSource
+    val permissionrequest = 99
     companion object {
         const val BASE_URL = "https://dapi.kakao.com/"
         const val API_KEY = "KakaoAK 2f8e49e7fefd85e3d4c11dc88ca0a8fd"
         const val LOCATION_PERMISSION_REQUEST_CODE  = 1000
     }
-
+    var permissions = arrayOf(
+        Manifest.permission.ACCESS_FINE_LOCATION,
+        Manifest.permission.ACCESS_COARSE_LOCATION
+    )
     var db: FirebaseFirestore = Firebase.firestore
     private var mbinding : ActivityInformationRegistrationPageBinding? = null
     private val binding get() = mbinding!!
@@ -57,6 +63,44 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
         mbinding = ActivityInformationRegistrationPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = FirebaseFirestore.getInstance()
+
+        fun isPermitted(): Boolean {
+            for (perm in permissions) {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        perm
+                    ) != PackageManager.PERMISSION_GRANTED
+                ) {
+                    return false
+                }
+            }
+            return true
+        }
+        fun startProcess() {
+            //권한 확인
+            val fm = supportFragmentManager
+            val mapFragment = fm.findFragmentById(R.id.map) as MapFragment?
+                ?: MapFragment.newInstance().also {
+                    fm.beginTransaction().add(R.id.map, it).commit()
+                }
+            mapFragment.getMapAsync(this)
+        }
+        if (isPermitted()) {
+            startProcess()
+        } else {
+            ActivityCompat.requestPermissions(this, permissions, permissionrequest)
+        }
+        title = "map"
+        NaverMapSdk.getInstance(this).client =
+            NaverMapSdk.NaverCloudPlatformClient("8eo4a3qdn1")
+
+
+
+
+
+
+
+
 
         binding.searchAddress.setOnClickListener {  // 주소를 등록하기 위한 검색 API 사용 버튼
 
