@@ -73,7 +73,7 @@ class SignInActivity : AppCompatActivity() {
                             db.collection("user")
                                    .document(Firebase.auth.currentUser?.uid ?: "No User")
                                    .set(userMap)
-
+                            Toast.makeText(this, "회원가입 완료! 로그인 해주세요", Toast.LENGTH_LONG).show()
                             finish()
                         } // 위에서 말한 모든 경우에 해당하지 않고 회원가입 실패 -> 회원가입 실패
                         else{
