@@ -26,6 +26,16 @@
             android:textSize="20dp"
             android:text="도로명 주소"
             />
+        <TextView
+            android:id="@+id/longitude_x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
+        <TextView
+            android:id="@+id/latitude_y"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
 
     </LinearLayout>
 
