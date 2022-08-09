@@ -21,7 +21,9 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:textSize="15dp"
-                android:text="이름(이메일)"/>
+                android:text="이름(이메일)"
+                android:fontFamily="@font/godom"
+                />
             <View
                 android:layout_width="15dp"
                 android:layout_height="10dp"/>
@@ -31,7 +33,9 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:textSize="15dp"
-                android:text="전화번호"/>
+                android:text="전화번호"
+                android:fontFamily="@font/godom"
+                />
         </LinearLayout>
         <View
             android:id="@+id/brankView1"
@@ -48,6 +52,7 @@
             android:padding="5dp"
             android:textSize="20dp"
             android:text="0명"
+            android:fontFamily="@font/godom"
             />
 
         <LinearLayout
@@ -64,7 +69,18 @@
                 android:textColor="@color/white"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:text="입장완료"/>
+                android:text="입장완료"
+                android:fontFamily="@font/godom"
+                />
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="38dp"
+                android:background="@drawable/button_layout_set"
+                android:textColor="@color/white"
+                android:layout_marginBottom="5dp"
+                android:text="취소"
+                android:fontFamily="@font/godom"
+                />
 
         </LinearLayout>
 
