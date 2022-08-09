@@ -45,6 +45,7 @@ class Waiting_List_Page : AppCompatActivity() {
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
         mInflater.inflate(R.menu.menu1, menu)
+
         return true
     }
 
@@ -60,9 +61,12 @@ class Waiting_List_Page : AppCompatActivity() {
 
 
 
-        reserveInfo.get().addOnSuccessListener { result ->
+        reserveInfo.addSnapshotListener { result, e ->
 
             if (result != null) {
+
+                waitingListInfo.clear()
+
                 for (data in result) {
                     waitingListInfo.addAll(
                         listOf(
@@ -130,7 +134,7 @@ class Waiting_List_Page : AppCompatActivity() {
 
             }
 
-        }
+        } // resereInfo get data
 
     }
 
