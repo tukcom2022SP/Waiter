@@ -100,9 +100,11 @@ class LoginActivity : AppCompatActivity() {
                          else if (userType.equals("owner")){
                              if (x_y != null) {
                                  if(!x_y.x_y.isEmpty()) {
-                                     Log.d("현민  ", "${x_y}")
+                                     //Log.d("현민  ", "${x_y.x_y}")
+                                     var aa = arrayListOf<String>()
+                                     aa.addAll(x_y.x_y)
                                      val intent = Intent(this, StoreList_UseOwner::class.java)
-                                     intent.putExtra("x_y","${x_y}")
+                                     intent.putStringArrayListExtra("x_y",aa)
                                      startActivity(intent)
                                  }
                                  else {
