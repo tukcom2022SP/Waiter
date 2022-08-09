@@ -61,9 +61,10 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         mInflater.inflate(R.menu.menu1, menu)
         return true
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //setContentView(R.layout.activity_map_page)
+//        setContentView(R.layout.activity_map_page)
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
         binding = ActivityMapPageBinding.inflate(layoutInflater)
         val view = binding.root
@@ -191,10 +192,6 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         //내 현 위치 찍어주기
         val myLocation = LatLng(location.latitude, location.longitude)
 
-//        val marker = Marker()
-//        marker.map = naverMap
-//        marker.setOnClickListener(this)
-
         //맵위에 overlay
         val locationOverlay = naverMap.locationOverlay
         naverMap.locationOverlay.run {
@@ -207,6 +204,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         val cameraUpdate = CameraUpdate.scrollTo(myLocation)//카메라 내위치에 표시
         naverMap.moveCamera(cameraUpdate)
     }
+
     override fun onClick(overlay: Overlay): Boolean {
         //마커 클릭하면 mainactivity 넘어가기
         if (overlay is Marker) {
@@ -215,6 +213,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         }
         return true
     }
+
     //recyleview에 리스트랑 마커 추가
     private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
         if (!searchResult?.documents.isNullOrEmpty()) {
