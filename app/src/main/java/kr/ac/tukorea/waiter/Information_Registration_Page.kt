@@ -69,19 +69,32 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val intent = Intent(this, MainActivity::class.java)
-        storeAddress.text = intent.getStringExtra("storeAddress")
-
-        val storeName = intent.getStringExtra("storeName")
-        val roadNameAddress = intent.getStringExtra("roadNameAddress")
-        val parcelAddress = intent.getStringExtra("parcelAddress")
-        val storeCallNum = intent.getStringExtra("storeCallNum")
-        val latitude_y = intent.getStringExtra("latitude_y")
-        val longitude_x = intent.getStringExtra("longitude_x")
-
-
-        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+        //val intent = Intent(this, SearchPage::class.java)
         mbinding = ActivityInformationRegistrationPageBinding.inflate(layoutInflater)
+        if(intent.hasExtra("storeName")) {
+            var storeName = intent.getStringExtra("storeName")
+            var roadNameAddress = intent.getStringExtra("roadNameAddress")
+            var parcelAddress = intent.getStringExtra("parcelAddress")
+            var storeCallNum = intent.getStringExtra("storeCallNum")
+            var latitude_y = intent.getDoubleExtra("latitude_y", 0.0)
+            var longitude_x = intent.getDoubleExtra("longitude_x", 0.0)
+
+
+            var restMap = hashMapOf(
+                // 식당 이름, 주소, x, y, 연락처 DB에 넣기
+                "storeName" to storeName,
+                "roadNameAddress" to roadNameAddress,
+                "parcelAddress" to parcelAddress,
+                "storeCallNum" to storeCallNum,
+                "latitude_y" to latitude_y,
+                "longitude_x" to longitude_x
+            )
+            Log.d("restMap", "${restMap}")
+            binding.storeAddress.text = intent.getStringExtra("roadNameAddress")
+
+        }
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+
         setContentView(binding.root)
         db = FirebaseFirestore.getInstance()
 
@@ -117,38 +130,28 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
             NaverMapSdk.NaverCloudPlatformClient("8eo4a3qdn1")
 
 
+
         binding.searchAddress.setOnClickListener {  // 주소를 등록하기 위한 검색 API 사용 버튼
             startActivity(
-                Intent(this, MainActivity::class.java)
+                Intent(this, SearchPage::class.java)
             )
 
-            val restMap = hashMapOf(
-                // 식당 이름, 주소, x, y, 연락처 DB에 넣기
-                "storeName" to storeName,
-                "roadNameAddress" to roadNameAddress,
-                "parcelAddress" to parcelAddress,
-                "storeCallNum" to storeCallNum,
-                "latitude_y" to latitude_y,
-                "longitude_x" to longitude_x
-            )
 
-            db.collection("rest_Info").add(restMap)
-                .addOnSuccessListener {
 
-                }
         }
 
         binding.registrationBtn.setOnClickListener {
-            if(binding.storeAddressEdit.text.toString().equals("")
+            if(binding.storeAddress.text.toString().equals("")
                 || binding.storeCorpNumEdit.text.toString().equals("") ){
                 Toast.makeText(this, "식당 등록에 필요한 정보를 모두 입력해주세요", Toast.LENGTH_SHORT).show()
             }
             else{
                 //activName.receiveData()
-                AddressString = binding.storeAddressEdit.toString()
+                AddressString = binding.storeAddress.toString()
                 CorpNumString = binding.storeCorpNumEdit.toString()
 
-
+//                db.collection("rest_Info").document("${longitude_x}_${latitude_y}")
+//                .set(restMap)
 
                 Toast.makeText(this, "입력 완료", Toast.LENGTH_LONG).show()
                 val intent = Intent(this,Waiting_List_Page::class.java)
@@ -219,65 +222,65 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
     }
 
     //검색 기능
-    private fun searchKeyword(place_name: String) {
-        //API설정
-        val retrofit = Retrofit.Builder()
-            .baseUrl(MapPage.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val api = retrofit.create(KakaoAPI::class.java)
-        val call = api.getSearchKeyword(MapPage.API_KEY, place_name)
-
-        call.enqueue(object : Callback<ResultSearchKeyword> {
-            //만약에 API와 통신성공시
-            override fun onResponse(
-                call: Call<ResultSearchKeyword>,
-                response: Response<ResultSearchKeyword>
-            ) {
-                Log.d("Test", "성공: ${response.raw()}")//로그찍기
-                Log.d("Test", "Body: ${response.body()}")//로그찍기
-                val x = response.body()?.documents?.get(0)?.x//x 확인 값
-                val y = response.body()?.documents?.get(0)?.y//y 확인 값
-                addItemsAndMarkers(response.body())//result 넘겨주기
-            }
-            //만약에 API와 통신실패시
-            override fun onFailure(call: Call<ResultSearchKeyword>, t: Throwable) {
-                Log.w("MainActivity", "실패 ${t.message}")
-            }
-        })
-    }
+//    private fun searchKeyword(place_name: String) {
+//        //API설정
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl(MapPage.BASE_URL)
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//        val api = retrofit.create(KakaoAPI::class.java)
+//        val call = api.getSearchKeyword(MapPage.API_KEY, place_name)
+//
+//        call.enqueue(object : Callback<ResultSearchKeyword> {
+//            //만약에 API와 통신성공시
+//            override fun onResponse(
+//                call: Call<ResultSearchKeyword>,
+//                response: Response<ResultSearchKeyword>
+//            ) {
+//                Log.d("Test", "성공: ${response.raw()}")//로그찍기
+//                Log.d("Test", "Body: ${response.body()}")//로그찍기
+//                val x = response.body()?.documents?.get(0)?.x//x 확인 값
+//                val y = response.body()?.documents?.get(0)?.y//y 확인 값
+//                addItemsAndMarkers(response.body())//result 넘겨주기
+//            }
+//            //만약에 API와 통신실패시
+//            override fun onFailure(call: Call<ResultSearchKeyword>, t: Throwable) {
+//                Log.w("MainActivity", "실패 ${t.message}")
+//            }
+//        })
+//    }
 
     //recyleview에 리스트랑 마커 추가
-    private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
-        if (!searchResult?.documents.isNullOrEmpty()) {
-            // 검색 결과 있음
-            listItems.clear()
-            Log.d("로그","${searchResult}")//로그 찍기
-            for (document in searchResult!!.documents)
-            // 해당 결과들이 documents 에 있으면
-            {
-                // 결과를 리사이클러 뷰에 추가
-                val item = ListLayout(
-                    document.place_name,
-                    document.road_address_name,
-                    document.address_name,
-                    document.x.toDouble(),
-                    document.y.toDouble()
-                )
-                listItems.add(item)//item에 있는내용 list로 넘기기
-                listAdapter.notifyDataSetChanged()//listadapter에 변경사항 알리기
-                val marker = Marker()//마커 생성
-                marker.position = LatLng(document.y.toDouble(),document.x.toDouble())//검색결과나오는거 마커로 찍기
-                marker.map = naverMap// 리스트 초기화
-                Log.d("로그1","${item}")//로그찍어보기
-            }
-        }
-        else
-        {
-            // 검색 결과가 없을 때 toast 메세지
-            Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
-        }
-    }
+//    private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
+//        if (!searchResult?.documents.isNullOrEmpty()) {
+//            // 검색 결과 있음
+//            listItems.clear()
+//            Log.d("로그","${searchResult}")//로그 찍기
+//            for (document in searchResult!!.documents)
+//            // 해당 결과들이 documents 에 있으면
+//            {
+//                // 결과를 리사이클러 뷰에 추가
+//                val item = ListLayout(
+//                    document.place_name,
+//                    document.road_address_name,
+//                    document.address_name,
+//                    document.x.toDouble(),
+//                    document.y.toDouble()
+//                )
+//                listItems.add(item)//item에 있는내용 list로 넘기기
+//                listAdapter.notifyDataSetChanged()//listadapter에 변경사항 알리기
+//                val marker = Marker()//마커 생성
+//                marker.position = LatLng(document.y.toDouble(),document.x.toDouble())//검색결과나오는거 마커로 찍기
+//                marker.map = naverMap// 리스트 초기화
+//                Log.d("로그1","${item}")//로그찍어보기
+//            }
+//        }
+//        else
+//        {
+//            // 검색 결과가 없을 때 toast 메세지
+//            Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
+//        }
+//    }
 
     override fun onDestroy() {
         mbinding = null
