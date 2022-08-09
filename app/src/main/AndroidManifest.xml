@@ -18,8 +18,14 @@
         android:theme="@style/Theme.Waiter"
         tools:targetApi="31">
         <activity
-            android:name=".OwnerMap"
-            android:exported="true"/>
+            android:name=".SearchPage"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".customerWaitinglist"
             android:exported="false" />

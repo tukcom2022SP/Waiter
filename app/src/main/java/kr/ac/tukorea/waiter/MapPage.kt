@@ -78,9 +78,9 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
 
         listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
-                val marker = Marker()
-                marker.position = LatLng(listItems[position].y, listItems[position].x)
-                marker.map =naverMap
+//                val marker = Marker()
+//                marker.position = LatLng(listItems[position].y, listItems[position].x)
+//                marker.map =naverMap
                 val cameraUpdate =
                     CameraUpdate.scrollTo(LatLng(listItems[position].y, listItems[position].x))
                 naverMap.moveCamera((cameraUpdate))
@@ -222,11 +222,13 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
     private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
         if (!searchResult?.documents.isNullOrEmpty()) {
             // 검색 결과 있음
+            var posx = ""
+            var posy = ""
             listItems.clear()
-            Log.d("로그","${searchResult}")//로그 찍기
+            Log.d("로그", "${searchResult}")//로그 찍기
             for (document in searchResult!!.documents)
             // 해당 결과들이 documents 에 있으면
-                 {
+            {
                 // 결과를 리사이클러 뷰에 추가
                 val item = ListLayout(
                     document.place_name,
@@ -237,35 +239,42 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
                 )
                 listItems.add(item)//item에 있는내용 list로 넘기기
                 listAdapter.notifyDataSetChanged()//listadapter에 변경사항 알리기
-                val marker = Marker()//마커 생성
-                marker.position = LatLng(document.y.toDouble(),document.x.toDouble())//검색결과나오는거 마커로 찍기
-                marker.map = naverMap// 리스트 초기화
-                Log.d("로그1","${item}")//로그찍어보기
+                Log.d("로그1", "${item}")//로그찍어보기
+                posx = document.x
+                posy = document.y
+                val x = item.x
+                val y = item.y
+                val address = item.address
+                val rd = item.road
 //                     infoWindow.adapter = object: InfoWindow.DefaultTextAdapter(application){
 //                         override fun get(infoWindow: InfoWindow): CharSequence{
 //                             return ""
 //                         }
 //                     }
 //
-                     val infoWindow = InfoWindow()
-                     infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(getApplication()) {
-                         override fun getText(infoWindow: InfoWindow): CharSequence {
-                             return "정보 창 내용"
-                         }
-                     }
-                    // infoWindow.open(marker)
-                     infoWindow.position = LatLng(document.y.toDouble(),document.x.toDouble())
-                     infoWindow.open(naverMap)
-                     val listener = Overlay.OnClickListener { overlay :Overlay->
-                         if (marker.infoWindow == null){
-                                infoWindow.open(marker)
-                         }else {
-                                infoWindow.close()
-                         }
-                         true
-                     }
-                     }
             }
+            val marker = Marker()//마커 생성
+            marker.position =
+                LatLng(posy.toDouble(),posx.toDouble())//검색결과나오는거 마커로 찍기
+            marker.map = naverMap// 리스트 초기화
+//            val infoWindow = InfoWindow()
+//            infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(getApplication()) {
+//                override fun getText(infoWindow: InfoWindow): CharSequence {
+//                    return "정보 창 내용"
+//                }
+//            }
+//            // infoWindow.open(marker)
+//            infoWindow.position = LatLng(posy.toDouble(), posx.toDouble())
+//            infoWindow.open(naverMap)
+//            val listener = Overlay.OnClickListener { overlay: Overlay ->
+//                if (marker.infoWindow == null) {
+//                    infoWindow.open(marker)
+//                } else {
+//                    infoWindow.close()
+//                }
+//                true
+//            }
+        }
         else
         {
             // 검색 결과가 없을 때 toast 메세지
