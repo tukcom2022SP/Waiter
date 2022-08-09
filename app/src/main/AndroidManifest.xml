@@ -20,7 +20,9 @@
         <activity
             android:name=".SearchPage"
             android:exported="true" />
-
+        <activity
+            android:name=".StoreList_UseOwner"
+            android:exported="true"/>
         <activity
             android:name=".customerWaitinglist"
             android:exported="true" />

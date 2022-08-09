@@ -18,7 +18,7 @@ class StoreList_UseOwner : AppCompatActivity() {
         setContentView(R.layout.activity_store_list_use_owner)
 
         var storeListinfo = arrayListOf<StoreListInfo_useStoreListPage>()
-
+        
         db2 = FirebaseFirestore.getInstance()
 
         val reserveInfo2 = db2.collection("rest_Info")
@@ -28,8 +28,6 @@ class StoreList_UseOwner : AppCompatActivity() {
                 storeListinfo.clear()
 
                 for (data in result) {
-
-
 
                     storeListinfo.addAll(
                         listOf(

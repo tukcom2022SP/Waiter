@@ -108,8 +108,8 @@ class SearchPage : AppCompatActivity() {
                 val item = ListLayout(
                     document.place_name,
                     document.road_address_name,
-                    document.phone,
                     document.address_name,
+                    document.phone,
                     document.x.toDouble(),
                     document.y.toDouble()
                 )
