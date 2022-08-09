@@ -64,8 +64,9 @@
                     android:layout_marginLeft="32dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="20dp"
+
                     android:fontFamily="@font/godom"
-                    android:text="먼저 사장님의 가게를 주소검색을 통해 등록하여주세요" />
+                    android:text="먼저 사장님의 가게를 주소검색을 통해 등록해주세요" />
 
                 <EditText
                     android:id="@+id/storeAddressEdit"
