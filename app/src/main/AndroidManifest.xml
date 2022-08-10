@@ -24,6 +24,7 @@
 
 
         <activity
+
             android:name=".Owner_Search"
             android:exported="true">
         <intent-filter>
@@ -45,6 +46,7 @@
         <activity
             android:name=".Information_Registration_Page"
             android:exported="true" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true" />
