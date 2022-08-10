@@ -17,29 +17,34 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Waiter"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.naver.maps.map.8eo4a3qdn1"
+            android:value="vNsyPSCAUhaNcqAinP9qzEh6eovnvJx7GlGj2TQD" />
+
+
         <activity
-            android:name=".SearchPage"
-            android:exported="true" />
-        <activity
-            android:name=".StoreList_UseOwner"
-            android:exported="true"/>
-        <activity
-            android:name=".StoreList_UseOwner"
+            android:name=".Owner_Search"
             android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
+        <activity
+            android:name=".Waiter_Search"
+            android:exported="true"/>
 
+        <activity
+            android:name=".StoreList_UseOwner"
+            android:exported="true" />
         <activity
             android:name=".customerWaitinglist"
             android:exported="true" />
         <activity
             android:name=".Information_Registration_Page"
             android:exported="true" />
-
-        <meta-data
-            android:name="com.naver.maps.map.8eo4a3qdn1"
-            android:value="vNsyPSCAUhaNcqAinP9qzEh6eovnvJx7GlGj2TQD" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true" />
@@ -54,13 +59,7 @@
             android:exported="true" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

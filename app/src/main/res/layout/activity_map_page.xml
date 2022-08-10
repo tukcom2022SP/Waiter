@@ -18,28 +18,9 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         android:id="@+id/maplayout"
         android:orientation="vertical">
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/map"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="com.naver.maps.map.MapFragment"
-            />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/slide"
-        android:layout_width="match_parent"
-        android:layout_height="400sp"
-        tools:context=".MapPage"
-        android:orientation="vertical">
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-
-            android:layout_height="wrap_content"
-            android:id="@+id/Searchbar"
-            >
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,23 +38,38 @@
                 android:text="검색"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvList"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="#E8EAF6"
-                app:layout_constraintTop_toBottomOf="@id/searchText"
-                />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-        <RelativeLayout
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/map"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="com.naver.maps.map.MapFragment"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/slide"
+        android:layout_width="match_parent"
+        android:layout_height="400sp"
+        tools:context=".MapPage"
+        android:orientation="vertical">
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/reservationBtn"
-                android:text="예약하기"
-                android:layout_alignParentRight="true"/>
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:id="@+id/restName"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/restAddres"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/restRoad"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/restX"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/restY"/>
     </LinearLayout>
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
