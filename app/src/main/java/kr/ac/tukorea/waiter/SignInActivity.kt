@@ -59,12 +59,15 @@ class SignInActivity : AppCompatActivity() {
                                 "signID" to binding.signmail.text.toString(),
                                 "passwd" to binding.signPW.text.toString(),
                                 "passwdCk" to binding.signPWcheck.text.toString(),
-                                "phoneNum" to binding.signnumber.text.toString()
+                                "phoneNum" to binding.signnumber.text.toString(),
+                                "x_y" to arrayListOf<String>()
                             )
 
                              //db안에 있는 users 컬렉션에 위 userMap에서 담은 정보를 넣어줌
                             if (binding.customer.isChecked) {
+                                userMap.remove("x_y")
                                 userMap["userType"] = "customer"
+
                             }
                             else if(binding.owner.isChecked) {
                                 userMap["userType"] = "owner"

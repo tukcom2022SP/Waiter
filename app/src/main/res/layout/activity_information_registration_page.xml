@@ -68,8 +68,8 @@
                     android:fontFamily="@font/godom"
                     android:text="먼저 사장님의 가게를 주소검색을 통해 등록해주세요" />
 
-                <EditText
-                    android:id="@+id/storeAddressEdit"
+                <TextView
+                    android:id="@+id/storeAddress"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginLeft="32dp"
@@ -93,8 +93,9 @@
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/button_layout_set"
                     android:fontFamily="@font/godom"
-                    android:text="주소 검색 버튼"
+                    android:text="주소 검색"
                     android:textColor="@color/white" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -143,18 +144,19 @@
                 android:textColor="@color/white" />
 
         </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
+
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/map2"
                 android:name="com.naver.maps.map.MapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:layout="@layout/activity_map_page"/>
+                tools:layout="?android:attr/preferenceLayoutChild"/>
         </LinearLayout>
     </LinearLayout>
 

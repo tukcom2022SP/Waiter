@@ -25,23 +25,24 @@
         <entry key="app/src/main/res/drawable/button_layout_set.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2235" />
         <entry key="app/src/main/res/drawable/round_button.xml" value="0.2225" />
-        <entry key="app/src/main/res/layout/activity_customer_waitinglist.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_customer_waitinglist.xml" value="0.21876373291015624" />
         <entry key="app/src/main/res/layout/activity_cwaiting_list_page.xml" value="0.2125" />
         <entry key="app/src/main/res/layout/activity_info_registration_page.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_information_registration_page.xml" value="0.10030212402343747" />
+        <entry key="app/src/main/res/layout/activity_information_registration_page.xml" value="0.21245421245421245" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.197955322265625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19701086956521738" />
-
         <entry key="app/src/main/res/layout/activity_map_page.xml" value="0.15625" />
+        <entry key="app/src/main/res/layout/activity_owner_rests_page.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_search_page.xml" value="0.17296295166015627" />
         <entry key="app/src/main/res/layout/activity_sign_in.xml" value="0.3701781850730257" />
-        <entry key="app/src/main/res/layout/activity_waiting_list_page.xml" value="0.24434546871461732" />
+        <entry key="app/src/main/res/layout/activity_store_list_use_owner.xml" value="0.15476190476190477" />
+        <entry key="app/src/main/res/layout/activity_waiting_list_page.xml" value="0.22980994625367984" />
         <entry key="app/src/main/res/layout/input_information.xml" value="0.26284672833871153" />
+        <entry key="app/src/main/res/layout/list_layout.xml" value="0.18342391304347827" />
         <entry key="app/src/main/res/layout/shadow.xml" value="0.2125" />
-        <entry key="app/src/main/res/layout/waiting_list_page_layout.xml" value="0.29014576345250226" />
-
+        <entry key="app/src/main/res/layout/storelist_layout.xml" value="0.15476190476190477" />
+        <entry key="app/src/main/res/layout/waiting_list_page_layout.xml" value="0.189387401636096" />
         <entry key="app/src/main/res/menu/menu1.xml" value="0.3369415283203125" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.161" />
-        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.161" />
       </map>
     </option>
   </component>

@@ -11,38 +11,45 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_waiter"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Waiter"
         tools:targetApi="31">
-        <activity
-            android:name=".PopupActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CallPopupActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AutoLoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".OwnerMap"
-            android:exported="true" />
-        <activity
-            android:name=".customerWaitinglist"
-            android:exported="false" />
-        <activity
-            android:name=".Information_Registration_Page"
-            android:exported="true" />
 
         <meta-data
             android:name="com.naver.maps.map.8eo4a3qdn1"
             android:value="vNsyPSCAUhaNcqAinP9qzEh6eovnvJx7GlGj2TQD" />
 
+
+        <activity
+
+            android:name=".Owner_Search"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+        <activity
+            android:name=".Waiter_Search"
+            android:exported="true"/>
+
+        <activity
+            android:name=".StoreList_UseOwner"
+            android:exported="true" />
+        <activity
+            android:name=".customerWaitinglist"
+            android:exported="true" />
+        <activity
+            android:name=".Information_Registration_Page"
+            android:exported="true" />
+
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".Waiting_List_Page"
             android:exported="true" />
@@ -54,17 +61,7 @@
             android:exported="true" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true">
-            <activity
-            android:name=".CallPopupActivity"
-                android:theme="@android:style/Theme.Dialog"/>
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>
