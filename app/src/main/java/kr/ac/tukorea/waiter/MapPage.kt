@@ -175,7 +175,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
                 val cameraUpdate =
                     CameraUpdate.scrollTo(LatLng(exam.y.toString().toDouble(), exam.x.toString().toDouble()))
                 naverMap.moveCamera((cameraUpdate))
-
+                binding.paneltitle.visibility = View.INVISIBLE
             }
         }
         else{

@@ -51,7 +51,11 @@
         android:layout_height="400sp"
         tools:context=".MapPage"
         android:orientation="vertical">
-
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/paneltitle"
+            android:textSize="30dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
