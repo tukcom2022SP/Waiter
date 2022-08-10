@@ -41,9 +41,6 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         const val BASE_URL = "https://dapi.kakao.com/"
         const val API_KEY = "KakaoAK 2f8e49e7fefd85e3d4c11dc88ca0a8fd"
         const val LOCATION_PERMISSION_REQUEST_CODE = 1000
-        private lateinit var binding: ActivityMapPageBinding
-        val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
-        val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
         private var pageNumber = 1      // 검색 페이지 번호
         private var keyword = ""        // 검색 키워드
         var permissions = arrayOf(
@@ -51,6 +48,9 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
     }
+    private lateinit var binding: ActivityMapPageBinding
+    val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
+    val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
