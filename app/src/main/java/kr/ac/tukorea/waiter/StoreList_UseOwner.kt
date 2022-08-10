@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.AdapterView
+import android.widget.PopupMenu
 import android.widget.Toast
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -12,6 +13,8 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_store_list_use_owner.*
 import kotlinx.android.synthetic.main.activity_waiting_list_page.*
 import kotlinx.android.synthetic.main.storelist_layout.view.*
+import kr.ac.tukorea.waiter.databinding.ActivityStoreListUseOwnerBinding
+import kr.ac.tukorea.waiter.databinding.ActivityWaitingListPageBinding
 
 class StoreList_UseOwner : AppCompatActivity() {
 
@@ -19,7 +22,7 @@ class StoreList_UseOwner : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_store_list_use_owner)
+        //setContentView(R.layout.activity_store_list_use_owner)
 
         var storeListinfo = arrayListOf<StoreListInfo_useStoreListPage>()
         
@@ -65,5 +68,35 @@ class StoreList_UseOwner : AppCompatActivity() {
             }
 
         }
+    }
+
+    override fun onStart() {  //메뉴 페이지
+        super.onStart()
+
+        val binding = ActivityStoreListUseOwnerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.menubtn.setOnClickListener {
+            var popmenu = PopupMenu(applicationContext,it)
+            menuInflater?.inflate(R.menu.menu1,popmenu.menu)
+            popmenu.show()
+            popmenu.setOnMenuItemClickListener{ item ->
+                when(item.itemId){
+                    R.id.logout -> {
+                        Toast.makeText(applicationContext,"1",Toast.LENGTH_SHORT).show()
+                        return@setOnMenuItemClickListener true
+                    }
+                    R.id.ite1 -> {
+                        Toast.makeText(applicationContext,"2",Toast.LENGTH_SHORT).show()
+                        return@setOnMenuItemClickListener true
+                    }
+                    else->
+                        return@setOnMenuItemClickListener false
+                }
+            }
+        }
+
+
+
     }
 }

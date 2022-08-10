@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Waiter_Search">
+    tools:context=".Owner_Search">
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/searchText1"
+        android:id="@+id/searchText2"
         android:inputType="text"
         android:hint="장소입력"
         app:layout_constraintTop_toTopOf="parent"
         />
     <Button
-        android:id="@+id/btn_search1"
+        android:id="@+id/btn_search2"
         style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -23,11 +23,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvList"
+        android:id="@+id/rvList2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#E8EAF6"
-        app:layout_constraintTop_toBottomOf="@id/searchText1"
+        app:layout_constraintTop_toBottomOf="@id/searchText2"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

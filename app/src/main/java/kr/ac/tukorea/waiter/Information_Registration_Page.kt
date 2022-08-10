@@ -78,31 +78,7 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
         //val intent = Intent(this, SearchPage::class.java)
         mbinding = ActivityInformationRegistrationPageBinding.inflate(layoutInflater)
 
-        if(intent.hasExtra("storeName")) {
-            var storeName = intent.getStringExtra("storeName")
-            var roadNameAddress = intent.getStringExtra("roadNameAddress")
-            var parcelAddress = intent.getStringExtra("parcelAddress")
-            var storeCallNum = intent.getStringExtra("storeCallNum")
-            var latitude_y = intent.getDoubleExtra("latitude_y", 0.0)
-            var longitude_x = intent.getDoubleExtra("longitude_x", 0.0)
 
-
-            var restMap = hashMapOf(
-                // 식당 이름, 주소, x, y, 연락처 DB에 넣기
-                "storeName" to storeName,
-                "roadNameAddress" to roadNameAddress,
-                "parcelAddress" to parcelAddress,
-                "storeCallNum" to storeCallNum,
-                "latitude_y" to latitude_y,
-                "longitude_x" to longitude_x,
-                "counter" to 0
-            )
-            store_registration = restMap.clone() as HashMap<String, Any>
-
-            Log.d("restMap", "${restMap}")
-            binding.storeAddress.text = intent.getStringExtra("roadNameAddress")
-//            addItemsAndMarkers(longitude_x, latitude_y)
-        }
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
         setContentView(binding.root)
@@ -143,7 +119,7 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
 
         binding.searchAddress.setOnClickListener {  // 주소를 등록하기 위한 검색 API 사용 버튼
             startActivity(
-                Intent(this, SearchPage::class.java)
+                Intent(this, Owner_Search::class.java)
             )
         }
 
@@ -210,6 +186,35 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
         fusedLocationProvideClient =
             LocationServices.getFusedLocationProviderClient(this)
         setUpdateLocationListener()
+        if(intent.hasExtra("storeName")) {
+            var storeName = intent.getStringExtra("storeName")
+            var roadNameAddress = intent.getStringExtra("roadNameAddress")
+            var parcelAddress = intent.getStringExtra("parcelAddress")
+            var storeCallNum = intent.getStringExtra("storeCallNum")
+            var latitude_y = intent.getDoubleExtra("latitude_y", 0.0)
+            var longitude_x = intent.getDoubleExtra("longitude_x", 0.0)
+            var restMap = hashMapOf(
+                // 식당 이름, 주소, x, y, 연락처 DB에 넣기
+                "storeName" to storeName,
+                "roadNameAddress" to roadNameAddress,
+                "parcelAddress" to parcelAddress,
+                "storeCallNum" to storeCallNum,
+                "latitude_y" to latitude_y,
+                "longitude_x" to longitude_x,
+                "counter" to 0
+            )
+            store_registration = restMap.clone() as HashMap<String, Any>
+            val marker = Marker()//마커 생성
+            marker.position =
+                LatLng(latitude_y,longitude_x)//검색결과나오는거 마커로 찍기
+            marker.map = naverMap// 리스트 초기화
+            val cameraUpdate =
+                CameraUpdate.scrollTo(LatLng(latitude_y,longitude_x))
+            naverMap.moveCamera((cameraUpdate))
+            Log.d("restMap", "${restMap}")
+            binding.storeAddress.text = intent.getStringExtra("roadNameAddress")
+            //   addItemsAndMarkers(longitude_x, latitude_y)
+        }
     }
 
     //만약에 권한을 받지 못했으면 메세지

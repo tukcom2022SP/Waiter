@@ -33,6 +33,7 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.util.FusedLocationSource
 import kr.ac.tukorea.waiter.databinding.ActivityLoginBinding
+import kotlinx.android.synthetic.main.activity_map_page.*
 import kr.ac.tukorea.waiter.databinding.ActivityMapPageBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -41,35 +42,33 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener {
+class MapPage : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var naverMap: NaverMap
     private var auth : FirebaseAuth? = null
     private lateinit var binding: ActivityMapPageBinding
     var db: FirebaseFirestore = Firebase.firestore
     var counter = 0
+    val infoWindow = InfoWindow()
+    lateinit var fusedLocationProvideClient: FusedLocationProviderClient
+    lateinit var locationCallback: LocationCallback
+    private lateinit var locationSource: FusedLocationSource
+    var phoneNum = "" // 유저 핸드폰 번호
+    var userName = "" // 유저 이름
+
     companion object {
         val permissionrequest = 99
-        val infoWindow = InfoWindow()
-        lateinit var fusedLocationProvideClient: FusedLocationProviderClient
-        lateinit var locationCallback: LocationCallback
-        private lateinit var locationSource: FusedLocationSource
-
         const val BASE_URL = "https://dapi.kakao.com/"
         const val API_KEY = "KakaoAK 2f8e49e7fefd85e3d4c11dc88ca0a8fd"
         const val LOCATION_PERMISSION_REQUEST_CODE = 1000
-        val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
-        val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
-        private var pageNumber = 1      // 검색 페이지 번호
-        private var keyword = ""        // 검색 키워드
-
-        var phoneNum = "" // 유저 핸드폰 번호
-        var userName = "" // 유저 이름
-
+        
         var permissions = arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
     }
+
+    val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
+    val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
@@ -79,24 +78,19 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_map_page)
+
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
         auth = Firebase.auth
         db = FirebaseFirestore.getInstance()
         binding = ActivityMapPageBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
-        if(intent.hasExtra("phone")) {
-            phoneNum = intent.getStringExtra("phone").toString()
-            userName = intent.getStringExtra("name").toString()
-            Log.d("Map intent확인", "${phoneNum}")
+        binding.btnSearch.setOnClickListener {
+            val SearchIntent = Intent(this, Waiter_Search::class.java)
+            startActivity(SearchIntent)
         }
+        LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        // 리사이클러 뷰
-        binding.rvList.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvList.adapter = listAdapter
 
         listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
@@ -108,12 +102,6 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
                 naverMap.moveCamera((cameraUpdate))
             }
         })
-        binding.btnSearch.setOnClickListener {
-            keyword = binding.searchText.text.toString()
-            pageNumber = 1
-            searchKeyword(keyword)
-        }
-
         binding.reservationBtn.setOnClickListener {
 
             var reservationMap = hashMapOf(
@@ -221,6 +209,29 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         fusedLocationProvideClient =
             LocationServices.getFusedLocationProviderClient(this)
         setUpdateLocationListener()
+        if (intent.hasExtra("name")) {
+            phoneNum = intent.getStringExtra("phone").toString()
+            userName = intent.getStringExtra("name").toString()
+            var exam = intent.getParcelableExtra<Exam>("examKey")
+            Log.d("로그확인", "phoneNum")
+            if (exam != null) {
+                findPlace(exam)
+                val marker = Marker()//마커 생성
+                marker.position =
+                    LatLng(exam.y.toString().toDouble(),exam.x.toString().toDouble())//검색결과나오는거 마커로 찍기
+                marker.map = naverMap// 리스트 초기화
+                val cameraUpdate =
+                    CameraUpdate.scrollTo(LatLng(exam.y.toString().toDouble(), exam.x.toString().toDouble()))
+                naverMap.moveCamera((cameraUpdate))
+
+                binding.paneltitle.visibility = View.INVISIBLE
+
+            }
+        }
+        else{
+            Log.d("로그확인실패","phoneNum")
+            Toast.makeText(this, "검색 exam 키가 없습니다", Toast.LENGTH_SHORT).show()
+        }
     }
     //만약에 권한을 받지 못했으면 메세지
     @SuppressLint("MissingPermission")
@@ -261,17 +272,36 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         locationOverlay.iconHeight = LocationOverlay.SIZE_AUTO
         val cameraUpdate = CameraUpdate.scrollTo(myLocation)//카메라 내위치에 표시
         naverMap.moveCamera(cameraUpdate)
+
     }
 
-    override fun onClick(overlay: Overlay): Boolean {
-        //마커 클릭하면 mainactivity 넘어가기
-        if (overlay is Marker) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
-        }
-        return true
+
+
+    fun findPlace(exam: Exam){
+        var posX = ""
+        var posY = ""
+
+        Log.d("로그확인exam","${exam}")
+
+        restName.text = exam?.name
+        restAddres.text = exam?.address
+        restRoad.text = exam?.road
+        restX.text = exam?.x
+        restY.text = exam?.y
+        posX = exam?.x.toString()
+        posY = exam?.y.toString()
+
     }
 
+
+    //    override fun onClick(overlay: Overlay): Boolean {
+//        //마커 클릭하면 mainactivity 넘어가기
+//        if (overlay is Marker) {
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
+//        }
+//        return true
+//    }
     //recyleview에 리스트랑 마커 추가
     private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
         if (!searchResult?.documents.isNullOrEmpty()) {
@@ -280,7 +310,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
             Log.d("로그","${searchResult}")//로그 찍기
             for (document in searchResult!!.documents)
             // 해당 결과들이 documents 에 있으면
-                 {
+            {
                 // 결과를 리사이클러 뷰에 추가
                 val item = ListLayout(
                     document.place_name,
@@ -302,29 +332,52 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
 //                         }
 //                     }
 //
-                     val infoWindow = InfoWindow()
-                     infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(getApplication()) {
-                         override fun getText(infoWindow: InfoWindow): CharSequence {
-                             return "정보 창 내용"
-                         }
-                     }
-                    // infoWindow.open(marker)
-                     infoWindow.position = LatLng(document.y.toDouble(),document.x.toDouble())
-                     infoWindow.open(naverMap)
-                     val listener = Overlay.OnClickListener { overlay :Overlay->
-                         if (marker.infoWindow == null){
-                                infoWindow.open(marker)
-                         }else {
-                                infoWindow.close()
-                         }
-                         true
-                     }
-                     }
-            }
-        else
-        {
-            // 검색 결과가 없을 때 toast 메세지
-            Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
+
+//            }
+//            val marker = Marker()//마커 생성
+//            marker.position =
+//                LatLng(posy.toDouble(),posx.toDouble())//검색결과나오는거 마커로 찍기
+//            marker.map = naverMap// 리스트 초기화
+//            val infoWindow = InfoWindow()
+//            infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(getApplication()) {
+//                override fun getText(infoWindow: InfoWindow): CharSequence {
+//                    return "정보 창 내용"
+//                }
+//            }
+//            // infoWindow.open(marker)
+//            infoWindow.position = LatLng(posy.toDouble(), posx.toDouble())
+//            infoWindow.open(naverMap)
+//            val listener = Overlay.OnClickListener { overlay: Overlay ->
+//                if (marker.infoWindow == null) {
+//                    infoWindow.open(marker)
+//                } else {
+//                    infoWindow.close()
+//                }
+//                true
+//            }
+//        }
+//        else
+//        {
+//            // 검색 결과가 없을 때 toast 메세지
+//            Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
+//        }
+//    }
+    //뒤로 가기 버튼을 2번 눌렀을 때 앱 종료 가능
+    private var backBtnTime: Long = 0
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        var curTime = System.currentTimeMillis();
+        var gapTime = curTime - backBtnTime
+        if(0 <= gapTime && 2000 >= gapTime) {
+            super.onBackPressed();
+        }
+        else {
+            backBtnTime = curTime;
+            Toast.makeText(this, "한번 더 누르면 종료됩니다.",Toast.LENGTH_SHORT).show();
+
         }
     }
 }
+
+
