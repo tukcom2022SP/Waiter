@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -59,6 +60,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         const val BASE_URL = "https://dapi.kakao.com/"
         const val API_KEY = "KakaoAK 2f8e49e7fefd85e3d4c11dc88ca0a8fd"
         const val LOCATION_PERMISSION_REQUEST_CODE = 1000
+        
         var permissions = arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
@@ -107,21 +109,28 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
                 "phoneNum" to phoneNum,
                 "customerNum" to 100
             )
+            db.collection("rest_Info").get().addOnSuccessListener { result ->
+
+                for ( document in result) {
+                    Log.d("일치값 확인", "${result}")
+               }
+            }
 
 
             db.collection("rest_Info").document("126.484480056159_33.5124867330564")
                 .get().addOnSuccessListener {
                     if (it.exists()){
                         counter = it.get("counter").toString().toInt()
-                        counter+=1
                     }
                 }
 
-            db.collection("rest_info").document("126.484480056159_33.5124867330564")
-                .update("counter", counter.toString().toInt())
+            db.collection("rest_Info").document("126.484480056159_33.5124867330564")
+                .update("counter", FieldValue.increment(1))
 
             db.collection("rest_Info").document("126.484480056159_33.5124867330564")
-                .collection("reservation").document(counter.toString())
+                .collection("reservation").document(
+                    counter.toString()
+                )
                 .set(reservationMap)
         }
 
