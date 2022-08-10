@@ -113,7 +113,7 @@ class Waiter_Search : AppCompatActivity(){
                     mapIntent.putExtra("road",listItems[position].road)
                     mapIntent.putExtra("x",listItems[position].x)
                     mapIntent.putExtra("y",listItems[position].y)
-                    myExam = Exam(listItems[position].name,listItems[position].address,listItems[position].road,listItems[position].x.toString(),listItems[position].y.toString())
+                    myExam = Exam(listItems[position].name,listItems[position].address,listItems[position].road,listItems[position].phone,listItems[position].x.toString(),listItems[position].y.toString())
                     mapIntent.putExtra("examKey",myExam)
                     startActivity(mapIntent)
                 }
