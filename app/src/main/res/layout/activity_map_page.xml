@@ -16,19 +16,23 @@
     app:umanoShadowHeight="0dp"
     android:background="@color/white"
     >
+
     <LinearLayout
+        android:id="@+id/maplayout"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:id="@+id/maplayout"
         android:orientation="vertical">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/searchText"
-                android:inputType="text"
-                android:hint="장소입력"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+
+        <EditText
+            android:id="@+id/searchText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="장소입력"
+            android:inputType="text"
+            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
             <Button
                 android:id="@+id/btn_search"
                 style="@style/Widget.AppCompat.Button.Small"
@@ -38,13 +42,24 @@
                 android:text="검색"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-                
+
+            <Button
+                android:id="@+id/reservationBtn"
+                style="@style/Widget.AppCompat.Button.Small"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="8dp"
+                android:text="예약하기" />
+        </LinearLayout>
+
+
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map"
+            android:name="com.naver.maps.map.MapFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.naver.maps.map.MapFragment"
-            />
+            tools:layout="?android:attr/preferenceLayoutChild" />
     </LinearLayout>
     
     <LinearLayout
