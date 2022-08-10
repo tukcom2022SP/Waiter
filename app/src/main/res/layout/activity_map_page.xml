@@ -33,6 +33,7 @@
                 android:fontFamily="@font/godom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+                
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/map"
             android:layout_width="match_parent"
@@ -40,12 +41,14 @@
             android:name="com.naver.maps.map.MapFragment"
             />
     </LinearLayout>
+    
     <LinearLayout
         android:id="@+id/slide"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         tools:context=".MapPage"
         android:orientation="vertical">
+        
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

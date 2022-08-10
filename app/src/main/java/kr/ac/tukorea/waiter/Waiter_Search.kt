@@ -39,7 +39,7 @@ class Waiter_Search : AppCompatActivity(){
         binding = ActivitySearchPageBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        val intent = Intent(this, Information_Registration_Page::class.java)
+//        val intent = Intent(this, Information_Registration_Page::class.java)
 
         // 리사이클러 뷰
         binding.rvList.layoutManager =

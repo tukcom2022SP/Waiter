@@ -1,6 +1,7 @@
 package kr.ac.tukorea.waiter
 
 
+import ResultSearchKeyword
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -30,10 +31,16 @@ import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.util.FusedLocationSource
+import kr.ac.tukorea.waiter.databinding.ActivityLoginBinding
 import kotlinx.android.synthetic.main.activity_map_page.*
 import kr.ac.tukorea.waiter.databinding.ActivityMapPageBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
-//,Overlay.OnClickListener
+
 class MapPage : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var naverMap: NaverMap
     private var auth : FirebaseAuth? = null
@@ -120,6 +127,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
             Log.d("posx확인","posx")
         }
 
+
         fun isPermitted(): Boolean {
             for (perm in permissions) {
                 if (ContextCompat.checkSelfPermission(
@@ -179,6 +187,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
     fun setLastLocation(location: Location) {
         //내 현 위치 찍어주기
         val myLocation = LatLng(location.latitude, location.longitude)
+
         //맵위에 overlay
         val locationOverlay = naverMap.locationOverlay
         naverMap.locationOverlay.run {
@@ -253,6 +262,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
 
     fun findPlace(exam: Exam){
         Log.d("로그확인exam","${exam}")
+
         restName.text = exam?.name
         restAddres.text = "    주소: "+exam?.address
         restRoad.text = "    도로명: "+exam?.road
@@ -271,23 +281,36 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
 //        return true
 //    }
     //recyleview에 리스트랑 마커 추가
-//    private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
-//        if (!searchResult?.documents.isNullOrEmpty()) {
-//            // 검색 결과 있음
-//            var posx = ""
-//            var posy = ""
-//           posx = document.x
-//                posy = document.y
-//                val x = item.x
-//                val y = item.y
-//                val address = item.address
-//                val rd = item.road
+    private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
+        if (!searchResult?.documents.isNullOrEmpty()) {
+            // 검색 결과 있음
+            listItems.clear()
+            Log.d("로그","${searchResult}")//로그 찍기
+            for (document in searchResult!!.documents)
+            // 해당 결과들이 documents 에 있으면
+            {
+                // 결과를 리사이클러 뷰에 추가
+                val item = ListLayout(
+                    document.place_name,
+                    document.road_address_name,
+                    document.address_name,
+                    document.phone,
+                    document.x.toDouble(),
+                    document.y.toDouble()
+                )
+                listItems.add(item)//item에 있는내용 list로 넘기기
+                listAdapter.notifyDataSetChanged()//listadapter에 변경사항 알리기
+                val marker = Marker()//마커 생성
+                marker.position = LatLng(document.y.toDouble(),document.x.toDouble())//검색결과나오는거 마커로 찍기
+                marker.map = naverMap// 리스트 초기화
+                Log.d("로그1","${item}")//로그찍어보기
 //                     infoWindow.adapter = object: InfoWindow.DefaultTextAdapter(application){
 //                         override fun get(infoWindow: InfoWindow): CharSequence{
 //                             return ""
 //                         }
 //                     }
 //
+
 //            }
 //            val marker = Marker()//마커 생성
 //            marker.position =
@@ -330,6 +353,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         else {
             backBtnTime = curTime;
             Toast.makeText(this, "한번 더 누르면 종료됩니다.",Toast.LENGTH_SHORT).show();
+
         }
     }
 }
