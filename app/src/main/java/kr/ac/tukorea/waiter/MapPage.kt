@@ -41,7 +41,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener {
+class MapPage : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var naverMap: NaverMap
     private var auth : FirebaseAuth? = null
     private lateinit var binding: ActivityMapPageBinding

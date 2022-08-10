@@ -27,7 +27,6 @@
             android:name=".SearchPage"
             android:exported="true" />
         <activity
-            android:name=".StoreList_UseOwner"
             android:name=".Owner_Search"
             android:exported="true"/>
         <activity
@@ -57,11 +56,9 @@
             android:exported="true" />
         <activity
             android:name=".LoginActivity"
-                <category android:name="android.intent.category.LAUNCHER" />
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
