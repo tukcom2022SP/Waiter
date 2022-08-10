@@ -33,31 +33,7 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = FirebaseFirestore.getInstance()
-
-
-
-//        if (userid == null) {
-//
-  //          Timer().schedule(object : TimerTask() {
-  //              override fun run() {
-  //                  val intent: Intent = Intent(applicationContext, LoginActivity::class.java)
-  //                  startActivity(intent)
-  //                  finish()
-  //              }
-  //          }, 2000)
-
-  //      }else{
-
-    //        Timer().schedule(object : TimerTask() {
-      //          override fun run() {
-        //            val intent: Intent = Intent(applicationContext, MainActivity::class.java)
-          //          startActivity(intent)
-            //        finish()
-         //       }
-       //     }, 2000)
-
-    //    }
-
+        val map_intent = Intent(this, MapPage::class.java)
 
         binding.loginbutton.setOnClickListener {
             val userEmail = binding.userid.text.toString()
@@ -68,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
             ) {
                 Toast.makeText(this, "로그인에 필요한 정보를 모두 입력해 주세요", Toast.LENGTH_SHORT).show()
             } else {
-                doLogin(userEmail, password)
+                doLogin(userEmail, password, map_intent)
             }
         }
 
@@ -80,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // 로그인 시 실행되는 함수
-    private fun doLogin(userEmail: String, password: String) {
+    private fun doLogin(userEmail: String, password: String, map_intent:Intent) {
         Log.d("data33",Firebase.auth.currentUser?.uid.toString() )
         Firebase.auth.signInWithEmailAndPassword(userEmail, password)
             .addOnCompleteListener(this) { // it: Task<AuthResult!>
@@ -93,16 +69,21 @@ class LoginActivity : AppCompatActivity() {
                         var x_y = documents.toObject<UserInfo>()  //인텐트로 페이지를 넘겨줄 때 사용자의 정보도 같이 넘겨주기 위함
 
                          if (userType.equals("customer")) {
+                             map_intent.putExtra("name", "${documents.get("signName")}")
+                             map_intent.putExtra("phone", "${documents.get("phoneNum")}")
+                             Log.d("Login", "${documents.get("signName")}")
                              startActivity(
-                                 Intent(this, MapPage::class.java)
+                                 map_intent
                              )
                          }
                          else if (userType.equals("owner")){
                              if (x_y != null) {
                                  if(!x_y.x_y.isEmpty()) {
-                                     Log.d("현민  ", "${x_y}")
+                                     //Log.d("현민  ", "${x_y.x_y}")
+                                     var aa = arrayListOf<String>()
+                                     aa.addAll(x_y.x_y)
                                      val intent = Intent(this, StoreList_UseOwner::class.java)
-                                     intent.putExtra("x_y","${x_y}")
+                                     intent.putStringArrayListExtra("x_y",aa)
                                      startActivity(intent)
                                  }
                                  else {
