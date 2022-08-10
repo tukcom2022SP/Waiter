@@ -10,7 +10,7 @@
     android:layout_width="match_parent"
     android:layout_gravity="bottom"
     android:gravity = "bottom"
-    sothree:umanoPanelHeight="68dp"
+    sothree:umanoPanelHeight="1dp"
     sothree:umanoShadowHeight="4dp"
     app:umanoOverlay="false"
     app:umanoShadowHeight="0dp"
@@ -20,22 +20,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/maplayout"
-        android:orientation="vertical">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/searchText"
-                android:inputType="text"
-                android:hint="장소입력"
-                app:layout_constraintTop_toTopOf="parent"
-                />
+        android:orientation="vertical"
+        android:background="@color/black">
             <Button
                 android:id="@+id/btn_search"
                 style="@style/Widget.AppCompat.Button.Small"
-                android:layout_width="100dp"
+                android:layout_width="400dp"
+                android:layout_gravity="center"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="검색"
+                android:text="검색창"
+                android:textSize="20dp"
+                android:fontFamily="@font/godom"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         <androidx.fragment.app.FragmentContainerView
@@ -48,39 +43,58 @@
     <LinearLayout
         android:id="@+id/slide"
         android:layout_width="match_parent"
-        android:layout_height="400sp"
+        android:layout_height="200dp"
         tools:context=".MapPage"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/paneltitle"
-            android:textSize="30dp"/>
+            android:text="식당을 먼저 검색해주세요"
+            android:textSize="33sp"
+            android:layout_gravity="center"
+            android:fontFamily="@font/godom"
+            />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/restName"/>
+            android:textSize="50sp"
+            android:id="@+id/restName"
+            android:layout_gravity="center"
+            android:fontFamily="@font/godom"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/restAddres"/>
+            android:id="@+id/restAddres"
+            android:fontFamily="@font/godom"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/restRoad"/>
+            android:id="@+id/restRoad"
+            android:fontFamily="@font/godom"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/restX"/>
+            android:id="@+id/restPhone"
+            android:fontFamily="@font/godom"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/restY"/>
+            android:id="@+id/restX"
+            android:fontFamily="@font/godom"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/restY"
+            android:fontFamily="@font/godom"/>
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:id="@+id/reservationBtn"
             android:text="예약하기"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:visibility="invisible"
+            android:layout_gravity="center"
+            android:fontFamily="@font/godom"/>
     </LinearLayout>
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>

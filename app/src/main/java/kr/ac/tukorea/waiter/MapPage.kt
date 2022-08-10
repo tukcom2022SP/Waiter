@@ -28,6 +28,7 @@ import com.naver.maps.map.*
 import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.android.synthetic.main.activity_map_page.*
 import kr.ac.tukorea.waiter.databinding.ActivityMapPageBinding
@@ -45,7 +46,8 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var locationSource: FusedLocationSource
     var phoneNum = "" // 유저 핸드폰 번호
     var userName = "" // 유저 이름
-
+    private var posx:Double = 0.0
+    private var posy: Double = 0.0
     companion object {
         val permissionrequest = 99
         const val BASE_URL = "https://dapi.kakao.com/"
@@ -81,16 +83,16 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         }
         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-        listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
-                val marker = Marker()
-                marker.position = LatLng(listItems[position].y, listItems[position].x)
-                marker.map =naverMap
-                val cameraUpdate =
-                    CameraUpdate.scrollTo(LatLng(listItems[position].y, listItems[position].x))
-                naverMap.moveCamera((cameraUpdate))
-            }
-        })
+//        listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
+//            override fun onClick(v: View, position: Int) {
+//                val marker = Marker()
+//                marker.position = LatLng(listItems[position].y, listItems[position].x)
+//                marker.map =naverMap
+//                val cameraUpdate =
+//                    CameraUpdate.scrollTo(LatLng(listItems[position].y, listItems[position].x))
+//                naverMap.moveCamera((cameraUpdate))
+//            }
+//        })
         binding.reservationBtn.setOnClickListener {
 
             var reservationMap = hashMapOf(
@@ -114,6 +116,8 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
             db.collection("rest_Info").document("126.484480056159_33.5124867330564")
                 .collection("reservation").document(counter.toString())
                 .set(reservationMap)
+
+            Log.d("posx확인","posx")
         }
 
         fun isPermitted(): Boolean {
@@ -147,42 +151,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
             NaverMapSdk.NaverCloudPlatformClient("8eo4a3qdn1")
         return
     }
-    @UiThread
-    override fun onMapReady(naverMap: NaverMap) {
-        //맵구현
-        this.naverMap = naverMap
-        naverMap.uiSettings.isLocationButtonEnabled = true
-        naverMap.locationSource = locationSource
-        val cameraPosition = CameraPosition(
-            LatLng(37.343991285297, 126.74729588817),
-            16.0
-        )
-        naverMap.cameraPosition = cameraPosition
-        fusedLocationProvideClient =
-            LocationServices.getFusedLocationProviderClient(this)
-        setUpdateLocationListener()
-        if (intent.hasExtra("name")) {
-            phoneNum = intent.getStringExtra("phone").toString()
-            userName = intent.getStringExtra("name").toString()
-            var exam = intent.getParcelableExtra<Exam>("examKey")
-            Log.d("로그확인", "phoneNum")
-            if (exam != null) {
-                findPlace(exam)
-                val marker = Marker()//마커 생성
-                marker.position =
-                    LatLng(exam.y.toString().toDouble(),exam.x.toString().toDouble())//검색결과나오는거 마커로 찍기
-                marker.map = naverMap// 리스트 초기화
-                val cameraUpdate =
-                    CameraUpdate.scrollTo(LatLng(exam.y.toString().toDouble(), exam.x.toString().toDouble()))
-                naverMap.moveCamera((cameraUpdate))
-                binding.paneltitle.visibility = View.INVISIBLE
-            }
-        }
-        else{
-            Log.d("로그확인실패","phoneNum")
-            Toast.makeText(this, "검색 exam 키가 없습니다", Toast.LENGTH_SHORT).show()
-        }
-    }
+
     //만약에 권한을 받지 못했으면 메세지
     @SuppressLint("MissingPermission")
 
@@ -219,25 +188,77 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         locationOverlay.isVisible = true
         locationOverlay.iconWidth = LocationOverlay.SIZE_AUTO
         locationOverlay.iconHeight = LocationOverlay.SIZE_AUTO
-        val cameraUpdate = CameraUpdate.scrollTo(myLocation)//카메라 내위치에 표시
-        naverMap.moveCamera(cameraUpdate)
-
+//        var cameraUpdate = CameraUpdate.scrollTo(myLocation)//카메라 내위치에 표시
+//            .animate(CameraAnimation.Linear)
+//       naverMap.moveCamera(cameraUpdate)
+    }
+    @UiThread
+    override fun onMapReady(naverMap: NaverMap) {
+        //맵구현
+        this.naverMap = naverMap
+        naverMap.uiSettings.isLocationButtonEnabled = true
+        naverMap.locationSource = locationSource
+        var cameraPosition = CameraPosition(
+            LatLng(37.343991285297, 126.74729588817),
+            16.0
+        )
+      naverMap.cameraPosition = cameraPosition
+        fusedLocationProvideClient =
+            LocationServices.getFusedLocationProviderClient(this)
+        setUpdateLocationListener()
+        if (intent.hasExtra("name")) {
+            phoneNum = intent.getStringExtra("phone").toString()
+            userName = intent.getStringExtra("name").toString()
+            var exam = intent.getParcelableExtra<Exam>("examKey")
+            Log.d("로그확인", "phoneNum")
+            if (exam != null) {
+                findPlace(exam)
+                val marker = Marker()//마커 생성
+                marker.position =
+                    LatLng(exam.y.toString().toDouble(),exam.x.toString().toDouble())//검색결과나오는거 마커로 찍기
+                marker.map = naverMap// 리스트 초기화
+                val infoWindow = InfoWindow()
+            infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(getApplication()) {
+                override fun getText(infoWindow: InfoWindow): CharSequence {
+                    return "정보 창 내용"
+                }
+            }
+            // infoWindow.open(marker)
+            infoWindow.position = LatLng(posy.toDouble(), posx.toDouble())
+            infoWindow.open(naverMap)
+            val listener = Overlay.OnClickListener { overlay: Overlay ->
+                if (marker.infoWindow == null) {
+                    infoWindow.open(marker)
+                } else {
+                    infoWindow.close()
+                }
+                true
+            }
+                 var cameraUpdate =
+                    CameraUpdate.scrollTo(LatLng(exam.y.toString().toDouble(), exam.x.toString().toDouble()))
+                        .animate(CameraAnimation.Easing)
+                var newlocation = LatLng(exam.y.toString().toDouble(), exam.x.toString().toDouble())
+                naverMap.moveCamera(cameraUpdate)
+                binding.paneltitle.visibility = View.GONE
+                binding.reservationBtn.visibility = View.VISIBLE
+            }
+        }
+        else{
+            Log.d("로그확인실패","phoneNum")
+            // Toast.makeText(this, "검색 exam 키가 없습니다", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
 
     fun findPlace(exam: Exam){
-        var posX = ""
-        var posY = ""
-
         Log.d("로그확인exam","${exam}")
         restName.text = exam?.name
-        restAddres.text = exam?.address
-        restRoad.text = exam?.road
-        restX.text = exam?.x
-        restY.text = exam?.y
-        posX = exam?.x.toString()
-        posY = exam?.y.toString()
+        restAddres.text = "    주소: "+exam?.address
+        restRoad.text = "    도로명: "+exam?.road
+        restPhone.text = "    번호: "+exam?.phone
+        posx = exam?.x!!.toDouble()
+        posy = exam?.y!!.toDouble()
     }
 
 
