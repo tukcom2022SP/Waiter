@@ -35,28 +35,6 @@ class LoginActivity : AppCompatActivity() {
         db = FirebaseFirestore.getInstance()
 
 
-        if (userid == null) {
-
-            Timer().schedule(object : TimerTask() {
-                override fun run() {
-                    val intent: Intent = Intent(applicationContext, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-            }, 2000)
-
-        }else{
-
-            Timer().schedule(object : TimerTask() {
-                override fun run() {
-                    val intent: Intent = Intent(applicationContext, MainActivity::class.java)
-                    startActivity(intent)
-                    finish()
-                }
-            }, 2000)
-
-        }
-
         binding.loginbutton.setOnClickListener {
             val userEmail = binding.userid.text.toString()
             val password = binding.password.text.toString()
