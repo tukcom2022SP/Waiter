@@ -7,12 +7,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_marginLeft="100dp"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
             android:padding="5dp"
@@ -21,6 +21,12 @@
             android:text="고객 웨이팅 리스트"
             android:fontFamily="@font/godom"
             />
+        <Button
+            android:id="@+id/menubtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="5dp"/>
     </LinearLayout>
 
 
@@ -41,20 +47,10 @@
             android:text="식당이름"
             android:fontFamily="@font/godom"
             />
-        <Button
-            android:id="@+id/newbtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="125dp"
-            android:layout_marginTop="5dp"/>
+
 
     </LinearLayout>
 
-
-<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-<!--        android:id="@+id/swapelayout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent">-->
 
         <ListView
             android:id="@+id/listView"
@@ -62,11 +58,6 @@
             android:layout_height="match_parent">
 
         </ListView>
-
-<!--    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
-
-
-
 
 
 </LinearLayout>
