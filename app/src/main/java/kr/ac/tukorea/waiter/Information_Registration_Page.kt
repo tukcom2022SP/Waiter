@@ -78,6 +78,7 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
         //val intent = Intent(this, SearchPage::class.java)
         mbinding = ActivityInformationRegistrationPageBinding.inflate(layoutInflater)
 
+
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
 
         setContentView(binding.root)
