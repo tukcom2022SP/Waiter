@@ -57,6 +57,7 @@
             android:exported="true" />
         <activity
             android:name=".LoginActivity"
+                <category android:name="android.intent.category.LAUNCHER" />
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

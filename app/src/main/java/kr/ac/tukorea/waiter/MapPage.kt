@@ -94,6 +94,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
 //        binding.rvList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
+//        binding.btnSearch.setOnClickListener {
 
         listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
