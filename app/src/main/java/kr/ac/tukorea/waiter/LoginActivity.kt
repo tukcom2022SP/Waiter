@@ -33,7 +33,9 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = FirebaseFirestore.getInstance()
+
         val map_intent = Intent(this, MapPage::class.java)
+
 
         binding.loginbutton.setOnClickListener {
             val userEmail = binding.userid.text.toString()
@@ -105,7 +107,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else {
                     Log.w("LoginActivity", "signInWithEmail", it.exception)
-                    Toast.makeText(this, "로그인 실패!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "아이디 혹은 비밀번호 오류로 인한 로그인 실패!", Toast.LENGTH_SHORT).show()
                 }
             }
     }

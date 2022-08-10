@@ -19,28 +19,31 @@ import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.activity_waiting_list_page.*
+import kr.ac.tukorea.waiter.databinding.ActivityWaitingListPageBinding
 import kr.ac.tukorea.waiter.databinding.WaitingListPageLayoutBinding
 import java.text.FieldPosition
 
 
 class Waiting_List_Page : AppCompatActivity() {
 
-//    private var Wbinding: DialogmenuBinding? = null
-//    private val binding get() = Wbinding!!
+//    private var mbinding: ActivityWaitingListPageBinding? = null
+//    private val binding get() = mbinding!!
+
 
     var db: FirebaseFirestore = Firebase.firestore
 
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
-        super.onCreateOptionsMenu(menu)
-        var mInflater = menuInflater
-        mInflater.inflate(R.menu.menu1, menu)
-
-        return true
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
+//        super.onCreateOptionsMenu(menu)
+//        var mInflater = menuInflater
+//        mInflater.inflate(R.menu.menu1, menu)
+//
+//        return true
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         val x_y = intent.getStringExtra("x_y")
         Log.d("x_y확인", "${x_y}")
         var waitingListInfo = arrayListOf<WaitingListInfo_useWaitingPage>()
@@ -97,8 +100,7 @@ class Waiting_List_Page : AppCompatActivity() {
                         if(alertDialog == null){
                             return@also
                         }
-//                        Wbinding = DialogmenuBinding.inflate(layoutInflater)
-//                        setContentView(binding.root)  //바인딩 연결 시간 남으면
+                          //바인딩 연결 시간 남으면
                         val button1 = alertDialog.findViewById<Button>(R.id.diabtn1)
                         val button2 = alertDialog.findViewById<Button>(R.id.diabtn2)
                         val infotext = alertDialog.findViewById<TextView>(R.id.infoText)
@@ -130,11 +132,31 @@ class Waiting_List_Page : AppCompatActivity() {
 
     }
 
-    override fun onStart() {
+    override fun onStart() {  //메뉴 페이지
         super.onStart()
 
-        setContentView(R.layout.activity_waiting_list_page)
-        var reintent = intent
+        val binding = ActivityWaitingListPageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.menubtn.setOnClickListener {
+            var popmenu = PopupMenu(applicationContext,it)
+            menuInflater?.inflate(R.menu.menu1,popmenu.menu)
+            popmenu.show()
+            popmenu.setOnMenuItemClickListener{ item ->
+                when(item.itemId){
+                    R.id.logout -> {
+                        Toast.makeText(applicationContext,"1",Toast.LENGTH_SHORT).show()
+                        return@setOnMenuItemClickListener true
+                    }
+                    R.id.ite1 -> {
+                        Toast.makeText(applicationContext,"2",Toast.LENGTH_SHORT).show()
+                        return@setOnMenuItemClickListener true
+                    }
+                    else->
+                        return@setOnMenuItemClickListener false
+                }
+            }
+        }
 
 
 

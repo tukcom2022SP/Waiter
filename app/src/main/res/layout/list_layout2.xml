@@ -42,6 +42,16 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/tv_list_road2"
                 app:layout_constraintTop_toBottomOf="@+id/tv_list_road2" />
+            <TextView
+                android:id="@+id/tv_list_phone2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="지번"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_list_address2"
+                app:layout_constraintTop_toBottomOf="@+id/tv_list_address2" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

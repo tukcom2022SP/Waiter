@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import org.w3c.dom.Text
 
 class ListAdapter2 (val itemList: ArrayList<ListLayout2>): RecyclerView.Adapter<ListAdapter2.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListAdapter2.ViewHolder {
@@ -20,6 +21,7 @@ class ListAdapter2 (val itemList: ArrayList<ListLayout2>): RecyclerView.Adapter<
         holder.name.text = itemList[position].name
         holder.road.text = itemList[position].road
         holder.address.text = itemList[position].address
+        holder.phone.text = itemList[position].phone
         // 아이템 클릭 이벤트
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
@@ -30,6 +32,7 @@ class ListAdapter2 (val itemList: ArrayList<ListLayout2>): RecyclerView.Adapter<
         val name: TextView = itemView.findViewById(R.id.tv_list_name2)
         val road: TextView = itemView.findViewById(R.id.tv_list_road2)
         val address: TextView = itemView.findViewById(R.id.tv_list_address2)
+        val phone: TextView = itemView.findViewById(R.id.tv_list_phone2)
     }
 
     interface OnItemClickListener {
