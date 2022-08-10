@@ -12,7 +12,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_login.*
 import kr.ac.tukorea.waiter.databinding.ActivityLoginBinding
+import java.util.*
 
 class LoginActivity : AppCompatActivity() {
     private var auth : FirebaseAuth? = null
@@ -21,8 +23,8 @@ class LoginActivity : AppCompatActivity() {
 
 
     data class UserInfo(
-        val passwd: String? = null,
-        val passwdCk: String? = null
+        val x_y: ArrayList<String> = ArrayList(),
+        //val passwdCk: String? = null
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +33,8 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         db = FirebaseFirestore.getInstance()
+
+        val map_intent = Intent(this, MapPage::class.java)
 
 
         binding.loginbutton.setOnClickListener {
@@ -42,9 +46,10 @@ class LoginActivity : AppCompatActivity() {
             ) {
                 Toast.makeText(this, "로그인에 필요한 정보를 모두 입력해 주세요", Toast.LENGTH_SHORT).show()
             } else {
-                doLogin(userEmail, password)
+                doLogin(userEmail, password, map_intent)
             }
         }
+
 //clickable 써보자
         binding.signinButton.setOnClickListener {
             val intent = Intent(this, SignInActivity::class.java)
@@ -53,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // 로그인 시 실행되는 함수
-    private fun doLogin(userEmail: String, password: String) {
+    private fun doLogin(userEmail: String, password: String, map_intent:Intent) {
         Log.d("data33",Firebase.auth.currentUser?.uid.toString() )
         Firebase.auth.signInWithEmailAndPassword(userEmail, password)
             .addOnCompleteListener(this) { // it: Task<AuthResult!>
@@ -63,17 +68,32 @@ class LoginActivity : AppCompatActivity() {
                     .addOnSuccessListener { documents ->
                      if (documents != null) { // documents 값이 존재할 때
                         var userType = documents.get("userType").toString()
-                        var a = documents.toObject<UserInfo>()  //인텐트로 페이지를 넘겨줄 때 사용자의 정보도 같이 넘겨주기 위함
+                        var x_y = documents.toObject<UserInfo>()  //인텐트로 페이지를 넘겨줄 때 사용자의 정보도 같이 넘겨주기 위함
 
                          if (userType.equals("customer")) {
+                             map_intent.putExtra("name", "${documents.get("signName")}")
+                             map_intent.putExtra("phone", "${documents.get("phoneNum")}")
+                             Log.d("Login", "${documents.get("signName")}")
                              startActivity(
-                                 Intent(this, MapPage::class.java)
+                                 map_intent
                              )
                          }
                          else if (userType.equals("owner")){
-                             startActivity(
-                                 Intent(this, Information_Registration_Page::class.java)
-                             )
+                             if (x_y != null) {
+                                 if(!x_y.x_y.isEmpty()) {
+                                     //Log.d("현민  ", "${x_y.x_y}")
+                                     var aa = arrayListOf<String>()
+                                     aa.addAll(x_y.x_y)
+                                     val intent = Intent(this, StoreList_UseOwner::class.java)
+                                     intent.putStringArrayListExtra("x_y",aa)
+                                     startActivity(intent)
+                                 }
+                                 else {
+                                     startActivity(
+                                         Intent(this, Information_Registration_Page::class.java)
+                                     )
+                                 }
+                             }
                          }
                          finish()
                      }
@@ -87,7 +107,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 else {
                     Log.w("LoginActivity", "signInWithEmail", it.exception)
-                    Toast.makeText(this, "로그인 실패!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "아이디 혹은 비밀번호 오류로 인한 로그인 실패!", Toast.LENGTH_SHORT).show()
                 }
             }
     }

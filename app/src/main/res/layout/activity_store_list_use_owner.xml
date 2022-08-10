@@ -12,13 +12,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="100dp"
+            android:layout_gravity="center"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="5dp"
+            android:layout_marginLeft="130dp"
             android:padding="5dp"
             android:textColor="#B22222"
             android:textSize="25dp"
-            android:text="고객 웨이팅 리스트"
+            android:text="식당 리스트"
             android:fontFamily="@font/godom"
             />
         <ImageButton
@@ -27,39 +28,17 @@
             android:layout_height="33dp"
             android:src="@drawable/ic_baseline_dehaze_24"
             android:background="@drawable/menubutton_layout"
-            android:layout_marginLeft="63dp"
+            android:layout_marginLeft="105dp"
             android:layout_marginTop="8dp"/>
     </LinearLayout>
 
 
-    <LinearLayout
+    <ListView
+        android:id="@+id/StorelistView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/layout_border"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/test1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="160dp"
-            android:text="식당이름"
-            android:fontFamily="@font/godom"
-            />
-
-
-    </LinearLayout>
-
-
-        <ListView
-            android:id="@+id/listView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ListView>
+    </ListView>
 
 
 </LinearLayout>

@@ -1,15 +1,17 @@
 package kr.ac.tukorea.waiter
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.ContentValues.TAG
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ImageButton
-import android.widget.Toast
+import android.view.WindowManager
+import android.widget.*
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
@@ -18,44 +20,48 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.activity_waiting_list_page.*
 import kr.ac.tukorea.waiter.databinding.ActivityWaitingListPageBinding
+import kr.ac.tukorea.waiter.databinding.WaitingListPageLayoutBinding
 import java.text.FieldPosition
 
 
 class Waiting_List_Page : AppCompatActivity() {
 
-    private var Wbinding: ActivityWaitingListPageBinding? = null
-    private val binding get() = Wbinding!!
+//    private var mbinding: ActivityWaitingListPageBinding? = null
+//    private val binding get() = mbinding!!
+
 
     var db: FirebaseFirestore = Firebase.firestore
 
-    data class UserInfo(
-        val index: String? = null,
-        val name: String? = null,
-        val phone: String? = null,
-        val customeNum: Int = 0
-    )
 
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
-        super.onCreateOptionsMenu(menu)
-        var mInflater = menuInflater
-        mInflater.inflate(R.menu.menu1, menu)
-        return true
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
+//        super.onCreateOptionsMenu(menu)
+//        var mInflater = menuInflater
+//        mInflater.inflate(R.menu.menu1, menu)
+//
+//        return true
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val x_y = intent.getStringExtra("x_y")
+        Log.d("x_y확인", "${x_y}")
         var waitingListInfo = arrayListOf<WaitingListInfo_useWaitingPage>()
 
         db = FirebaseFirestore.getInstance()
 
-        val reserveInfo = db.collection("rest_Info").document("abc")
+        val reserveInfo = db.collection("rest_Info").document("${x_y}")
             .collection("reservation")
 
-        reserveInfo.get().addOnSuccessListener { result ->
+
+
+        reserveInfo.addSnapshotListener { result, e ->
 
             if (result != null) {
+                Log.d("datachk2", "${result.documents}")
+
+                waitingListInfo.clear()
+
                 for (data in result) {
                     waitingListInfo.addAll(
                         listOf(
@@ -87,29 +93,71 @@ class Waiting_List_Page : AppCompatActivity() {
 
                 val indexpo = (position+1).toString()
 
-                val remove = db.collection("rest_Info").document("abc")
-                    .collection("reservation").document("${indexpo}")
-                remove.delete().addOnSuccessListener {
-                    Log.d("Testdata","succes")
-                }
+                AlertDialog.Builder(this)  // 다이어로그 출력
+                    .setView(R.layout.dialogmenu)
+                    .show()
+                    .also{ alertDialog ->
+                        if(alertDialog == null){
+                            return@also
+                        }
+                          //바인딩 연결 시간 남으면
+                        val button1 = alertDialog.findViewById<Button>(R.id.diabtn1)
+                        val button2 = alertDialog.findViewById<Button>(R.id.diabtn2)
+                        val infotext = alertDialog.findViewById<TextView>(R.id.infoText)
+
+                        infotext.setText("${(position+1)}번째 리스트를 삭제")
+
+                        button1?.setOnClickListener {
+                            alertDialog.dismiss()
+                            Log.d("Testdata","확인")
+
+                            val remove = db.collection("rest_Info").document("${x_y}")   //DB삭제
+                                .collection("reservation").document("${indexpo}")
+                            remove.delete().addOnSuccessListener {
+                                Log.d("Testdata","succes")
+                            }
+                        }
+
+                        button2?.setOnClickListener {
+                            alertDialog.dismiss()
+                            Log.d("Testdata","취소")
+                        }
+
+                    }
+
+
             }
 
-        }
-
-        var checked = 0
-        //items.remove
-
-        Wbinding = ActivityWaitingListPageBinding.inflate(layoutInflater)
-        setContentView(binding.root)  //바인딩 연결
-
+        } // resereInfo get data
 
     }
 
-    override fun onStart() {
+    override fun onStart() {  //메뉴 페이지
         super.onStart()
 
-        setContentView(R.layout.activity_waiting_list_page)
-        var reintent = intent
+        val binding = ActivityWaitingListPageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.menubtn.setOnClickListener {
+            var popmenu = PopupMenu(applicationContext,it)
+            menuInflater?.inflate(R.menu.menu1,popmenu.menu)
+            popmenu.show()
+            popmenu.setOnMenuItemClickListener{ item ->
+                when(item.itemId){
+                    R.id.logout -> {
+                        Toast.makeText(applicationContext,"1",Toast.LENGTH_SHORT).show()
+                        return@setOnMenuItemClickListener true
+                    }
+                    R.id.ite1 -> {
+                        Toast.makeText(applicationContext,"2",Toast.LENGTH_SHORT).show()
+                        return@setOnMenuItemClickListener true
+                    }
+                    else->
+                        return@setOnMenuItemClickListener false
+                }
+            }
+        }
+
 
 
     }
