@@ -3,6 +3,7 @@ package kr.ac.tukorea.waiter
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -72,13 +73,16 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_map_page)
+
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
         auth = Firebase.auth
         db = FirebaseFirestore.getInstance()
         binding = ActivityMapPageBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        binding.btnSearch.setOnClickListener {
+            val SearchIntent = Intent(this,Owner_Search::class.java)
+        }
 
         if(intent.hasExtra("phone")) {
             phoneNum = intent.getStringExtra("phone").toString()
@@ -89,7 +93,6 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         // 리사이클러 뷰
 //        binding.rvList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-//        binding.rvList.adapter = listAdapter
 
 
         listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
@@ -217,8 +220,11 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         locationOverlay.iconHeight = LocationOverlay.SIZE_AUTO
         val cameraUpdate = CameraUpdate.scrollTo(myLocation)//카메라 내위치에 표시
         naverMap.moveCamera(cameraUpdate)
-        findPlace()
+
     }
+
+
+
     fun findPlace(){
         var posX = ""
         var posY = ""
