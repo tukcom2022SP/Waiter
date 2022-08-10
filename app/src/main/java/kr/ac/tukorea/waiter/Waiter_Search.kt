@@ -5,15 +5,15 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import androidx.core.content.ContextCompat
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.CameraUpdate
-import kr.ac.tukorea.waiter.MapPage.Companion.listAdapter
-import kr.ac.tukorea.waiter.databinding.ActivityMapPageBinding
+import kr.ac.tukorea.waiter.Information_Registration_Page.Companion.API_KEY
+import kr.ac.tukorea.waiter.Information_Registration_Page.Companion.BASE_URL
 import kr.ac.tukorea.waiter.databinding.ActivitySearchPageBinding
 import retrofit2.Call
 import retrofit2.Callback
@@ -21,12 +21,13 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class SearchPage : AppCompatActivity() {
+class Waiter_Search : AppCompatActivity(){
     private lateinit var binding: ActivitySearchPageBinding
     val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
     val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
     private var pageNumber = 1      // 검색 페이지 번호
     private var keyword = ""
+    private lateinit var myExam :Exam
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
@@ -48,11 +49,11 @@ class SearchPage : AppCompatActivity() {
         fun searchKeyword(place_name: String) {
             //API설정
             val retrofit = Retrofit.Builder()
-                .baseUrl(MapPage.BASE_URL)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
             val api = retrofit.create(KakaoAPI::class.java)
-            val call = api.getSearchKeyword(MapPage.API_KEY, place_name)
+            val call = api.getSearchKeyword(API_KEY, place_name)
 
             call.enqueue(object : Callback<ResultSearchKeyword> {
                 //만약에 API와 통신성공시
@@ -72,22 +73,6 @@ class SearchPage : AppCompatActivity() {
                 }
             })
         }
-        listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
-// 여기에서 변수 선언해주고 다음 페이지로 넘어가게 해주어야함
-                intent.putExtra("storeName", listAdapter.itemList.get(position).name)
-                intent.putExtra("roadNameAddress", listAdapter.itemList.get(position).road)
-                intent.putExtra("parcelAddress", listAdapter.itemList.get(position).address)
-                intent.putExtra("storeCallNum", listAdapter.itemList.get(position).phone)
-                intent.putExtra("latitude_y", listAdapter.itemList.get(position).y)
-                intent.putExtra("longitude_x", listAdapter.itemList.get(position).x)
-                Log.d("ddddd", listAdapter.itemList.get(position).name)
-                startActivity(
-                    intent
-                )
-
-            }
-        })
         binding.btnSearch1.setOnClickListener {
             keyword = binding.searchText1.text.toString()
             pageNumber = 1
@@ -116,7 +101,31 @@ class SearchPage : AppCompatActivity() {
                 listItems.add(item)//item에 있는내용 list로 넘기기
                 listAdapter.notifyDataSetChanged()//listadapter에 변경사항 알리기
                 Log.d("로그3", "${item}")//로그찍어보기
+                posx = document.x
+                posy = document.y
+                Log.d("한",posx)
             }
+            var mapIntent = Intent(this, MapPage::class.java)
+            listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
+                override fun onClick(v: View, position: Int) {
+                    mapIntent.putExtra("name",listItems[position].name)
+                    mapIntent.putExtra("address",listItems[position].address)
+                    mapIntent.putExtra("road",listItems[position].road)
+                    mapIntent.putExtra("x",listItems[position].x)
+                    mapIntent.putExtra("y",listItems[position].y)
+                    myExam = Exam(listItems[position].name,listItems[position].address,listItems[position].road,listItems[position].x.toString(),listItems[position].y.toString())
+                    mapIntent.putExtra("examKey",myExam)
+                    startActivity(mapIntent)
+                }
+            })
+        }
+        else
+        {
+            // 검색 결과가 없을 때 toast 메세지
+            Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
         }
     }
+
 }
+
+

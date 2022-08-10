@@ -7,16 +7,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class ListAdapter(val itemList: ArrayList<ListLayout>): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListAdapter.ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_layout, parent, false)
+class ListAdapter2 (val itemList: ArrayList<ListLayout2>): RecyclerView.Adapter<ListAdapter2.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListAdapter2.ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_layout2, parent, false)
         return ViewHolder(view)
     }
     override fun getItemCount(): Int {
         return itemList.size
     }
 
-    override fun onBindViewHolder(holder: ListAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ListAdapter2.ViewHolder, position: Int) {
         holder.name.text = itemList[position].name
         holder.road.text = itemList[position].road
         holder.address.text = itemList[position].address
@@ -27,9 +27,9 @@ class ListAdapter(val itemList: ArrayList<ListLayout>): RecyclerView.Adapter<Lis
     }
 
     class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
-        val name: TextView = itemView.findViewById(R.id.tv_list_name)
-        val road: TextView = itemView.findViewById(R.id.tv_list_road)
-        val address: TextView = itemView.findViewById(R.id.tv_list_address)
+        val name: TextView = itemView.findViewById(R.id.tv_list_name2)
+        val road: TextView = itemView.findViewById(R.id.tv_list_road2)
+        val address: TextView = itemView.findViewById(R.id.tv_list_address2)
     }
 
     interface OnItemClickListener {

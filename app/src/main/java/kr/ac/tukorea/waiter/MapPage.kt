@@ -1,17 +1,18 @@
 package kr.ac.tukorea.waiter
 
 
-import ResultSearchKeyword
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.Log
 import android.view.Menu
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
@@ -29,18 +30,13 @@ import com.naver.maps.map.*
 import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.util.FusedLocationSource
 import kr.ac.tukorea.waiter.databinding.ActivityLoginBinding
+import kotlinx.android.synthetic.main.activity_map_page.*
 import kr.ac.tukorea.waiter.databinding.ActivityMapPageBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
-
-class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener {
+//,Overlay.OnClickListener
+class MapPage : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var naverMap: NaverMap
     private var auth : FirebaseAuth? = null
     private lateinit var binding: ActivityMapPageBinding
@@ -52,24 +48,21 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         lateinit var fusedLocationProvideClient: FusedLocationProviderClient
         lateinit var locationCallback: LocationCallback
         private lateinit var locationSource: FusedLocationSource
-
         const val BASE_URL = "https://dapi.kakao.com/"
         const val API_KEY = "KakaoAK 2f8e49e7fefd85e3d4c11dc88ca0a8fd"
         const val LOCATION_PERMISSION_REQUEST_CODE = 1000
-        private lateinit var binding: ActivityMapPageBinding
-        val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
-        val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
         private var pageNumber = 1      // 검색 페이지 번호
         private var keyword = ""        // 검색 키워드
-
         var phoneNum = "" // 유저 핸드폰 번호
         var userName = "" // 유저 이름
-
         var permissions = arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
     }
+    private lateinit var binding: ActivityMapPageBinding
+    val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
+    val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
@@ -94,9 +87,10 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         }
 
         // 리사이클러 뷰
-        binding.rvList.layoutManager =
+//        binding.rvList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rvList.adapter = listAdapter
+//        binding.rvList.adapter = listAdapter
+
 
         listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
@@ -138,8 +132,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
                 .collection("reservation").document(counter.toString())
                 .set(reservationMap)
         }
-
-
+        
         fun isPermitted(): Boolean {
             for (perm in permissions) {
                 if (ContextCompat.checkSelfPermission(
@@ -171,35 +164,6 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
             NaverMapSdk.NaverCloudPlatformClient("8eo4a3qdn1")
         return
     }
-    //검색 기능
-    private fun searchKeyword(place_name: String) {
-        //API설정
-        val retrofit = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val api = retrofit.create(KakaoAPI::class.java)
-        val call = api.getSearchKeyword(API_KEY, place_name)
-
-        call.enqueue(object : Callback<ResultSearchKeyword> {
-            //만약에 API와 통신성공시
-            override fun onResponse(
-                call: Call<ResultSearchKeyword>,
-                response: Response<ResultSearchKeyword>
-            ) {
-                Log.d("Test", "성공: ${response.raw()}")//로그찍기
-                Log.d("Test", "Body: ${response.body()}")//로그찍기
-                val x = response.body()?.documents?.get(0)?.x//x 확인 값
-                val y = response.body()?.documents?.get(0)?.y//y 확인 값
-                addItemsAndMarkers(response.body())//result 넘겨주기
-            }
-            //만약에 API와 통신실패시
-            override fun onFailure(call: Call<ResultSearchKeyword>, t: Throwable) {
-                Log.w("MainActivity", "실패 ${t.message}")
-            }
-        })
-    }
-
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
         //맵구현
@@ -242,7 +206,6 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
     fun setLastLocation(location: Location) {
         //내 현 위치 찍어주기
         val myLocation = LatLng(location.latitude, location.longitude)
-
         //맵위에 overlay
         val locationOverlay = naverMap.locationOverlay
         naverMap.locationOverlay.run {
@@ -254,70 +217,90 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback, Overlay.OnClickListener
         locationOverlay.iconHeight = LocationOverlay.SIZE_AUTO
         val cameraUpdate = CameraUpdate.scrollTo(myLocation)//카메라 내위치에 표시
         naverMap.moveCamera(cameraUpdate)
+        findPlace()
     }
-
-    override fun onClick(overlay: Overlay): Boolean {
-        //마커 클릭하면 mainactivity 넘어가기
-        if (overlay is Marker) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+    fun findPlace(){
+        var posX = ""
+        var posY = ""
+        if (intent.hasExtra("examKey")) {
+            var exam = intent.getParcelableExtra<Exam>("examKey")
+            restName.text = exam?.name
+            restAddres.text = exam?.address
+            restRoad.text = exam?.road
+            restX.text = exam?.x
+            restY.text = exam?.y
+            posX = exam?.x.toString()
+            posY = exam?.y.toString()
         }
-        return true
+        else{
+            Toast.makeText(this, "검색 exam 키가 없습니다", Toast.LENGTH_SHORT).show()
+        }
+        val marker = Marker()//마커 생성
+        marker.position =
+            LatLng(posY.toDouble(),posX.toDouble())//검색결과나오는거 마커로 찍기
+        marker.map = naverMap// 리스트 초기화
+        val cameraUpdate =
+            CameraUpdate.scrollTo(LatLng(posY.toDouble(), posX.toDouble()))
+        naverMap.moveCamera((cameraUpdate))
+
     }
 
+
+
+    //    override fun onClick(overlay: Overlay): Boolean {
+//        //마커 클릭하면 mainactivity 넘어가기
+//        if (overlay is Marker) {
+//            val intent = Intent(this, MainActivity::class.java)
+//            startActivity(intent)
+//        }
+//        return true
+//    }
     //recyleview에 리스트랑 마커 추가
-    private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
-        if (!searchResult?.documents.isNullOrEmpty()) {
-            // 검색 결과 있음
-            listItems.clear()
-            Log.d("로그","${searchResult}")//로그 찍기
-            for (document in searchResult!!.documents)
-            // 해당 결과들이 documents 에 있으면
-                 {
-                // 결과를 리사이클러 뷰에 추가
-                val item = ListLayout(
-                    document.place_name,
-                    document.road_address_name,
-                    document.address_name,
-                    document.phone,
-                    document.x.toDouble(),
-                    document.y.toDouble()
-                )
-                listItems.add(item)//item에 있는내용 list로 넘기기
-                listAdapter.notifyDataSetChanged()//listadapter에 변경사항 알리기
-                val marker = Marker()//마커 생성
-                marker.position = LatLng(document.y.toDouble(),document.x.toDouble())//검색결과나오는거 마커로 찍기
-                marker.map = naverMap// 리스트 초기화
-                Log.d("로그1","${item}")//로그찍어보기
+//    private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
+//        if (!searchResult?.documents.isNullOrEmpty()) {
+//            // 검색 결과 있음
+//            var posx = ""
+//            var posy = ""
+//           posx = document.x
+//                posy = document.y
+//                val x = item.x
+//                val y = item.y
+//                val address = item.address
+//                val rd = item.road
 //                     infoWindow.adapter = object: InfoWindow.DefaultTextAdapter(application){
 //                         override fun get(infoWindow: InfoWindow): CharSequence{
 //                             return ""
 //                         }
 //                     }
 //
-                     val infoWindow = InfoWindow()
-                     infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(getApplication()) {
-                         override fun getText(infoWindow: InfoWindow): CharSequence {
-                             return "정보 창 내용"
-                         }
-                     }
-                    // infoWindow.open(marker)
-                     infoWindow.position = LatLng(document.y.toDouble(),document.x.toDouble())
-                     infoWindow.open(naverMap)
-                     val listener = Overlay.OnClickListener { overlay :Overlay->
-                         if (marker.infoWindow == null){
-                                infoWindow.open(marker)
-                         }else {
-                                infoWindow.close()
-                         }
-                         true
-                     }
-                     }
-            }
-        else
-        {
-            // 검색 결과가 없을 때 toast 메세지
-            Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
-        }
-    }
+//            }
+//            val marker = Marker()//마커 생성
+//            marker.position =
+//                LatLng(posy.toDouble(),posx.toDouble())//검색결과나오는거 마커로 찍기
+//            marker.map = naverMap// 리스트 초기화
+//            val infoWindow = InfoWindow()
+//            infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(getApplication()) {
+//                override fun getText(infoWindow: InfoWindow): CharSequence {
+//                    return "정보 창 내용"
+//                }
+//            }
+//            // infoWindow.open(marker)
+//            infoWindow.position = LatLng(posy.toDouble(), posx.toDouble())
+//            infoWindow.open(naverMap)
+//            val listener = Overlay.OnClickListener { overlay: Overlay ->
+//                if (marker.infoWindow == null) {
+//                    infoWindow.open(marker)
+//                } else {
+//                    infoWindow.close()
+//                }
+//                true
+//            }
+//        }
+//        else
+//        {
+//            // 검색 결과가 없을 때 toast 메세지
+//            Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
+//        }
+//    }
+
 }

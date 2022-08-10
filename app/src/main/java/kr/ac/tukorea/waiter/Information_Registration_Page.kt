@@ -143,7 +143,7 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
 
         binding.searchAddress.setOnClickListener {  // 주소를 등록하기 위한 검색 API 사용 버튼
             startActivity(
-                Intent(this, SearchPage::class.java)
+                Intent(this, Owner_Search::class.java)
             )
         }
 
