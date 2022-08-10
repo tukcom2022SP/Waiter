@@ -20,6 +20,7 @@ class ListAdapter(val itemList: ArrayList<ListLayout>): RecyclerView.Adapter<Lis
         holder.name.text = itemList[position].name
         holder.road.text = itemList[position].road
         holder.address.text = itemList[position].address
+        holder.phone.text = itemList[position].phone
         // 아이템 클릭 이벤트
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
@@ -30,6 +31,7 @@ class ListAdapter(val itemList: ArrayList<ListLayout>): RecyclerView.Adapter<Lis
         val name: TextView = itemView.findViewById(R.id.tv_list_name)
         val road: TextView = itemView.findViewById(R.id.tv_list_road)
         val address: TextView = itemView.findViewById(R.id.tv_list_address)
+        val phone: TextView = itemView.findViewById(R.id.tv_list_phone)
     }
 
     interface OnItemClickListener {
@@ -39,6 +41,5 @@ class ListAdapter(val itemList: ArrayList<ListLayout>): RecyclerView.Adapter<Lis
     fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
     }
-
     private lateinit var itemClickListener : OnItemClickListener
 }
