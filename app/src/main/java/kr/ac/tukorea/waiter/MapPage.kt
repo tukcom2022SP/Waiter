@@ -8,12 +8,9 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.os.Looper
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.Log
 import android.view.Menu
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +29,6 @@ import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
-import kr.ac.tukorea.waiter.databinding.ActivityLoginBinding
 import kotlinx.android.synthetic.main.activity_map_page.*
 import kr.ac.tukorea.waiter.databinding.ActivityMapPageBinding
 
@@ -43,25 +39,24 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var binding: ActivityMapPageBinding
     var db: FirebaseFirestore = Firebase.firestore
     var counter = 0
+    val infoWindow = InfoWindow()
+    lateinit var fusedLocationProvideClient: FusedLocationProviderClient
+    lateinit var locationCallback: LocationCallback
+    private lateinit var locationSource: FusedLocationSource
+    var phoneNum = "" // 유저 핸드폰 번호
+    var userName = "" // 유저 이름
+
     companion object {
         val permissionrequest = 99
-        val infoWindow = InfoWindow()
-        lateinit var fusedLocationProvideClient: FusedLocationProviderClient
-        lateinit var locationCallback: LocationCallback
-        private lateinit var locationSource: FusedLocationSource
         const val BASE_URL = "https://dapi.kakao.com/"
         const val API_KEY = "KakaoAK 2f8e49e7fefd85e3d4c11dc88ca0a8fd"
         const val LOCATION_PERMISSION_REQUEST_CODE = 1000
-        private var pageNumber = 1      // 검색 페이지 번호
-        private var keyword = ""        // 검색 키워드
-        var phoneNum = "" // 유저 핸드폰 번호
-        var userName = "" // 유저 이름
         var permissions = arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
         )
     }
-    private lateinit var binding: ActivityMapPageBinding
+
     val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
     val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
@@ -81,20 +76,10 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         val view = binding.root
         setContentView(view)
         binding.btnSearch.setOnClickListener {
-            val SearchIntent = Intent(this,Owner_Search::class.java)
+            val SearchIntent = Intent(this, Waiter_Search::class.java)
+            startActivity(SearchIntent)
         }
-
-        if(intent.hasExtra("phone")) {
-            phoneNum = intent.getStringExtra("phone").toString()
-            userName = intent.getStringExtra("name").toString()
-            Log.d("Map intent확인", "${phoneNum}")
-        }
-
-        // 리사이클러 뷰
-//        binding.rvList.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-//        binding.btnSearch.setOnClickListener {
+        LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
         listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
@@ -106,12 +91,6 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
                 naverMap.moveCamera((cameraUpdate))
             }
         })
-        binding.btnSearch.setOnClickListener {
-            keyword = binding.searchText.text.toString()
-            pageNumber = 1
-            searchKeyword(keyword)
-        }
-
         binding.reservationBtn.setOnClickListener {
 
             var reservationMap = hashMapOf(
@@ -182,6 +161,27 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         fusedLocationProvideClient =
             LocationServices.getFusedLocationProviderClient(this)
         setUpdateLocationListener()
+        if (intent.hasExtra("name")) {
+            phoneNum = intent.getStringExtra("phone").toString()
+            userName = intent.getStringExtra("name").toString()
+            var exam = intent.getParcelableExtra<Exam>("examKey")
+            Log.d("로그확인", "phoneNum")
+            if (exam != null) {
+                findPlace(exam)
+                val marker = Marker()//마커 생성
+                marker.position =
+                    LatLng(exam.y.toString().toDouble(),exam.x.toString().toDouble())//검색결과나오는거 마커로 찍기
+                marker.map = naverMap// 리스트 초기화
+                val cameraUpdate =
+                    CameraUpdate.scrollTo(LatLng(exam.y.toString().toDouble(), exam.x.toString().toDouble()))
+                naverMap.moveCamera((cameraUpdate))
+
+            }
+        }
+        else{
+            Log.d("로그확인실패","phoneNum")
+            Toast.makeText(this, "검색 exam 키가 없습니다", Toast.LENGTH_SHORT).show()
+        }
     }
     //만약에 권한을 받지 못했으면 메세지
     @SuppressLint("MissingPermission")
@@ -226,11 +226,11 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
 
 
 
-    fun findPlace(){
+    fun findPlace(exam: Exam){
         var posX = ""
         var posY = ""
-        if (intent.hasExtra("examKey")) {
-            var exam = intent.getParcelableExtra<Exam>("examKey")
+
+        Log.d("로그확인exam","${exam}")
             restName.text = exam?.name
             restAddres.text = exam?.address
             restRoad.text = exam?.road
@@ -238,20 +238,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
             restY.text = exam?.y
             posX = exam?.x.toString()
             posY = exam?.y.toString()
-        }
-        else{
-            Toast.makeText(this, "검색 exam 키가 없습니다", Toast.LENGTH_SHORT).show()
-        }
-        val marker = Marker()//마커 생성
-        marker.position =
-            LatLng(posY.toDouble(),posX.toDouble())//검색결과나오는거 마커로 찍기
-        marker.map = naverMap// 리스트 초기화
-        val cameraUpdate =
-            CameraUpdate.scrollTo(LatLng(posY.toDouble(), posX.toDouble()))
-        naverMap.moveCamera((cameraUpdate))
-
     }
-
 
 
     //    override fun onClick(overlay: Overlay): Boolean {

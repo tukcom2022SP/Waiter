@@ -21,7 +21,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class Waiter_Search : AppCompatActivity(){
+class Waiter_Search1 : AppCompatActivity(){
     private lateinit var binding: ActivitySearchPageBinding
     val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
     val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
@@ -39,7 +39,7 @@ class Waiter_Search : AppCompatActivity(){
         binding = ActivitySearchPageBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        val intent = Intent(this, Information_Registration_Page::class.java)
+//        val intent = Intent(this, Information_Registration_Page::class.java)
 
         // 리사이클러 뷰
         binding.rvList.layoutManager =
