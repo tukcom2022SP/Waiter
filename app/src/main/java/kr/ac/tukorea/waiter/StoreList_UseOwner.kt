@@ -33,28 +33,22 @@ class StoreList_UseOwner : AppCompatActivity() {
         reserveInfo2.addSnapshotListener { result, e ->
             if (result != null) {
                 storeListinfo.clear()
-
                 for (data in result) {
-
                     if (x_y != null) {
-                        if (x_y.contains(data.data["x_y"].toString())){
-                            Log.d("혼자","12")
+                        if (x_y.contains(data.id)){
+                             storeListinfo.addAll(
+                                listOf(
+                                    StoreListInfo_useStoreListPage(
+                                        data.data["storeName"].toString(),
+                                        data.data["roadNameAddress"].toString(),
+                                        data.data["longitude_x"].toString().toDouble(),
+                                        data.data["latitude_y"].toString().toDouble()
+                                    )
+                                )
+                            )
                         }
                     }
-
-                    storeListinfo.addAll(
-                        listOf(
-                            StoreListInfo_useStoreListPage(
-                                data.data["storeName"].toString(),
-                                data.data["roadNameAddress"].toString(),
-                                data.data["longitude_x"].toString().toDouble(),
-                                data.data["latitude_y"].toString().toDouble()
-                            )
-                        )
-                    )
-
                 }
-
             } else {
                 Log.d("TAG", "fail")
             }
