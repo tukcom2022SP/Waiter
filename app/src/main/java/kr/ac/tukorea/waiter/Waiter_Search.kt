@@ -21,7 +21,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class SearchPage : AppCompatActivity(){
+class Waiter_Search : AppCompatActivity(){
     private lateinit var binding: ActivitySearchPageBinding
     val listItems = arrayListOf<ListLayout>()   // 리사이클러 뷰 아이템
     val listAdapter = ListAdapter(listItems)    // 리사이클러 뷰 어댑터
@@ -73,22 +73,6 @@ class SearchPage : AppCompatActivity(){
                 }
             })
         }
-        listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int) {
-// 여기에서 변수 선언해주고 다음 페이지로 넘어가게 해주어야함
-                intent.putExtra("storeName", listAdapter.itemList.get(position).name)
-                intent.putExtra("roadNameAddress", listAdapter.itemList.get(position).road)
-                intent.putExtra("parcelAddress", listAdapter.itemList.get(position).address)
-                intent.putExtra("storeCallNum", listAdapter.itemList.get(position).phone)
-                intent.putExtra("latitude_y", listAdapter.itemList.get(position).y)
-                intent.putExtra("longitude_x", listAdapter.itemList.get(position).x)
-                Log.d("ddddd", listAdapter.itemList.get(position).name)
-                startActivity(
-                    intent
-                )
-
-            }
-        })
         binding.btnSearch1.setOnClickListener {
             keyword = binding.searchText1.text.toString()
             pageNumber = 1
