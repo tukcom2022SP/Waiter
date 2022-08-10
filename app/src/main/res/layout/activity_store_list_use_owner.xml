@@ -22,12 +22,14 @@
             android:text="식당 리스트"
             android:fontFamily="@font/godom"
             />
-        <Button
+        <ImageButton
             android:id="@+id/menubtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="100dp"
-            android:layout_marginTop="5dp"/>
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:src="@drawable/ic_baseline_dehaze_24"
+            android:background="@drawable/menubutton_layout"
+            android:layout_marginLeft="105dp"
+            android:layout_marginTop="8dp"/>
     </LinearLayout>
 
 
