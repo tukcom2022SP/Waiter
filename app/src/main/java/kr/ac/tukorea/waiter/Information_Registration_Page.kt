@@ -94,7 +94,8 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
                 "parcelAddress" to parcelAddress,
                 "storeCallNum" to storeCallNum,
                 "latitude_y" to latitude_y,
-                "longitude_x" to longitude_x
+                "longitude_x" to longitude_x,
+                "counter" to 0
             )
             store_registration = restMap.clone() as HashMap<String, Any>
 

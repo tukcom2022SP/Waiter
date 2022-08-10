@@ -24,6 +24,10 @@
 
 
         <activity
+            android:name=".SearchPage"
+            android:exported="true" />
+        <activity
+            android:name=".StoreList_UseOwner"
             android:name=".Owner_Search"
             android:exported="true"/>
         <activity

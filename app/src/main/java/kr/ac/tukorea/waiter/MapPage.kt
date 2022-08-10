@@ -20,18 +20,28 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
 import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
+import kr.ac.tukorea.waiter.databinding.ActivityLoginBinding
 import kotlinx.android.synthetic.main.activity_map_page.*
 import kr.ac.tukorea.waiter.databinding.ActivityMapPageBinding
 
 //,Overlay.OnClickListener
 class MapPage : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var naverMap: NaverMap
+    private var auth : FirebaseAuth? = null
+    private lateinit var binding: ActivityMapPageBinding
+    var db: FirebaseFirestore = Firebase.firestore
+    var counter = 0
     companion object {
         val permissionrequest = 99
         val infoWindow = InfoWindow()
@@ -43,6 +53,8 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         const val LOCATION_PERMISSION_REQUEST_CODE = 1000
         private var pageNumber = 1      // 검색 페이지 번호
         private var keyword = ""        // 검색 키워드
+        var phoneNum = "" // 유저 핸드폰 번호
+        var userName = "" // 유저 이름
         var permissions = arrayOf(
             Manifest.permission.ACCESS_FINE_LOCATION,
             Manifest.permission.ACCESS_COARSE_LOCATION
@@ -62,30 +74,65 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         super.onCreate(savedInstanceState)
 //        setContentView(R.layout.activity_map_page)
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+        auth = Firebase.auth
+        db = FirebaseFirestore.getInstance()
         binding = ActivityMapPageBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        if(intent.hasExtra("phone")) {
+            phoneNum = intent.getStringExtra("phone").toString()
+            userName = intent.getStringExtra("name").toString()
+            Log.d("Map intent확인", "${phoneNum}")
+        }
 
         // 리사이클러 뷰
 //        binding.rvList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 //        binding.rvList.adapter = listAdapter
 
-//        listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
-//            override fun onClick(v: View, position: Int) {
-////                val marker = Marker()
-////                marker.position = LatLng(listItems[position].y, listItems[position].x)
-////                marker.map =naverMap
-//                val cameraUpdate =
-//                    CameraUpdate.scrollTo(LatLng(listItems[position].y, listItems[position].x))
-//                naverMap.moveCamera((cameraUpdate))
-//            }
-//        })
-//        binding.btnSearch.setOnClickListener {
-//            keyword = binding.searchText.text.toString()
-//            pageNumber = 1
-//            searchKeyword(keyword)
-//        }
+
+        listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
+            override fun onClick(v: View, position: Int) {
+                val marker = Marker()
+                marker.position = LatLng(listItems[position].y, listItems[position].x)
+                marker.map =naverMap
+                val cameraUpdate =
+                    CameraUpdate.scrollTo(LatLng(listItems[position].y, listItems[position].x))
+                naverMap.moveCamera((cameraUpdate))
+            }
+        })
+        binding.btnSearch.setOnClickListener {
+            keyword = binding.searchText.text.toString()
+            pageNumber = 1
+            searchKeyword(keyword)
+        }
+
+        binding.reservationBtn.setOnClickListener {
+
+            var reservationMap = hashMapOf(
+                "userName" to userName,
+                "phoneNum" to phoneNum,
+                "customerNum" to 100
+            )
+
+
+            db.collection("rest_Info").document("126.484480056159_33.5124867330564")
+                .get().addOnSuccessListener {
+                    if (it.exists()){
+                        counter = it.get("counter").toString().toInt()
+                        counter+=1
+                    }
+                }
+
+            db.collection("rest_info").document("126.484480056159_33.5124867330564")
+                .update("counter", counter.toString().toInt())
+
+            db.collection("rest_Info").document("126.484480056159_33.5124867330564")
+                .collection("reservation").document(counter.toString())
+                .set(reservationMap)
+        }
+        
         fun isPermitted(): Boolean {
             for (perm in permissions) {
                 if (ContextCompat.checkSelfPermission(

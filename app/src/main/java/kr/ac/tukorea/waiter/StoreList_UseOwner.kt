@@ -24,28 +24,31 @@ class StoreList_UseOwner : AppCompatActivity() {
         var storeListinfo = arrayListOf<StoreListInfo_useStoreListPage>()
         
         db2 = FirebaseFirestore.getInstance()
-        val intent = Intent(this, Waiting_List_Page::class.java)
+        val intent2 = Intent(this, Waiting_List_Page::class.java)
+
         val reserveInfo2 = db2.collection("rest_Info")
+        val x_y = intent.getStringArrayListExtra("x_y")
+        Log.d("x_y2", "${x_y}")
 
         reserveInfo2.addSnapshotListener { result, e ->
             if (result != null) {
                 storeListinfo.clear()
-
                 for (data in result) {
-
-                    storeListinfo.addAll(
-                        listOf(
-                            StoreListInfo_useStoreListPage(
-                                data.data["storeName"].toString(),
-                                data.data["roadNameAddress"].toString(),
-                                data.data["longitude_x"].toString().toDouble(),
-                                data.data["latitude_y"].toString().toDouble()
+                    if (x_y != null) {
+                        if (x_y.contains(data.id)){
+                             storeListinfo.addAll(
+                                listOf(
+                                    StoreListInfo_useStoreListPage(
+                                        data.data["storeName"].toString(),
+                                        data.data["roadNameAddress"].toString(),
+                                        data.data["longitude_x"].toString().toDouble(),
+                                        data.data["latitude_y"].toString().toDouble()
+                                    )
+                                )
                             )
-                        )
-                    )
-
+                        }
+                    }
                 }
-
             } else {
                 Log.d("TAG", "fail")
             }
@@ -57,8 +60,8 @@ class StoreList_UseOwner : AppCompatActivity() {
                 val selection = parent.getItemAtPosition(position) as StoreListInfo_useStoreListPage
                 Log.d("Testdata", "${position}")
                 Toast.makeText(this, selection.storeName, Toast.LENGTH_SHORT).show()
-                intent.putExtra("x_y", "${selection.longitude_x}_${selection.latitude_y}")
-                startActivity(intent)
+                intent2.putExtra("x_y", "${selection.longitude_x}_${selection.latitude_y}")
+                startActivity(intent2)
             }
 
         }
