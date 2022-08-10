@@ -18,7 +18,7 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="match_parent"
         android:id="@+id/maplayout"
         android:orientation="vertical">
             <EditText
@@ -57,6 +57,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/paneltitle"
+            android:textSize="30dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/restName"/>
         <TextView
             android:layout_width="wrap_content"
@@ -74,10 +79,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/restY"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/restPhone"/>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

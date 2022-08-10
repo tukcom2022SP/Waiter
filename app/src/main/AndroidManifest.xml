@@ -23,12 +23,14 @@
             android:value="vNsyPSCAUhaNcqAinP9qzEh6eovnvJx7GlGj2TQD" />
 
 
+
         <activity
             android:name=".SearchPage"
             android:exported="true" />
         <activity
             android:name=".Owner_Search"
             android:exported="true"/>
+
         <activity
             android:name=".Waiter_Search"
             android:exported="true"/>
@@ -41,7 +43,7 @@
             android:exported="true" />
         <activity
             android:name=".Information_Registration_Page"
-            android:exported="true" />
+            android:exported="true"/>
         <activity
             android:name=".MainActivity"
             android:exported="true" />
@@ -56,11 +58,19 @@
             android:exported="true" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true" >
+
+            android:exported="true"/>
+
+        <activity
+            android:name=".AutoLoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
     </application>
 

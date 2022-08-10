@@ -89,6 +89,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         }
         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
+
         listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
                 val marker = Marker()
@@ -214,6 +215,8 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
                     CameraUpdate.scrollTo(LatLng(exam.y.toString().toDouble(), exam.x.toString().toDouble()))
                 naverMap.moveCamera((cameraUpdate))
 
+                binding.paneltitle.visibility = View.INVISIBLE
+
             }
         }
         else{
@@ -270,13 +273,15 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         var posY = ""
 
         Log.d("로그확인exam","${exam}")
-            restName.text = exam?.name
-            restAddres.text = exam?.address
-            restRoad.text = exam?.road
-            restX.text = exam?.x
-            restY.text = exam?.y
-            posX = exam?.x.toString()
-            posY = exam?.y.toString()
+
+        restName.text = exam?.name
+        restAddres.text = exam?.address
+        restRoad.text = exam?.road
+        restX.text = exam?.x
+        restY.text = exam?.y
+        posX = exam?.x.toString()
+        posY = exam?.y.toString()
+
     }
 
 
@@ -318,29 +323,52 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
 //                         }
 //                     }
 //
-                val infoWindow = InfoWindow()
-                infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(getApplication()) {
-                    override fun getText(infoWindow: InfoWindow): CharSequence {
-                        return "정보 창 내용"
-                    }
-                }
-                // infoWindow.open(marker)
-                infoWindow.position = LatLng(document.y.toDouble(),document.x.toDouble())
-                infoWindow.open(naverMap)
-                val listener = Overlay.OnClickListener { overlay :Overlay->
-                    if (marker.infoWindow == null){
-                        infoWindow.open(marker)
-                    }else {
-                        infoWindow.close()
-                    }
-                    true
-                }
-            }
+
+//            }
+//            val marker = Marker()//마커 생성
+//            marker.position =
+//                LatLng(posy.toDouble(),posx.toDouble())//검색결과나오는거 마커로 찍기
+//            marker.map = naverMap// 리스트 초기화
+//            val infoWindow = InfoWindow()
+//            infoWindow.adapter = object : InfoWindow.DefaultTextAdapter(getApplication()) {
+//                override fun getText(infoWindow: InfoWindow): CharSequence {
+//                    return "정보 창 내용"
+//                }
+//            }
+//            // infoWindow.open(marker)
+//            infoWindow.position = LatLng(posy.toDouble(), posx.toDouble())
+//            infoWindow.open(naverMap)
+//            val listener = Overlay.OnClickListener { overlay: Overlay ->
+//                if (marker.infoWindow == null) {
+//                    infoWindow.open(marker)
+//                } else {
+//                    infoWindow.close()
+//                }
+//                true
+//            }
+//        }
+//        else
+//        {
+//            // 검색 결과가 없을 때 toast 메세지
+//            Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
+//        }
+//    }
+    //뒤로 가기 버튼을 2번 눌렀을 때 앱 종료 가능
+    private var backBtnTime: Long = 0
+
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        var curTime = System.currentTimeMillis();
+        var gapTime = curTime - backBtnTime
+        if(0 <= gapTime && 2000 >= gapTime) {
+            super.onBackPressed();
         }
-        else
-        {
-            // 검색 결과가 없을 때 toast 메세지
-            Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
+        else {
+            backBtnTime = curTime;
+            Toast.makeText(this, "한번 더 누르면 종료됩니다.",Toast.LENGTH_SHORT).show();
+
         }
     }
 }
+
+

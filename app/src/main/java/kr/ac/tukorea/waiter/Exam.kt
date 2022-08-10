@@ -3,7 +3,9 @@ package kr.ac.tukorea.waiter
 import android.os.Parcel
 import android.os.Parcelable
 
-class Exam(var name: String?, var address: String?,var phone: String?, var road: String?, var x: String?, var y: String?) :
+
+class Exam(var name: String?, var address: String?,var phone:String?, var road: String?, var x: String?, var y: String?) :
+
     Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
