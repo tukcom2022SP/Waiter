@@ -20,7 +20,6 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.activity_waiting_list_page.*
 import kr.ac.tukorea.waiter.databinding.ActivityWaitingListPageBinding
-import kr.ac.tukorea.waiter.databinding.WaitingListPageLayoutBinding
 import java.text.FieldPosition
 
 
@@ -50,10 +49,8 @@ class Waiting_List_Page : AppCompatActivity() {
 
         db = FirebaseFirestore.getInstance()
 
-        val reserveInfo = db.collection("rest_Info").document("${x_y}")
+        val reserveInfo = db.collection("rest_Info").document("$x_y")
             .collection("reservation")
-
-
 
         reserveInfo.addSnapshotListener { result, e ->
 
@@ -69,7 +66,7 @@ class Waiting_List_Page : AppCompatActivity() {
                                 data.get("name").toString(),
                                 data.get("phone").toString(),
                                 data.get("customerNum").toString().toInt(),
-                                data.get("index").toString().toInt()
+//                                data.get("index").toString().toInt()
                             )
                         )
                     )
