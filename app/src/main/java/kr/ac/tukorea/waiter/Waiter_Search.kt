@@ -12,6 +12,7 @@ import android.view.Menu
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_map_page.*
 import kr.ac.tukorea.waiter.Information_Registration_Page.Companion.API_KEY
 import kr.ac.tukorea.waiter.Information_Registration_Page.Companion.BASE_URL
 import kr.ac.tukorea.waiter.databinding.ActivitySearchPageBinding
@@ -28,6 +29,8 @@ class Waiter_Search : AppCompatActivity(){
     private var pageNumber = 1      // 검색 페이지 번호
     private var keyword = ""
     private lateinit var myExam :Exam
+    var user_name = ""
+    var phone_num = ""
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
@@ -45,6 +48,12 @@ class Waiter_Search : AppCompatActivity(){
         binding.rvList.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rvList.adapter = listAdapter
+
+        if (intent.hasExtra("user_name")){
+            user_name = intent.getStringExtra("user_name").toString()
+            phone_num = intent.getStringExtra("phoneNum").toString()
+
+        }
 
         fun searchKeyword(place_name: String) {
             //API설정
@@ -77,6 +86,8 @@ class Waiter_Search : AppCompatActivity(){
             keyword = binding.searchText1.text.toString()
             pageNumber = 1
             searchKeyword(keyword)
+            binding.hintText.visibility = View.GONE
+            binding.imageL.visibility= View.GONE
         }
     }
     private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
@@ -108,6 +119,8 @@ class Waiter_Search : AppCompatActivity(){
             var mapIntent = Intent(this, MapPage::class.java)
             listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
                 override fun onClick(v: View, position: Int) {
+                    mapIntent.putExtra("user_name", user_name)
+                    mapIntent.putExtra("phoneNum",phone_num)
                     mapIntent.putExtra("name",listItems[position].name)
                     mapIntent.putExtra("address",listItems[position].address)
                     mapIntent.putExtra("road",listItems[position].road)
@@ -125,7 +138,21 @@ class Waiter_Search : AppCompatActivity(){
             Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
         }
     }
+    //뒤로 가기 버튼을 2번 눌렀을 때 앱 종료 가능
+    private var backBtnTime: Long = 0
 
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        var curTime = System.currentTimeMillis();
+        var gapTime = curTime - backBtnTime
+        if(0 <= gapTime && 2000 >= gapTime) {
+            super.onBackPressed();
+        }
+        else {
+            backBtnTime = curTime;
+            Toast.makeText(this, "한번 더 누르면 종료됩니다.",Toast.LENGTH_SHORT).show();
+        }
+    }
 }
 
 
