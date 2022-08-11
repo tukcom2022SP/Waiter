@@ -86,6 +86,8 @@ class Waiter_Search : AppCompatActivity(){
             keyword = binding.searchText1.text.toString()
             pageNumber = 1
             searchKeyword(keyword)
+            binding.hintText.visibility = View.GONE
+            binding.imageL.visibility= View.GONE
         }
     }
     private fun addItemsAndMarkers(searchResult: ResultSearchKeyword?) {
@@ -136,7 +138,21 @@ class Waiter_Search : AppCompatActivity(){
             Toast.makeText(this, "검색 결과가 없습니다", Toast.LENGTH_SHORT).show()
         }
     }
+    //뒤로 가기 버튼을 2번 눌렀을 때 앱 종료 가능
+    private var backBtnTime: Long = 0
 
+    override fun onBackPressed() {
+        //super.onBackPressed()
+        var curTime = System.currentTimeMillis();
+        var gapTime = curTime - backBtnTime
+        if(0 <= gapTime && 2000 >= gapTime) {
+            super.onBackPressed();
+        }
+        else {
+            backBtnTime = curTime;
+            Toast.makeText(this, "한번 더 누르면 종료됩니다.",Toast.LENGTH_SHORT).show();
+        }
+    }
 }
 
 

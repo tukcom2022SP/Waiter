@@ -4,15 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Waiter_Search">
+    tools:context=".Waiter_Search"
+    android:background="@color/white">
+
     <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/searchText1"
-        android:inputType="text"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="3dp"
         android:hint="장소입력"
+        android:autofillHints="name"
+        android:gravity="center"
+        android:inputType="text"
+        android:background="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/btn_search1"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="20dp"
+        android:fontFamily="@font/godom"
         />
+
     <Button
         android:id="@+id/btn_search1"
         style="@style/Widget.AppCompat.Button.Small"
@@ -20,14 +32,46 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:text="검색"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/godom"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvList"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="#E8EAF6"
         app:layout_constraintTop_toBottomOf="@id/searchText1"
+        android:layout_marginTop="10dp"
         />
+
+    <TextView
+        android:id="@+id/hintText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="장소를 입력해 주세요"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rvList"
+        android:fontFamily="@font/godom"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="112dp"
+        android:src="@drawable/testlogo"
+        android:id="@+id/imageL"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/hintText"
+        app:layout_constraintVertical_bias="1.0" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

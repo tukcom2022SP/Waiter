@@ -55,6 +55,9 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
     var store_name = ""
     var store_registration = hashMapOf<String, Any>()
 
+    private var posx:Double = 0.0
+    private var posy: Double = 0.0
+    
     companion object {
         val permissionrequest = 99
         const val BASE_URL = "https://dapi.kakao.com/"
@@ -96,7 +99,6 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         }
         LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
-
         listAdapter.setItemClickListener(object : ListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int) {
                 val marker = Marker()
@@ -113,6 +115,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
             phoneNum = intent.getStringExtra("phone2").toString()
             Log.d("Map intent확인", "${userName}")
         }
+
 
         binding.reservationBtn.setOnClickListener {
             Log.d("Map intent확인22", "${userName}")
@@ -193,8 +196,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
             NaverMapSdk.NaverCloudPlatformClient("8eo4a3qdn1")
         return
     }
-
-
+    
     @UiThread
     override fun onMapReady(naverMap: NaverMap) {
         //맵구현
@@ -279,11 +281,10 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         locationOverlay.isVisible = true
         locationOverlay.iconWidth = LocationOverlay.SIZE_AUTO
         locationOverlay.iconHeight = LocationOverlay.SIZE_AUTO
-        val cameraUpdate = CameraUpdate.scrollTo(myLocation)//카메라 내위치에 표시
-        naverMap.moveCamera(cameraUpdate)
-
+//        var cameraUpdate = CameraUpdate.scrollTo(myLocation)//카메라 내위치에 표시
+//            .animate(CameraAnimation.Linear)
+//       naverMap.moveCamera(cameraUpdate)
     }
-
 
     fun findPlace(exam: Exam) {
         var posX = ""
@@ -292,13 +293,11 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
         Log.d("로그확인exam", "${exam}")
 
         restName.text = exam?.name
-        restAddres.text = exam?.address
-        restRoad.text = exam?.road
-        restX.text = exam?.x
-        restY.text = exam?.y
-        posX = exam?.x.toString()
-        posY = exam?.y.toString()
-
+        restAddres.text = "    주소: "+exam?.address
+        restRoad.text = "    도로명: "+exam?.road
+        restPhone.text = "    번호: "+exam?.phone
+        posx = exam?.x!!.toDouble()
+        posy = exam?.y!!.toDouble()
     }
 
 
