@@ -65,7 +65,7 @@ class SignInActivity : AppCompatActivity() {
 
                              //db안에 있는 users 컬렉션에 위 userMap에서 담은 정보를 넣어줌
                             if (binding.customer.isChecked) {
-                                userMap.remove("x_y")
+//                                userMap.remove("x_y")
                                 userMap["userType"] = "customer"
 
                             }
