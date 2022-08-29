@@ -23,7 +23,6 @@
             android:value="vNsyPSCAUhaNcqAinP9qzEh6eovnvJx7GlGj2TQD" />
 
 
-
         <activity
             android:name=".Owner_Search"
             android:exported="true"/>
@@ -56,10 +55,6 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true"/>
-
-        <activity
-            android:name=".AutoLoginActivity"
-            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

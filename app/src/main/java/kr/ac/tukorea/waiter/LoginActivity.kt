@@ -69,11 +69,11 @@ class LoginActivity : AppCompatActivity() {
                      if (documents != null) { // documents 값이 존재할 때
                         var userType = documents.get("userType").toString()
                         var x_y = documents.toObject<UserInfo>()  //인텐트로 페이지를 넘겨줄 때 사용자의 정보도 같이 넘겨주기 위함
-
+                         Log.d("Login2222", "${userType}")
                          if (userType.equals("customer")) {
-                             map_intent.putExtra("name", "${documents.get("signName")}")
-                             map_intent.putExtra("phone", "${documents.get("phoneNum")}")
-                             Log.d("Login", "${documents.get("signName")}")
+                             map_intent.putExtra("name2", "${documents.get("signName")}")
+                             map_intent.putExtra("phone2", "${documents.get("phoneNum")}")
+                             Log.d("Login22", "${documents.get("signName")}")
                              startActivity(
                                  map_intent
                              )
