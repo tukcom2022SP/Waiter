@@ -2,17 +2,13 @@ package kr.ac.tukorea.waiter
 
 import ResultSearchKeyword
 import android.content.Intent
-import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Parcel
-import android.os.Parcelable
 import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_map_page.*
 import kr.ac.tukorea.waiter.Information_Registration_Page.Companion.API_KEY
 import kr.ac.tukorea.waiter.Information_Registration_Page.Companion.BASE_URL
 import kr.ac.tukorea.waiter.databinding.ActivitySearchPageBinding
@@ -34,7 +30,7 @@ class Waiter_Search : AppCompatActivity(){
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
-        mInflater.inflate(R.menu.menu1, menu)
+        mInflater.inflate(R.menu.customermenu, menu)
         return true
     }
     override fun onCreate(savedInstanceState: Bundle?) {

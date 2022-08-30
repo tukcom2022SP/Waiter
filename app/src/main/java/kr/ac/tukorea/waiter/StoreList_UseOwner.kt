@@ -7,14 +7,12 @@ import android.util.Log
 import android.widget.AdapterView
 import android.widget.PopupMenu
 import android.widget.Toast
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_store_list_use_owner.*
-import kotlinx.android.synthetic.main.activity_waiting_list_page.*
-import kotlinx.android.synthetic.main.storelist_layout.view.*
 import kr.ac.tukorea.waiter.databinding.ActivityStoreListUseOwnerBinding
-import kr.ac.tukorea.waiter.databinding.ActivityWaitingListPageBinding
 
 class StoreList_UseOwner : AppCompatActivity() {
 
@@ -75,28 +73,35 @@ class StoreList_UseOwner : AppCompatActivity() {
 
         val binding = ActivityStoreListUseOwnerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val logIntent = Intent(this, LoginActivity::class.java)
+        val registIntent = Intent(this, Information_Registration_Page::class.java)
 
         binding.menubtn.setOnClickListener {
             var popmenu = PopupMenu(applicationContext,it)
-            menuInflater?.inflate(R.menu.menu1,popmenu.menu)
+            menuInflater?.inflate(R.menu.ownermenu,popmenu.menu)
             popmenu.show()
             popmenu.setOnMenuItemClickListener{ item ->
                 when(item.itemId){
                     R.id.logout -> {
-                        Toast.makeText(applicationContext,"1",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext,"로그아웃 되었습니다.\n다시 로그인해주요",Toast.LENGTH_SHORT).show()
+                        Firebase.auth.signOut()
+                        startActivity(logIntent)
                         return@setOnMenuItemClickListener true
                     }
-                    R.id.ite1 -> {
-                        Toast.makeText(applicationContext,"2",Toast.LENGTH_SHORT).show()
+                    R.id.addNewRestaurant -> {
+                        Toast.makeText(applicationContext,"사장님의 식당을 추가해주세요",Toast.LENGTH_SHORT).show()
+                        startActivity(registIntent)
                         return@setOnMenuItemClickListener true
                     }
-                    else->
+                    R.id.ite2 -> {
+                        Toast.makeText(applicationContext, "3", Toast.LENGTH_SHORT).show()
+                        return@setOnMenuItemClickListener true
+                    }
+                    else-> {
                         return@setOnMenuItemClickListener false
+                    }
                 }
             }
         }
-
-
-
     }
 }
