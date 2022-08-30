@@ -1,28 +1,17 @@
 package kr.ac.tukorea.waiter
 
-import android.app.Activity
 import android.app.AlertDialog
-import android.app.Dialog
-import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.View
-import android.view.WindowManager
 import android.widget.*
-import com.google.android.gms.tasks.Tasks
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_sign_in.*
 import kotlinx.android.synthetic.main.activity_waiting_list_page.*
 import kr.ac.tukorea.waiter.databinding.ActivityWaitingListPageBinding
-import java.text.FieldPosition
 
 
 class Waiting_List_Page : AppCompatActivity() {
@@ -140,7 +129,7 @@ class Waiting_List_Page : AppCompatActivity() {
 
         binding.menubtn.setOnClickListener {
             var popmenu = PopupMenu(applicationContext,it)
-            menuInflater?.inflate(R.menu.menu1,popmenu.menu)
+            menuInflater?.inflate(R.menu.customermenu,popmenu.menu)
             popmenu.show()
             popmenu.setOnMenuItemClickListener{ item ->
                 when(item.itemId){

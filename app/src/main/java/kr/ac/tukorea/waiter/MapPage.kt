@@ -33,11 +33,6 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.util.FusedLocationSource
 import kotlinx.android.synthetic.main.activity_map_page.*
 import kr.ac.tukorea.waiter.databinding.ActivityMapPageBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 
 class MapPage : AppCompatActivity(), OnMapReadyCallback {
@@ -75,7 +70,7 @@ class MapPage : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
-        mInflater.inflate(R.menu.menu1, menu)
+        mInflater.inflate(R.menu.customermenu, menu)
         return true
     }
 

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import kr.ac.tukorea.waiter.databinding.ActivityCustomerWaitinglistBinding
-import kr.ac.tukorea.waiter.databinding.ActivityInformationRegistrationPageBinding
 
 class customerWaitinglist : AppCompatActivity() {
 
@@ -17,7 +16,7 @@ class customerWaitinglist : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
-        mInflater.inflate(R.menu.menu1,menu)
+        mInflater.inflate(R.menu.customermenu,menu)
         return true
     }
 

@@ -1,6 +1,5 @@
 package kr.ac.tukorea.waiter
 
-import ResultSearchKeyword
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -19,24 +18,14 @@ import com.google.android.gms.location.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.*
-import com.naver.maps.map.overlay.InfoWindow
 import com.naver.maps.map.overlay.LocationOverlay
 import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.overlay.Overlay
 import com.naver.maps.map.util.FusedLocationSource
-import kotlinx.android.synthetic.main.activity_information_registration_page.*
 import kr.ac.tukorea.waiter.databinding.ActivityInformationRegistrationPageBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var naverMap: NaverMap
@@ -68,7 +57,7 @@ class Information_Registration_Page : AppCompatActivity(), OnMapReadyCallback {
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {  //메뉴
         super.onCreateOptionsMenu(menu)
         var mInflater = menuInflater
-        mInflater.inflate(R.menu.menu1,menu)
+        mInflater.inflate(R.menu.customermenu,menu)
         return true
     }
 
