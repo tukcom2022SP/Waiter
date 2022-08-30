@@ -112,8 +112,6 @@ class Waiting_List_Page : AppCompatActivity() {
                         }
 
                     }
-
-
             }
 
         } // resereInfo get data
@@ -126,10 +124,11 @@ class Waiting_List_Page : AppCompatActivity() {
         val binding = ActivityWaitingListPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val logIntent = Intent(this, LoginActivity::class.java)
+        val registIntent = Intent(this, Information_Registration_Page::class.java)
 
         binding.menubtn.setOnClickListener {
             var popmenu = PopupMenu(applicationContext,it)
-            menuInflater?.inflate(R.menu.customermenu,popmenu.menu)
+            menuInflater?.inflate(R.menu.ownermenu,popmenu.menu)
             popmenu.show()
             popmenu.setOnMenuItemClickListener{ item ->
                 when(item.itemId){
@@ -139,12 +138,16 @@ class Waiting_List_Page : AppCompatActivity() {
                         startActivity(logIntent)
                         return@setOnMenuItemClickListener true
                     }
-                    R.id.ite1 -> {
-                        Toast.makeText(applicationContext,"2",Toast.LENGTH_SHORT).show()
+                    R.id.addNewRestaurant -> {
+                        Toast.makeText(applicationContext,"사장님의 식당을 추가해주세요",Toast.LENGTH_SHORT).show()
+                        startActivity(registIntent)
+                        return@setOnMenuItemClickListener true
+                    }
+                    R.id.ite2 -> {
+                        Toast.makeText(applicationContext, "3", Toast.LENGTH_SHORT).show()
                         return@setOnMenuItemClickListener true
                     }
                     else-> {
-                        Toast.makeText(applicationContext, "3", Toast.LENGTH_SHORT).show()
                         return@setOnMenuItemClickListener false
                     }
                 }

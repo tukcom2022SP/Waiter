@@ -12,7 +12,7 @@
 
     <item
         android:id="@+id/ite2"
-        android:title=".">
+        android:title="뿌잉">
 
     </item>
 </menu>

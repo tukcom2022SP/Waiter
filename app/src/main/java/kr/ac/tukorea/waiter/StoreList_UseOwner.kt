@@ -74,6 +74,7 @@ class StoreList_UseOwner : AppCompatActivity() {
         val binding = ActivityStoreListUseOwnerBinding.inflate(layoutInflater)
         setContentView(binding.root)
         val logIntent = Intent(this, LoginActivity::class.java)
+        val registIntent = Intent(this, Information_Registration_Page::class.java)
 
         binding.menubtn.setOnClickListener {
             var popmenu = PopupMenu(applicationContext,it)
@@ -88,7 +89,8 @@ class StoreList_UseOwner : AppCompatActivity() {
                         return@setOnMenuItemClickListener true
                     }
                     R.id.addNewRestaurant -> {
-                        Toast.makeText(applicationContext,"2",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext,"사장님의 식당을 추가해주세요",Toast.LENGTH_SHORT).show()
+                        startActivity(registIntent)
                         return@setOnMenuItemClickListener true
                     }
                     R.id.ite2 -> {
@@ -96,7 +98,6 @@ class StoreList_UseOwner : AppCompatActivity() {
                         return@setOnMenuItemClickListener true
                     }
                     else-> {
-
                         return@setOnMenuItemClickListener false
                     }
                 }
