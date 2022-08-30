@@ -22,7 +22,6 @@
             android:name="com.naver.maps.map.8eo4a3qdn1"
             android:value="vNsyPSCAUhaNcqAinP9qzEh6eovnvJx7GlGj2TQD" />
 
-
         <activity
             android:name=".Owner_Search"
             android:exported="true"/>
@@ -54,7 +53,7 @@
             android:exported="true" />
         <activity
             android:name=".LoginActivity"
-            android:exported="true"/>
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

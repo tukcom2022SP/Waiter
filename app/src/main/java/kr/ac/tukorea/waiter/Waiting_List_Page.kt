@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import com.google.android.gms.tasks.Tasks
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -134,6 +136,7 @@ class Waiting_List_Page : AppCompatActivity() {
 
         val binding = ActivityWaitingListPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val logIntent = Intent(this, LoginActivity::class.java)
 
         binding.menubtn.setOnClickListener {
             var popmenu = PopupMenu(applicationContext,it)
@@ -142,20 +145,21 @@ class Waiting_List_Page : AppCompatActivity() {
             popmenu.setOnMenuItemClickListener{ item ->
                 when(item.itemId){
                     R.id.logout -> {
-                        Toast.makeText(applicationContext,"1",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext,"로그아웃 되었습니다.\n다시 로그인해주요",Toast.LENGTH_SHORT).show()
+                        Firebase.auth.signOut()
+                        startActivity(logIntent)
                         return@setOnMenuItemClickListener true
                     }
                     R.id.ite1 -> {
                         Toast.makeText(applicationContext,"2",Toast.LENGTH_SHORT).show()
                         return@setOnMenuItemClickListener true
                     }
-                    else->
+                    else-> {
+                        Toast.makeText(applicationContext, "3", Toast.LENGTH_SHORT).show()
                         return@setOnMenuItemClickListener false
+                    }
                 }
             }
         }
-
-
-
     }
 }
